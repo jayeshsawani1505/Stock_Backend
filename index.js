@@ -17,9 +17,25 @@ app.use(cors({
 app.use(bodyParser.json());
 
 const authRoutes = require('./routes/authRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const creditNoteRoutes = require('./routes/creditNoteRoutes');
+const signatureRoutes = require('./routes/signatureRoutes');
+const vendorRoutes = require('./routes/vendorRoutes');
+const productRoutes = require('./routes/productRoutes');
+const subproductRoutes = require('./routes/subproductRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const quotationRoutes = require('./routes/quotationRoutes');
 
 
 app.use('/api/auth', authRoutes);
+app.use('/api', categoryRoutes);
+app.use('/api/credit-notes', creditNoteRoutes);
+app.use('/api/signatures', signatureRoutes);
+app.use('/api/vendors', vendorRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/subproducts', subproductRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/quotations', quotationRoutes);
 
 
 app.listen(PORT, () => {

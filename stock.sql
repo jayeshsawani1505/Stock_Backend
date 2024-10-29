@@ -72,7 +72,7 @@ CREATE TABLE `customers` (
   `profile_photo` varchar(255) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `currency` varchar(50) DEFAULT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,  -- Make email unique
   `website` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `notes` text DEFAULT NULL,
