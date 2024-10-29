@@ -31,6 +31,7 @@ const expensesRoutes = require('./routes/expensesRoutes');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const invoiceRoutes = require('./routes/invoiceRoutes');
 const purchasesRoutes = require('./routes/purchasesRoutes');
+const returnDebitNotesPurchasesRoutes = require('./routes/returnDebitNotesPurchasesRoutes');
 
 
 app.use('/api/auth', authRoutes);
@@ -48,6 +49,7 @@ app.use('/api/expenses', expensesRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/purchases', purchasesRoutes);
+app.use('/api/return-debit-notes-purchases', returnDebitNotesPurchasesRoutes);
 
 
 app.listen(PORT, () => {

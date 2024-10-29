@@ -1,0 +1,5980 @@
+{
+	"info": {
+		"_postman_id": "88a9b64e-7b0c-4ccd-9809-bfe9d2530f90",
+		"name": "stock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32079493"
+	},
+	"item": [
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "Add category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category_name\": \"Electronics\",\r\n  \"description\": \"Devices, gadgets, and accessories.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://localhost:3000/api/categories",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"category_name\": \"Electronics\",\r\n  \"description\": \"Devices, gadgets, and accessories.\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"43-82g2jarHvcJkmnaotG7PhbAnSGo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 04:42:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Category created successfully\",\n    \"data\": {\n        \"categoryId\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Category By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/categories/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Category By Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/categories/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "187"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"bb-hr4twmXTrLZQSkrtJmuW7jgqR+8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 04:44:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"category_id\": 1,\n        \"category_name\": \"Electronics\",\n        \"description\": \"Devices, gadgets, and accessories.\",\n        \"created_at\": \"2024-10-29T04:42:41.000Z\",\n        \"updated_at\": \"2024-10-29T04:42:41.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Category",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "347"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"15b-J5WFbugitPpEcdWtCYYG0KYbCaI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 04:45:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"category_id\": 1,\n            \"category_name\": \"Electronics\",\n            \"description\": \"Devices, gadgets, and accessories.\",\n            \"created_at\": \"2024-10-29T04:42:41.000Z\",\n            \"updated_at\": \"2024-10-29T04:42:41.000Z\"\n        },\n        {\n            \"category_id\": 2,\n            \"category_name\": \"Books\",\n            \"description\": \"All types of books.\",\n            \"created_at\": \"2024-10-29T04:45:35.000Z\",\n            \"updated_at\": \"2024-10-29T04:45:35.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category_name\": \"Updated Electronics\",\r\n  \"description\": \"Updated description for electronics.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/categories/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Category",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"category_name\": \"Updated Electronics\",\r\n  \"description\": \"Updated description for electronics.\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/categories/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "152"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"98-8iV3WjZUG/MInXlc1J7NTyN01GU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 04:46:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Category updated successfully\",\n    \"data\": {\n        \"id\": \"1\",\n        \"category_name\": \"Updated Electronics\",\n        \"description\": \"Updated description for electronics.\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/categories/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "signatures",
+			"item": [
+				{
+					"name": "Create signatures",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"signature_name\": \"John Doe\",\r\n    \"signature_photo\": \"http://example.com/signatures/johndoe.png\",\r\n    \"status\": \"Active\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/signatures",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signatures"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create signatures",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"signature_name\": \"John Doe\",\r\n    \"signature_photo\": \"http://example.com/signatures/johndoe.png\",\r\n    \"status\": \"Active\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/signatures",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"signatures"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "17"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11-obT/VAXmFlL+ww20bBfWPyzSvGY\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:08:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"signatureId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all signatures",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/signatures",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signatures"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all signatures",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/signatures",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"signatures"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "284"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11c-eH7e8wdAI2Vs7HUbCPeS4nyTA9s\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:11:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Signatures retrieved successfully\",\n    \"signatures\": [\n        {\n            \"signature_id\": 1,\n            \"signature_name\": \"Johnathan Doe\",\n            \"signature_photo\": \"http://example.com/signatures/johndoe_updated.png\",\n            \"status\": \"Inactive\",\n            \"created_at\": \"2024-10-29T06:08:16.000Z\",\n            \"updated_at\": \"2024-10-29T06:10:48.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Update signatures",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"signature_name\": \"Johnathan Doe\",\r\n    \"signature_photo\": \"http://example.com/signatures/johndoe_updated.png\",\r\n    \"status\": \"Inactive\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/signatures/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signatures",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update signatures",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"signature_name\": \"Johnathan Doe\",\r\n    \"signature_photo\": \"http://example.com/signatures/johndoe_updated.png\",\r\n    \"status\": \"Inactive\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/signatures/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"signatures",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "197"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c5-ncLK20T2yNcuSjJIaIA6xIDREOs\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:10:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Signature updated successfully\",\n    \"updatedSignature\": {\n        \"id\": \"1\",\n        \"signature_name\": \"Johnathan Doe\",\n        \"signature_photo\": \"http://example.com/signatures/johndoe_updated.png\",\n        \"status\": \"Inactive\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "signatures  BY id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/signatures/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signatures",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "signatures  BY id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/signatures/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"signatures",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "280"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"118-ne59/azJg4R91IhliylA29/yoeg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:11:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Signature retrieved successfully\",\n    \"signature\": {\n        \"signature_id\": 1,\n        \"signature_name\": \"Johnathan Doe\",\n        \"signature_photo\": \"http://example.com/signatures/johndoe_updated.png\",\n        \"status\": \"Inactive\",\n        \"created_at\": \"2024-10-29T06:08:16.000Z\",\n        \"updated_at\": \"2024-10-29T06:10:48.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete signatures",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/signatures/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"signatures",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vendors",
+			"item": [
+				{
+					"name": "Get All Vendors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/vendors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendors"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all vendors",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/vendors",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendors"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-afUY9GyGwARZzR8z4+FKYxRx8DQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:14:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Vendors retrieved successfully\",\n    \"vendors\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Vendors",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vendor_name\": \"ABC Supplies\",\r\n    \"email\": \"contact@abcsupplies.com\",\r\n    \"phone_number\": \"1234567890\",\r\n    \"closing_balance\": 100.50\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/vendors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendors"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Vendors",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"vendor_name\": \"ABC Supplies\",\r\n    \"email\": \"contact@abcsupplies.com\",\r\n    \"phone_number\": \"1234567890\",\r\n    \"closing_balance\": 100.50\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/vendors",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendors"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41-7xeHNjf0/oZvOMxYyeVPIUFBCgg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:15:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Vendor created successfully\",\n    \"vendor\": {\n        \"vendorId\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Vendor By id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/vendors/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendors",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Vendor By id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/vendors/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendors",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "263"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"107-EC3ec1wyuzdvozzK63YIdbTSNhw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:15:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Vendor retrieved successfully\",\n    \"vendor\": {\n        \"vendor_id\": 1,\n        \"vendor_name\": \"ABC Supplies\",\n        \"email\": \"contact@abcsupplies.com\",\n        \"phone_number\": \"1234567890\",\n        \"closing_balance\": 100.5,\n        \"created_at\": \"2024-10-29T06:15:26.000Z\",\n        \"updated_at\": \"2024-10-29T06:15:26.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Vendor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vendor_name\": \"ABC Supplies Updated\",\r\n    \"email\": \"contact@abcsupplies.com\",\r\n    \"phone_number\": \"0987654321\",\r\n    \"closing_balance\": 150.00\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/vendors/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendors",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Vendor",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"vendor_name\": \"ABC Supplies Updated\",\r\n    \"email\": \"contact@abcsupplies.com\",\r\n    \"phone_number\": \"0987654321\",\r\n    \"closing_balance\": 150.00\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/vendors/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendors",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "189"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"bd-y3apHH8wm6atat+RCXgOwEz5e/E\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:16:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Vendor updated successfully\",\n    \"updatedVendor\": {\n        \"id\": \"1\",\n        \"vendor_name\": \"ABC Supplies Updated\",\n        \"email\": \"contact@abcsupplies.com\",\n        \"phone_number\": \"0987654321\",\n        \"closing_balance\": 150\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete vendor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/vendors/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get all Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all Products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-IieLICsXeq9EV1WJ03AIdKTAcxI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:23:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Products retrieved successfully\",\n    \"products\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_type\": \"Product\",\r\n    \"product_name\": \"Sample Product\",\r\n    \"product_code\": \"SP001\",\r\n    \"category_id\": 1,\r\n    \"quantity\": 100,\r\n    \"selling_price\": 25.50,\r\n    \"purchase_price\": 20.00,\r\n    \"units\": \"pcs\",\r\n    \"alert_quantity\": 10,\r\n    \"barcode_code\": \"1234567890123\",\r\n    \"discount_type\": \"Percentage\",\r\n    \"tax\": \"10%\",\r\n    \"description\": \"This is a sample product description.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"item_type\": \"Product\",\r\n    \"product_name\": \"Sample Product\",\r\n    \"product_code\": \"SP001\",\r\n    \"category_id\": 1,\r\n    \"quantity\": 100,\r\n    \"selling_price\": 25.50,\r\n    \"purchase_price\": 20.00,\r\n    \"units\": \"pcs\",\r\n    \"alert_quantity\": 10,\r\n    \"barcode_code\": \"1234567890123\",\r\n    \"discount_type\": \"Percentage\",\r\n    \"tax\": \"10%\",\r\n    \"description\": \"This is a sample product description.\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-GXafYFymEDCy9km4jKyLk1LwhM4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:24:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Product created successfully\",\n    \"product\": {\n        \"productId\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Product By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Product By Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "481"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e1-+vsrwwaaxRY1rettzWysV51twCA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:24:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Product retrieved successfully\",\n    \"product\": {\n        \"product_id\": 1,\n        \"item_type\": \"Product\",\n        \"product_name\": \"Sample Product\",\n        \"product_code\": \"SP001\",\n        \"category_id\": 1,\n        \"quantity\": 100,\n        \"selling_price\": 25.5,\n        \"purchase_price\": 20,\n        \"units\": \"pcs\",\n        \"alert_quantity\": 10,\n        \"barcode_code\": \"1234567890123\",\n        \"discount_type\": \"Percentage\",\n        \"tax\": \"10%\",\n        \"description\": \"This is a sample product description.\",\n        \"product_image\": null,\n        \"created_at\": \"2024-10-29T06:24:23.000Z\",\n        \"updated_at\": \"2024-10-29T06:24:23.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_type\": \"Product\",\r\n    \"product_name\": \"Updated Sample Product\",\r\n    \"product_code\": \"SP001-UPD\",\r\n    \"category_id\": 1,\r\n    \"quantity\": 150,\r\n    \"selling_price\": 27.00,\r\n    \"purchase_price\": 21.00,\r\n    \"units\": \"pcs\",\r\n    \"alert_quantity\": 15,\r\n    \"barcode_code\": \"1234567890123\",\r\n    \"discount_type\": \"Fixed\",\r\n    \"tax\": \"15%\",\r\n    \"description\": \"This is an updated sample product description.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"item_type\": \"Product\",\r\n    \"product_name\": \"Updated Sample Product\",\r\n    \"product_code\": \"SP001-UPD\",\r\n    \"category_id\": 1,\r\n    \"quantity\": 150,\r\n    \"selling_price\": 27.00,\r\n    \"purchase_price\": 21.00,\r\n    \"units\": \"pcs\",\r\n    \"alert_quantity\": 15,\r\n    \"barcode_code\": \"1234567890123\",\r\n    \"discount_type\": \"Fixed\",\r\n    \"tax\": \"15%\",\r\n    \"description\": \"This is an updated sample product description.\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"products",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "393"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"189-46xbbEssnrXZrIiwA4KlswkmoWw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:25:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Product updated successfully\",\n    \"updatedProduct\": {\n        \"id\": \"1\",\n        \"item_type\": \"Product\",\n        \"product_name\": \"Updated Sample Product\",\n        \"product_code\": \"SP001-UPD\",\n        \"category_id\": 1,\n        \"quantity\": 150,\n        \"selling_price\": 27,\n        \"purchase_price\": 21,\n        \"units\": \"pcs\",\n        \"alert_quantity\": 15,\n        \"barcode_code\": \"1234567890123\",\n        \"discount_type\": \"Fixed\",\n        \"tax\": \"15%\",\n        \"description\": \"This is an updated sample product description.\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Sub Products",
+			"item": [
+				{
+					"name": "Get all sub products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/subproducts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"subproducts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all sub products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/subproducts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"subproducts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41-yzknpMBubBM7JElpk5404Ec2hIE\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:29:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Subproducts retrieved successfully\",\n    \"subproducts\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Sub Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 1,\r\n    \"subproduct_name\": \"Sample Subproduct\",\r\n    \"subproduct_code\": \"SSP001\",\r\n    \"quantity\": 50,\r\n    \"unit_price\": 15.75,\r\n    \"units\": \"pcs\",\r\n    \"description\": \"This is a sample subproduct description.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/subproducts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"subproducts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sub Product BY id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/subproducts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"subproducts",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sub Product BY id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/subproducts/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"subproducts",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "344"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"158-KzBBnAnXgVdOstVZx5Qa1QECYmM\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:30:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Subproduct retrieved successfully\",\n    \"subproduct\": {\n        \"subproduct_id\": 1,\n        \"product_id\": 1,\n        \"subproduct_name\": \"Sample Subproduct\",\n        \"subproduct_code\": \"SSP001\",\n        \"quantity\": 50,\n        \"unit_price\": 15.75,\n        \"units\": \"pcs\",\n        \"description\": \"This is a sample subproduct description.\",\n        \"created_at\": \"2024-10-29T06:30:33.000Z\",\n        \"updated_at\": \"2024-10-29T06:30:33.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Sub Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 1,\r\n    \"subproduct_name\": \"Updated Sample Subproduct\",\r\n    \"subproduct_code\": \"SSP001-UPD\",\r\n    \"quantity\": 60,\r\n    \"unit_price\": 18.00,\r\n    \"units\": \"pcs\",\r\n    \"description\": \"This is an updated sample subproduct description.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/subproducts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"subproducts",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Sub Product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product_id\": 1,\r\n    \"subproduct_name\": \"Updated Sample Subproduct\",\r\n    \"subproduct_code\": \"SSP001-UPD\",\r\n    \"quantity\": 60,\r\n    \"unit_price\": 18.00,\r\n    \"units\": \"pcs\",\r\n    \"description\": \"This is an updated sample subproduct description.\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/subproducts/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"subproducts",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "278"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"116-bu1paBgV/Cu3bRg9puAr6ZfdXU0\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:31:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Subproduct updated successfully\",\n    \"updatedSubproduct\": {\n        \"id\": \"1\",\n        \"product_id\": 1,\n        \"subproduct_name\": \"Updated Sample Subproduct\",\n        \"subproduct_code\": \"SSP001-UPD\",\n        \"quantity\": 60,\n        \"unit_price\": 18,\n        \"units\": \"pcs\",\n        \"description\": \"This is an updated sample subproduct description.\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete SubProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/subproducts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"subproducts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Get All payments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/payments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"payments"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All payments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/payments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"payments"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-NQ1a4ri8WUdTm7zVsYZpuZkHnkU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:39:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Payments retrieved successfully\",\n    \"payments\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Crate Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer_id\": 8,\r\n    \"amount\": 100.50,\r\n    \"payment_mode\": \"Credit Card\",\r\n    \"payment_date\": \"2024-10-29\",\r\n    \"payment_status\": \"Completed\",\r\n    \"description\": \"Payment for invoice #12345\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/payments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"payments"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Crate Payment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"customer_id\": 8,\r\n    \"amount\": 100.50,\r\n    \"payment_mode\": \"Credit Card\",\r\n    \"payment_date\": \"2024-10-29\",\r\n    \"payment_status\": \"Completed\",\r\n    \"description\": \"Payment for invoice #12345\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/payments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"payments"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-55rQPOtMTvckaJ/ufez5DZIfNow\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:40:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Payment created successfully\",\n    \"payment\": {\n        \"paymentId\": 2\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Payment by payment id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/payments/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"payments",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Payment by payment id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/payments/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"payments",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "325"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"145-WL9tdt0k8yqSEtdzhDL4Sp3q3KE\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:41:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Payment retrieved successfully\",\n    \"payment\": {\n        \"payment_id\": 2,\n        \"customer_id\": 8,\n        \"amount\": 100.5,\n        \"payment_mode\": \"Credit Card\",\n        \"payment_date\": \"2024-10-28T18:30:00.000Z\",\n        \"payment_status\": \"Completed\",\n        \"description\": \"Payment for invoice #12345\",\n        \"created_at\": \"2024-10-29T06:40:42.000Z\",\n        \"updated_at\": \"2024-10-29T06:40:42.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Payment Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer_id\": 9,\r\n    \"amount\": 150.75,\r\n    \"payment_mode\": \"Bank Transfer\",\r\n    \"payment_date\": \"2024-10-29\",\r\n    \"payment_status\": \"Completed\",\r\n    \"description\": \"Updated payment for invoice #12345\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/payments/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"payments",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete payment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/payments/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"payments",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment by customer id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/payments/customer/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"payments",
+								"customer",
+								"9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Payment by customer id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/payments/customer/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"payments",
+										"customer",
+										"9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "340"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"154-AmchcDb3XWLC2Hs+fZv2hpaf4Io\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:44:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Payments retrieved successfully\",\n    \"payments\": [\n        {\n            \"payment_id\": 2,\n            \"customer_id\": 9,\n            \"amount\": 150.75,\n            \"payment_mode\": \"Bank Transfer\",\n            \"payment_date\": \"2024-10-28T18:30:00.000Z\",\n            \"payment_status\": \"Completed\",\n            \"description\": \"Updated payment for invoice #12345\",\n            \"created_at\": \"2024-10-29T06:40:42.000Z\",\n            \"updated_at\": \"2024-10-29T06:42:09.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Quotation",
+			"item": [
+				{
+					"name": "Get All Quotation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/quotations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"quotations"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Quotation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/quotations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"quotations"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3f-X3ucNjW1CmXvky2VVl1HgWGS9+Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:53:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Quotations retrieved successfully\",\n    \"quotations\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Quotation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quotation_number\": \"QTN-001\",\r\n    \"customer_id\": 8,\r\n    \"quotation_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-29\",\r\n    \"reference_number\": \"REF-001\",\r\n    \"status\": \"Pending\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 5,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 100.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"This is a sample note.\",\r\n    \"terms_conditions\": \"Terms and conditions apply.\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": \"path/to/image.png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/quotations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"quotations"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Quotation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"quotation_number\": \"QTN-001\",\r\n    \"customer_id\": 8,\r\n    \"quotation_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-29\",\r\n    \"reference_number\": \"REF-001\",\r\n    \"status\": \"Pending\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 5,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 100.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"This is a sample note.\",\r\n    \"terms_conditions\": \"Terms and conditions apply.\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": \"path/to/image.png\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/quotations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"quotations"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "60"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3c-9abswyjT33TvlhAp0SCDOfzi9sg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:55:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Quotation created successfully\",\n    \"quotationId\": 3\n}"
+						}
+					]
+				},
+				{
+					"name": "Quotation by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/quotations/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"quotations",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Quotation by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/quotations/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"quotations",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "525"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20d-Cdn3DzSEEPd4grgC4RuSFSohSTw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:55:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Quotation retrieved successfully\",\n    \"quotation\": {\n        \"id\": 3,\n        \"quotation_number\": \"QTN-001\",\n        \"customer_id\": 8,\n        \"quotation_date\": \"2024-10-28T18:30:00.000Z\",\n        \"due_date\": \"2024-11-28T18:30:00.000Z\",\n        \"reference_number\": \"REF-001\",\n        \"status\": \"Pending\",\n        \"product_id\": 1,\n        \"quantity\": 5,\n        \"unit\": \"pcs\",\n        \"rate\": 100,\n        \"bank_id\": 1,\n        \"notes\": \"This is a sample note.\",\n        \"terms_conditions\": \"Terms and conditions apply.\",\n        \"total_amount\": 500,\n        \"signature_image\": \"path/to/image.png\",\n        \"created_at\": \"2024-10-29T06:55:27.000Z\",\n        \"updated_at\": \"2024-10-29T06:55:27.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Quotation",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quotation_number\": \"QTN-001\",\r\n    \"customer_id\": 8,\r\n    \"quotation_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-29\",\r\n    \"reference_number\": \"REF-001\",\r\n    \"status\": \"Approved\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 5,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 100.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"This is a sample note.\",\r\n    \"terms_conditions\": \"Terms and conditions apply.\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": \"path/to/image.png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/quotations/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"quotations",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Quotation",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"quotation_number\": \"QTN-001\",\r\n    \"customer_id\": 8,\r\n    \"quotation_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-29\",\r\n    \"reference_number\": \"REF-001\",\r\n    \"status\": \"Approved\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 5,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 100.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"This is a sample note.\",\r\n    \"terms_conditions\": \"Terms and conditions apply.\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": \"path/to/image.png\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/quotations/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"quotations",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "418"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1a2-SIuwo11far4JHsSsluTPryXELJU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 06:57:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Quotation updated successfully\",\n    \"quotation\": {\n        \"id\": \"3\",\n        \"quotation_number\": \"QTN-001\",\n        \"customer_id\": 8,\n        \"quotation_date\": \"2024-10-29\",\n        \"due_date\": \"2024-11-29\",\n        \"reference_number\": \"REF-001\",\n        \"status\": \"Approved\",\n        \"product_id\": 1,\n        \"quantity\": 5,\n        \"unit\": \"pcs\",\n        \"rate\": 100,\n        \"bank_id\": 1,\n        \"notes\": \"This is a sample note.\",\n        \"terms_conditions\": \"Terms and conditions apply.\",\n        \"total_amount\": 500,\n        \"signature_image\": \"path/to/image.png\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Quotation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/quotations/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"quotations",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Quotations by Customer id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/quotations/customer/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"quotations",
+								"customer",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Quotations by Customer id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/quotations/customer/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"quotations",
+										"customer",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-pw/nuCKdPQk5Vds1xcaLE2hs18o\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 07:32:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"No quotations found for this customer\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "credit note invoices",
+			"item": [
+				{
+					"name": "note invoice by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/creditnoteinvoices/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"creditnoteinvoices",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://localhost:3000/api/creditnoteinvoices/3",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/creditnoteinvoices/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"creditnoteinvoices",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "482"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e2-Fais5ZV5GD1ksEKLrztUI2nHRpA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 07:37:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Credit note invoice retrieved successfully\",\n    \"invoice\": {\n        \"id\": 3,\n        \"customer_id\": 8,\n        \"creditNote_date\": \"2024-10-28T18:30:00.000Z\",\n        \"due_date\": \"2024-11-14T18:30:00.000Z\",\n        \"reference_number\": \"REF123\",\n        \"product_name\": \"Product A\",\n        \"product_id\": 1,\n        \"quantity\": 10,\n        \"unit\": \"pcs\",\n        \"rate\": 50,\n        \"bank_id\": 2,\n        \"notes\": \"Sample note\",\n        \"terms_conditions\": \"Sample terms\",\n        \"total_amount\": 500,\n        \"signature_image\": \"signature.png\",\n        \"created_at\": \"2024-10-29T07:35:53.000Z\",\n        \"updated_at\": \"2024-10-29T07:35:53.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create credit note invoice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer_id\": 8,\r\n    \"creditNote_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-15\",\r\n    \"reference_number\": \"REF123\",\r\n    \"product_name\": \"Product A\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 2,\r\n    \"notes\": \"Sample note\",\r\n    \"terms_conditions\": \"Sample terms\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": \"signature.png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/creditnoteinvoices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"creditnoteinvoices"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create credit note invoice",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"customer_id\": 8,\r\n    \"creditNote_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-15\",\r\n    \"reference_number\": \"REF123\",\r\n    \"product_name\": \"Product A\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 2,\r\n    \"notes\": \"Sample note\",\r\n    \"terms_conditions\": \"Sample terms\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": \"signature.png\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/creditnoteinvoices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"creditnoteinvoices"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-qkVjm3y4+CrBdNRQPfl7Z+/TMzA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 07:35:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Credit note invoice created successfully\",\n    \"invoiceId\": 3\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all create note Invoice",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/creditnoteinvoices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"creditnoteinvoices"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all create note Invoice",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/creditnoteinvoices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"creditnoteinvoices"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "486"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e6-OqTQw4SSCElJSMqE77OiFoeByXo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 07:40:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Credit note invoices retrieved successfully\",\n    \"invoices\": [\n        {\n            \"id\": 3,\n            \"customer_id\": 8,\n            \"creditNote_date\": \"2024-10-28T18:30:00.000Z\",\n            \"due_date\": \"2024-11-14T18:30:00.000Z\",\n            \"reference_number\": \"REF123\",\n            \"product_name\": \"Product A\",\n            \"product_id\": 1,\n            \"quantity\": 10,\n            \"unit\": \"pcs\",\n            \"rate\": 50,\n            \"bank_id\": 2,\n            \"notes\": \"Sample note\",\n            \"terms_conditions\": \"Sample terms\",\n            \"total_amount\": 500,\n            \"signature_image\": \"signature.png\",\n            \"created_at\": \"2024-10-29T07:35:53.000Z\",\n            \"updated_at\": \"2024-10-29T07:35:53.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Update note Invoice",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer_id\": 8,\r\n    \"creditNote_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-15\",\r\n    \"reference_number\": \"REF123\",\r\n    \"product_name\": \"Product A\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 2,\r\n    \"notes\": \"Sample note\",\r\n    \"terms_conditions\": \"Sample terms\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": \"signature.png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/creditnoteinvoices/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"creditnoteinvoices",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update note Invoice",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"customer_id\": 8,\r\n    \"creditNote_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-15\",\r\n    \"reference_number\": \"REF123\",\r\n    \"product_name\": \"Product A\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 2,\r\n    \"notes\": \"Sample note\",\r\n    \"terms_conditions\": \"Sample terms\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": \"signature.png\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/creditnoteinvoices/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"creditnoteinvoices",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "374"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"176-j2aYz4ziuyrWsoQnD9EkHzNofuA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 07:42:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Credit note invoice updated successfully\",\n    \"invoice\": {\n        \"id\": \"3\",\n        \"customer_id\": 8,\n        \"creditNote_date\": \"2024-10-29\",\n        \"due_date\": \"2024-11-15\",\n        \"reference_number\": \"REF123\",\n        \"product_name\": \"Product A\",\n        \"product_id\": 1,\n        \"quantity\": 10,\n        \"unit\": \"pcs\",\n        \"rate\": 50,\n        \"bank_id\": 2,\n        \"notes\": \"Sample note\",\n        \"terms_conditions\": \"Sample terms\",\n        \"total_amount\": 500,\n        \"signature_image\": \"signature.png\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Note invoice",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/creditnoteinvoices/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"creditnoteinvoices",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"customers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Customers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "5000"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1388-Md0rRhSVWcxnTrImCtohN66J2ns\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 08:44:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Customers retrieved successfully\",\n    \"customers\": [\n        {\n            \"customer_id\": 8,\n            \"profile_photo\": \"path/to/photo.jpg\",\n            \"name\": \"John Doe\",\n            \"currency\": \"USD\",\n            \"email\": \"john.doe@example.com\",\n            \"website\": \"www.johndoe.com\",\n            \"phone\": \"+1234567890\",\n            \"notes\": \"Some notes about the customer.\",\n            \"billing_name\": \"John Doe\",\n            \"billing_address_line1\": \"123 Main St\",\n            \"billing_address_line2\": \"Apt 4B\",\n            \"billing_country\": \"USA\",\n            \"billing_state\": \"NY\",\n            \"billing_city\": \"New York\",\n            \"billing_pincode\": \"10001\",\n            \"shipping_name\": \"John Doe\",\n            \"shipping_address_line1\": \"123 Main St\",\n            \"shipping_address_line2\": \"Apt 4B\",\n            \"shipping_country\": \"USA\",\n            \"shipping_state\": \"NY\",\n            \"shipping_city\": \"New York\",\n            \"shipping_pincode\": \"10001\",\n            \"bank_name\": \"Bank of America\",\n            \"branch\": \"Main Branch\",\n            \"account_number\": \"123456789\",\n            \"account_holder_name\": \"John Doe\",\n            \"ifsc\": \"BOFAUS3N\",\n            \"created_at\": \"2024-10-29T05:10:49.000Z\",\n            \"updated_at\": \"2024-10-29T05:10:49.000Z\"\n        },\n        {\n            \"customer_id\": 9,\n            \"profile_photo\": \"path/to/photo.jpg\",\n            \"name\": \"John Doe\",\n            \"currency\": \"USD\",\n            \"email\": \"john.doe@example.com\",\n            \"website\": \"www.johndoe.com\",\n            \"phone\": \"+1234567890\",\n            \"notes\": \"Some notes about the customer.\",\n            \"billing_name\": \"John Doe\",\n            \"billing_address_line1\": \"123 Main St\",\n            \"billing_address_line2\": \"Apt 4B\",\n            \"billing_country\": \"USA\",\n            \"billing_state\": \"NY\",\n            \"billing_city\": \"New York\",\n            \"billing_pincode\": \"10001\",\n            \"shipping_name\": \"John Doe\",\n            \"shipping_address_line1\": \"123 Main St\",\n            \"shipping_address_line2\": \"Apt 4B\",\n            \"shipping_country\": \"USA\",\n            \"shipping_state\": \"NY\",\n            \"shipping_city\": \"New York\",\n            \"shipping_pincode\": \"10001\",\n            \"bank_name\": \"Bank of America\",\n            \"branch\": \"Main Branch\",\n            \"account_number\": \"123456789\",\n            \"account_holder_name\": \"John Doe\",\n            \"ifsc\": \"BOFAUS3N\",\n            \"created_at\": \"2024-10-29T05:12:25.000Z\",\n            \"updated_at\": \"2024-10-29T05:12:25.000Z\"\n        },\n        {\n            \"customer_id\": 10,\n            \"profile_photo\": \"path/to/photo.jpg\",\n            \"name\": \"John Doe\",\n            \"currency\": \"USD\",\n            \"email\": \"john.doe@example.com\",\n            \"website\": \"www.johndoe.com\",\n            \"phone\": \"+1234567890\",\n            \"notes\": \"Some notes about the customer.\",\n            \"billing_name\": \"John Doe\",\n            \"billing_address_line1\": \"123 Main St\",\n            \"billing_address_line2\": \"Apt 4B\",\n            \"billing_country\": \"USA\",\n            \"billing_state\": \"NY\",\n            \"billing_city\": \"New York\",\n            \"billing_pincode\": \"10001\",\n            \"shipping_name\": \"John Doe\",\n            \"shipping_address_line1\": \"123 Main St\",\n            \"shipping_address_line2\": \"Apt 4B\",\n            \"shipping_country\": \"USA\",\n            \"shipping_state\": \"NY\",\n            \"shipping_city\": \"New York\",\n            \"shipping_pincode\": \"10001\",\n            \"bank_name\": \"Bank of America\",\n            \"branch\": \"Main Branch\",\n            \"account_number\": \"123456789\",\n            \"account_holder_name\": \"John Doe\",\n            \"ifsc\": \"BOFAUS3N\",\n            \"created_at\": \"2024-10-29T05:15:26.000Z\",\n            \"updated_at\": \"2024-10-29T05:15:26.000Z\"\n        },\n        {\n            \"customer_id\": 11,\n            \"profile_photo\": \"path/to/photo.jpg\",\n            \"name\": \"John Doe\",\n            \"currency\": \"USD\",\n            \"email\": \"john.doe@example.com\",\n            \"website\": \"www.johndoe.com\",\n            \"phone\": \"+1234567890\",\n            \"notes\": \"Some notes about the customer.\",\n            \"billing_name\": \"John Doe\",\n            \"billing_address_line1\": \"123 Main St\",\n            \"billing_address_line2\": \"Apt 4B\",\n            \"billing_country\": \"USA\",\n            \"billing_state\": \"NY\",\n            \"billing_city\": \"New York\",\n            \"billing_pincode\": \"10001\",\n            \"shipping_name\": \"John Doe\",\n            \"shipping_address_line1\": \"123 Main St\",\n            \"shipping_address_line2\": \"Apt 4B\",\n            \"shipping_country\": \"USA\",\n            \"shipping_state\": \"NY\",\n            \"shipping_city\": \"New York\",\n            \"shipping_pincode\": \"10001\",\n            \"bank_name\": \"Bank of America\",\n            \"branch\": \"Main Branch\",\n            \"account_number\": \"123456789\",\n            \"account_holder_name\": \"John Doe\",\n            \"ifsc\": \"BOFAUS3N\",\n            \"created_at\": \"2024-10-29T05:17:06.000Z\",\n            \"updated_at\": \"2024-10-29T05:17:06.000Z\"\n        },\n        {\n            \"customer_id\": 12,\n            \"profile_photo\": \"path/to/photo.jpg\",\n            \"name\": \"John Doe\",\n            \"currency\": \"USD\",\n            \"email\": \"john.doe@example.com\",\n            \"website\": \"www.johndoe.com\",\n            \"phone\": \"+1234567890\",\n            \"notes\": \"Some notes about the customer.\",\n            \"billing_name\": \"John Doe\",\n            \"billing_address_line1\": \"123 Main St\",\n            \"billing_address_line2\": \"Apt 4B\",\n            \"billing_country\": \"USA\",\n            \"billing_state\": \"NY\",\n            \"billing_city\": \"New York\",\n            \"billing_pincode\": \"10001\",\n            \"shipping_name\": \"John Doe\",\n            \"shipping_address_line1\": \"123 Main St\",\n            \"shipping_address_line2\": \"Apt 4B\",\n            \"shipping_country\": \"USA\",\n            \"shipping_state\": \"NY\",\n            \"shipping_city\": \"New York\",\n            \"shipping_pincode\": \"10001\",\n            \"bank_name\": \"Bank of America\",\n            \"branch\": \"Main Branch\",\n            \"account_number\": \"123456789\",\n            \"account_holder_name\": \"John Doe\",\n            \"ifsc\": \"BOFAUS3N\",\n            \"created_at\": \"2024-10-29T05:18:20.000Z\",\n            \"updated_at\": \"2024-10-29T05:18:20.000Z\"\n        },\n        {\n            \"customer_id\": 13,\n            \"profile_photo\": \"https://example.com/photo1.jpg\",\n            \"name\": \"John Doe\",\n            \"currency\": \"USD\",\n            \"email\": \"john.doe@example.com\",\n            \"website\": \"https://johndoe.com\",\n            \"phone\": \"+1234567890\",\n            \"notes\": \"Preferred contact method is email.\",\n            \"billing_name\": \"John Doe\",\n            \"billing_address_line1\": \"123 Main St\",\n            \"billing_address_line2\": \"Apt 4B\",\n            \"billing_country\": \"USA\",\n            \"billing_state\": \"NY\",\n            \"billing_city\": \"New York\",\n            \"billing_pincode\": \"10001\",\n            \"shipping_name\": \"John Doe\",\n            \"shipping_address_line1\": \"456 Elm St\",\n            \"shipping_address_line2\": \"Suite 5C\",\n            \"shipping_country\": \"USA\",\n            \"shipping_state\": \"NY\",\n            \"shipping_city\": \"New York\",\n            \"shipping_pincode\": \"10002\",\n            \"bank_name\": \"Bank of America\",\n            \"branch\": \"Downtown\",\n            \"account_number\": \"123456789012\",\n            \"account_holder_name\": \"John Doe\",\n            \"ifsc\": \"BOFAUS3N\",\n            \"created_at\": \"2024-10-29T05:25:16.000Z\",\n            \"updated_at\": \"2024-10-29T05:25:16.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profile_photo\": \"https://example.com/profile.jpg\",\r\n    \"name\": \"John Doe\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"johndoe@example.com\",\r\n    \"website\": \"https://johndoe.com\",\r\n    \"phone\": \"1234567890\",\r\n    \"notes\": \"Regular customer\",\r\n    \"billing_name\": \"John Doe\",\r\n    \"billing_address_line1\": \"123 Main St\",\r\n    \"billing_address_line2\": \"Apt 4B\",\r\n    \"billing_country\": \"USA\",\r\n    \"billing_state\": \"California\",\r\n    \"billing_city\": \"Los Angeles\",\r\n    \"billing_pincode\": \"90001\",\r\n    \"shipping_name\": \"John Doe\",\r\n    \"shipping_address_line1\": \"123 Main St\",\r\n    \"shipping_address_line2\": \"Apt 4B\",\r\n    \"shipping_country\": \"USA\",\r\n    \"shipping_state\": \"California\",\r\n    \"shipping_city\": \"Los Angeles\",\r\n    \"shipping_pincode\": \"90001\",\r\n    \"bank_name\": \"Bank of America\",\r\n    \"branch\": \"Downtown\",\r\n    \"account_number\": \"1234567890\",\r\n    \"account_holder_name\": \"John Doe\",\r\n    \"ifsc\": \"BOFAUS3N\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"customers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Customer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"profile_photo\": \"https://example.com/profile.jpg\",\r\n    \"name\": \"John Doe\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"johndoe@example.com\",\r\n    \"website\": \"https://johndoe.com\",\r\n    \"phone\": \"1234567890\",\r\n    \"notes\": \"Regular customer\",\r\n    \"billing_name\": \"John Doe\",\r\n    \"billing_address_line1\": \"123 Main St\",\r\n    \"billing_address_line2\": \"Apt 4B\",\r\n    \"billing_country\": \"USA\",\r\n    \"billing_state\": \"California\",\r\n    \"billing_city\": \"Los Angeles\",\r\n    \"billing_pincode\": \"90001\",\r\n    \"shipping_name\": \"John Doe\",\r\n    \"shipping_address_line1\": \"123 Main St\",\r\n    \"shipping_address_line2\": \"Apt 4B\",\r\n    \"shipping_country\": \"USA\",\r\n    \"shipping_state\": \"California\",\r\n    \"shipping_city\": \"Los Angeles\",\r\n    \"shipping_pincode\": \"90001\",\r\n    \"bank_name\": \"Bank of America\",\r\n    \"branch\": \"Downtown\",\r\n    \"account_number\": \"1234567890\",\r\n    \"account_holder_name\": \"John Doe\",\r\n    \"ifsc\": \"BOFAUS3N\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-p/LWkFfMqQUv/shEFspD2fyPvPo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 08:51:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Customer created successfully\",\n    \"customerId\": 14\n}"
+						}
+					]
+				},
+				{
+					"name": "customer by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/customers/14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"customers",
+								"14"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "customer by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/customers/14",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"customers",
+										"14"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "898"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"382-iM0lOe7C2hVAkJjqrpyijMFaGNY\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 08:53:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Customer retrieved successfully\",\n    \"customer\": {\n        \"customer_id\": 14,\n        \"profile_photo\": \"https://example.com/profile.jpg\",\n        \"name\": \"John Doe\",\n        \"currency\": \"USD\",\n        \"email\": \"johndoe@example.com\",\n        \"website\": \"https://johndoe.com\",\n        \"phone\": \"1234567890\",\n        \"notes\": \"Regular customer\",\n        \"billing_name\": \"John Doe\",\n        \"billing_address_line1\": \"123 Main St\",\n        \"billing_address_line2\": \"Apt 4B\",\n        \"billing_country\": \"USA\",\n        \"billing_state\": \"California\",\n        \"billing_city\": \"Los Angeles\",\n        \"billing_pincode\": \"90001\",\n        \"shipping_name\": \"John Doe\",\n        \"shipping_address_line1\": \"123 Main St\",\n        \"shipping_address_line2\": \"Apt 4B\",\n        \"shipping_country\": \"USA\",\n        \"shipping_state\": \"California\",\n        \"shipping_city\": \"Los Angeles\",\n        \"shipping_pincode\": \"90001\",\n        \"bank_name\": \"Bank of America\",\n        \"branch\": \"Downtown\",\n        \"account_number\": \"1234567890\",\n        \"account_holder_name\": \"John Doe\",\n        \"ifsc\": \"BOFAUS3N\",\n        \"created_at\": \"2024-10-29T08:51:10.000Z\",\n        \"updated_at\": \"2024-10-29T08:51:10.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profile_photo\": \"https://example.com/profile-updated.jpg\",\r\n    \"name\": \"John Doe Updated\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"john.doe.updated@example.com\",\r\n    \"website\": \"https://johndoeupdated.com\",\r\n    \"phone\": \"0987654321\",\r\n    \"notes\": \"Updated notes\",\r\n    \"billing_name\": \"John Doe Updated\",\r\n    \"billing_address_line1\": \"456 Market St\",\r\n    \"billing_address_line2\": \"Suite 8A\",\r\n    \"billing_country\": \"USA\",\r\n    \"billing_state\": \"New York\",\r\n    \"billing_city\": \"New York\",\r\n    \"billing_pincode\": \"10001\",\r\n    \"shipping_name\": \"John Doe Updated\",\r\n    \"shipping_address_line1\": \"456 Market St\",\r\n    \"shipping_address_line2\": \"Suite 8A\",\r\n    \"shipping_country\": \"USA\",\r\n    \"shipping_state\": \"New York\",\r\n    \"shipping_city\": \"New York\",\r\n    \"shipping_pincode\": \"10001\",\r\n    \"bank_name\": \"Chase Bank\",\r\n    \"branch\": \"Uptown\",\r\n    \"account_number\": \"9876543210\",\r\n    \"account_holder_name\": \"John Doe Updated\",\r\n    \"ifsc\": \"CHASUS33\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/customers/14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"customers",
+								"14"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Customer",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"profile_photo\": \"https://example.com/profile-updated.jpg\",\r\n    \"name\": \"John Doe Updated\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"john.doe.updated@example.com\",\r\n    \"website\": \"https://johndoeupdated.com\",\r\n    \"phone\": \"0987654321\",\r\n    \"notes\": \"Updated notes\",\r\n    \"billing_name\": \"John Doe Updated\",\r\n    \"billing_address_line1\": \"456 Market St\",\r\n    \"billing_address_line2\": \"Suite 8A\",\r\n    \"billing_country\": \"USA\",\r\n    \"billing_state\": \"New York\",\r\n    \"billing_city\": \"New York\",\r\n    \"billing_pincode\": \"10001\",\r\n    \"shipping_name\": \"John Doe Updated\",\r\n    \"shipping_address_line1\": \"456 Market St\",\r\n    \"shipping_address_line2\": \"Suite 8A\",\r\n    \"shipping_country\": \"USA\",\r\n    \"shipping_state\": \"New York\",\r\n    \"shipping_city\": \"New York\",\r\n    \"shipping_pincode\": \"10001\",\r\n    \"bank_name\": \"Chase Bank\",\r\n    \"branch\": \"Uptown\",\r\n    \"account_number\": \"9876543210\",\r\n    \"account_holder_name\": \"John Doe Updated\",\r\n    \"ifsc\": \"CHASUS33\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/customers/14",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"customers",
+										"14"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "861"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"35d-Vv712jXUi6c40j5uuuuL8/r6Smk\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 08:57:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Customer updated successfully\",\n    \"customer\": {\n        \"customerId\": \"14\",\n        \"profile_photo\": \"https://example.com/profile-updated.jpg\",\n        \"name\": \"John Doe Updated\",\n        \"currency\": \"USD\",\n        \"email\": \"john.doe.updated@example.com\",\n        \"website\": \"https://johndoeupdated.com\",\n        \"phone\": \"0987654321\",\n        \"notes\": \"Updated notes\",\n        \"billing_name\": \"John Doe Updated\",\n        \"billing_address_line1\": \"456 Market St\",\n        \"billing_address_line2\": \"Suite 8A\",\n        \"billing_country\": \"USA\",\n        \"billing_state\": \"New York\",\n        \"billing_city\": \"New York\",\n        \"billing_pincode\": \"10001\",\n        \"shipping_name\": \"John Doe Updated\",\n        \"shipping_address_line1\": \"456 Market St\",\n        \"shipping_address_line2\": \"Suite 8A\",\n        \"shipping_country\": \"USA\",\n        \"shipping_state\": \"New York\",\n        \"shipping_city\": \"New York\",\n        \"shipping_pincode\": \"10001\",\n        \"bank_name\": \"Chase Bank\",\n        \"branch\": \"Uptown\",\n        \"account_number\": \"9876543210\",\n        \"account_holder_name\": \"John Doe Updated\",\n        \"ifsc\": \"CHASUS33\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/customers/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"customers",
+								"10"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Customer",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/customers/10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"customers",
+										"10"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b-I1hiO/USZhyUKqOhODBip+hHZQk\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 08:58:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Customer deleted successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "delivery challans",
+			"item": [
+				{
+					"name": "Create delivery_challans",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"delivery_number\": \"DC1001\",\r\n    \"customer_id\": 14,\r\n    \"delivery_date\": \"2024-11-01\",\r\n    \"due_date\": \"2024-11-10\",\r\n    \"reference_number\": \"REF1001\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 20,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 25.75,\r\n    \"bank_id\": 501,\r\n    \"notes\": \"Handle with care\",\r\n    \"terms_conditions\": \"Payment due within 30 days\",\r\n    \"total_amount\": 515.00,\r\n    \"signature_image\": \"https://example.com/images/signature1.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/delivery_challans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"delivery_challans"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create delivery_challans",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"delivery_number\": \"DC1001\",\r\n    \"customer_id\": 14,\r\n    \"delivery_date\": \"2024-11-01\",\r\n    \"due_date\": \"2024-11-10\",\r\n    \"reference_number\": \"REF1001\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 20,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 25.75,\r\n    \"bank_id\": 501,\r\n    \"notes\": \"Handle with care\",\r\n    \"terms_conditions\": \"Payment due within 30 days\",\r\n    \"total_amount\": 515.00,\r\n    \"signature_image\": \"https://example.com/images/signature1.jpg\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/delivery_challans",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"delivery_challans"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-8/qeSV7Kfi0YBRhOEtYuoLlhFKg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:06:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Delivery challan created successfully\",\n    \"id\": 3\n}"
+						}
+					]
+				},
+				{
+					"name": "Get delivery_challans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/delivery_challans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"delivery_challans"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get delivery_challans",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/delivery_challans",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"delivery_challans"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "469"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d5-dt3+Z2bs+v7gU8L9t/pE/ogT+EE\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:07:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 3,\n        \"delivery_number\": \"DC1001\",\n        \"customer_id\": 14,\n        \"delivery_date\": \"2024-10-31T18:30:00.000Z\",\n        \"due_date\": \"2024-11-09T18:30:00.000Z\",\n        \"reference_number\": \"REF1001\",\n        \"product_id\": 1,\n        \"quantity\": 20,\n        \"unit\": \"pcs\",\n        \"rate\": 25.75,\n        \"bank_id\": 501,\n        \"notes\": \"Handle with care\",\n        \"terms_conditions\": \"Payment due within 30 days\",\n        \"total_amount\": 515,\n        \"signature_image\": \"https://example.com/images/signature1.jpg\",\n        \"created_at\": \"2024-10-29T09:06:02.000Z\",\n        \"updated_at\": \"2024-10-29T09:06:02.000Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "delivery_challans by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/delivery_challans/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"delivery_challans",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delivery_challans by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/delivery_challans/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"delivery_challans",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "467"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d3-WN1JoqR11sxW7fA+wI4ROAFxw4Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:08:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"delivery_number\": \"DC1001\",\n    \"customer_id\": 14,\n    \"delivery_date\": \"2024-10-31T18:30:00.000Z\",\n    \"due_date\": \"2024-11-09T18:30:00.000Z\",\n    \"reference_number\": \"REF1001\",\n    \"product_id\": 1,\n    \"quantity\": 20,\n    \"unit\": \"pcs\",\n    \"rate\": 25.75,\n    \"bank_id\": 501,\n    \"notes\": \"Handle with care\",\n    \"terms_conditions\": \"Payment due within 30 days\",\n    \"total_amount\": 515,\n    \"signature_image\": \"https://example.com/images/signature1.jpg\",\n    \"created_at\": \"2024-10-29T09:06:02.000Z\",\n    \"updated_at\": \"2024-10-29T09:06:02.000Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Delivery challan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"delivery_number\": \"DC1001\",\r\n    \"customer_id\": 14,\r\n    \"delivery_date\": \"2024-11-01\",\r\n    \"due_date\": \"2024-11-15\",\r\n    \"reference_number\": \"REF1001\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 25,  // Updated quantity\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 25.75,\r\n    \"bank_id\": 501,\r\n    \"notes\": \"Urgent delivery required\",\r\n    \"terms_conditions\": \"Payment due within 30 days\",\r\n    \"total_amount\": 643.75,\r\n    \"signature_image\": \"https://example.com/images/signature1.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/delivery_challans/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"delivery_challans",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Delivery challan",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"delivery_number\": \"DC1001\",\r\n    \"customer_id\": 14,\r\n    \"delivery_date\": \"2024-11-01\",\r\n    \"due_date\": \"2024-11-15\",\r\n    \"reference_number\": \"REF1001\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 25,  // Updated quantity\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 25.75,\r\n    \"bank_id\": 501,\r\n    \"notes\": \"Urgent delivery required\",\r\n    \"terms_conditions\": \"Payment due within 30 days\",\r\n    \"total_amount\": 643.75,\r\n    \"signature_image\": \"https://example.com/images/signature1.jpg\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/delivery_challans/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"delivery_challans",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "64"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"40-J0OGiDdULRk9SP297kWlLl3/KS0\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:15:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Delivery challan updated successfully.\",\n    \"data\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Delivery challan",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/delivery_challans/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"delivery_challans",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "expenses",
+			"item": [
+				{
+					"name": "Get all expenses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/expenses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"expenses"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all expenses",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/expenses",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"expenses"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "56"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"38-yuT0bhq+oA7fqhSVbEYCLhbCx9o\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:23:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Expenses retrieved successfully.\",\n    \"data\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Create expenses",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"reference\": \"Monthly Subscription\",\r\n  \"amount\": 100.00,\r\n  \"payment_mode\": \"Cash\",\r\n  \"expense_date\": \"2024-10-29\",\r\n  \"payment_status\": \"Paid\",\r\n  \"description\": \"Payment for monthly subscription service.\",\r\n  \"attachment\": null\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/expenses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"expenses"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create expenses",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"reference\": \"Monthly Subscription\",\r\n  \"amount\": 100.00,\r\n  \"payment_mode\": \"Cash\",\r\n  \"expense_date\": \"2024-10-29\",\r\n  \"payment_status\": \"Paid\",\r\n  \"description\": \"Payment for monthly subscription service.\",\r\n  \"attachment\": null\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/expenses",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"expenses"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-lh9Qd3PP4NPbzeVa4tUzOjNs7yo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:23:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Expense created successfully.\",\n    \"expenseId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "expenses by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/expenses/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"expenses",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "expenses by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/expenses/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"expenses",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "361"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"169-0UUkR1/mauDo9V3Xs89lC13fI2Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:24:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Expense retrieved successfully.\",\n    \"data\": {\n        \"expense_id\": 1,\n        \"reference\": \"Monthly Subscription\",\n        \"amount\": 100,\n        \"payment_mode\": \"Cash\",\n        \"expense_date\": \"2024-10-28T18:30:00.000Z\",\n        \"payment_status\": \"Paid\",\n        \"description\": \"Payment for monthly subscription service.\",\n        \"attachment\": null,\n        \"created_at\": \"2024-10-29T09:23:49.000Z\",\n        \"updated_at\": \"2024-10-29T09:23:49.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update expenses",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"reference\": \"Monthly Subscription Updated\",\r\n  \"amount\": 120.00,\r\n  \"payment_mode\": \"Credit Card\",\r\n  \"expense_date\": \"2024-10-29\",\r\n  \"payment_status\": \"Pending\",\r\n  \"description\": \"Updated payment for monthly subscription service.\",\r\n  \"attachment\": null\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/expenses/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"expenses",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update expenses",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"reference\": \"Monthly Subscription Updated\",\r\n  \"amount\": 120.00,\r\n  \"payment_mode\": \"Credit Card\",\r\n  \"expense_date\": \"2024-10-29\",\r\n  \"payment_status\": \"Pending\",\r\n  \"description\": \"Updated payment for monthly subscription service.\",\r\n  \"attachment\": null\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/expenses/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"expenses",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "285"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11d-Yhak04zf+qvOhRQnN/vL2S2SW/0\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:24:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Expense updated successfully.\",\n    \"data\": {\n        \"id\": \"1\",\n        \"reference\": \"Monthly Subscription Updated\",\n        \"amount\": 120,\n        \"payment_mode\": \"Credit Card\",\n        \"expense_date\": \"2024-10-29\",\n        \"payment_status\": \"Pending\",\n        \"description\": \"Updated payment for monthly subscription service.\",\n        \"attachment\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete expenses",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/expenses/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"expenses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "inventory",
+			"item": [
+				{
+					"name": "get all inventory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/inventory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"inventory"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all inventory",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/inventory",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"inventory"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3f-+tPquPBq4s+HpHnpnR7xWg9lDF8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:33:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Inventory items retrieved successfully.\",\n    \"data\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "create inventory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_name\": \"Item A\",\r\n    \"item_code\": \"ITEM001\",\r\n    \"units\": \"pcs\",\r\n    \"quantity\": 100,\r\n    \"selling_price\": 20.50,\r\n    \"purchase_price\": 15.00,\r\n    \"status\": \"In Stock\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/inventory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"inventory"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create inventory",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"item_name\": \"Item A\",\r\n    \"item_code\": \"ITEM001\",\r\n    \"units\": \"pcs\",\r\n    \"quantity\": 100,\r\n    \"selling_price\": 20.50,\r\n    \"purchase_price\": 15.00,\r\n    \"status\": \"In Stock\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/inventory",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"inventory"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"42-bu5SubnwWGr8wuuQeFJSiRLA0FE\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:33:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Inventory item created successfully.\",\n    \"inventoryId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "inventory by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/inventory/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"inventory",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "inventory by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/inventory/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"inventory",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "291"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"123-YiWQbc0ZL+TodZGchGpwL3fMGQU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:34:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Inventory item retrieved successfully.\",\n    \"data\": {\n        \"inventory_id\": 1,\n        \"item_name\": \"Item A\",\n        \"item_code\": \"ITEM001\",\n        \"units\": \"pcs\",\n        \"quantity\": 100,\n        \"selling_price\": 20.5,\n        \"purchase_price\": 15,\n        \"status\": \"In Stock\",\n        \"created_at\": \"2024-10-29T09:33:43.000Z\",\n        \"updated_at\": \"2024-10-29T09:33:43.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update inventory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_name\": \"Updated Item A\",\r\n    \"item_code\": \"ITEM001\",\r\n    \"units\": \"pcs\",\r\n    \"quantity\": 80,\r\n    \"selling_price\": 22.00,\r\n    \"purchase_price\": 16.00,\r\n    \"status\": \"In Stock\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/inventory/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"inventory",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update inventory",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"item_name\": \"Updated Item A\",\r\n    \"item_code\": \"ITEM001\",\r\n    \"units\": \"pcs\",\r\n    \"quantity\": 80,\r\n    \"selling_price\": 22.00,\r\n    \"purchase_price\": 16.00,\r\n    \"status\": \"In Stock\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/inventory/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"inventory",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "50"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"32-7V4FW52yD9CNEKrhYT0UL2/m3G0\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:34:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Inventory item updated successfully.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete inventory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/inventory/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"inventory",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "invoices",
+			"item": [
+				{
+					"name": "Get all invoices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/invoices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"invoices"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all invoices",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/invoices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"invoices"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "56"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"38-1h+Qdlz6tSsR29U5AQ3k+uetWWQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:43:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invoices retrieved successfully.\",\n    \"data\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Create invoices",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"invoice_number\": \"INV-001\",\r\n    \"customer_id\": 14,\r\n    \"invoice_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-29\",\r\n    \"reference_number\": \"REF-001\",\r\n    \"status\": \"Pending\",\r\n    \"recurring\": 0,\r\n    \"recurring_cycle\": null,\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 100.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"Thank you for your business.\",\r\n    \"terms_conditions\": \"Payment is due within 30 days.\",\r\n    \"total_amount\": 1000.00\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/invoices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"invoices"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create invoices",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"invoice_number\": \"INV-001\",\r\n    \"customer_id\": 14,\r\n    \"invoice_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-29\",\r\n    \"reference_number\": \"REF-001\",\r\n    \"status\": \"Pending\",\r\n    \"recurring\": 0,\r\n    \"recurring_cycle\": null,\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 100.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"Thank you for your business.\",\r\n    \"terms_conditions\": \"Payment is due within 30 days.\",\r\n    \"total_amount\": 1000.00\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/invoices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"invoices"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-TrWCcnHU7KK+vEZxoQX+dikqGpY\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:44:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invoice created successfully.\",\n    \"invoiceId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "invoices by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/invoices/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"invoices",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "invoices by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/invoices/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"invoices",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "549"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"225-0qugSOu4z5lexOidbneQvEetORg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:45:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invoice retrieved successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"invoice_number\": \"INV-001\",\n        \"customer_id\": 14,\n        \"invoice_date\": \"2024-10-28T18:30:00.000Z\",\n        \"due_date\": \"2024-11-28T18:30:00.000Z\",\n        \"reference_number\": \"REF-001\",\n        \"status\": \"Pending\",\n        \"recurring\": 0,\n        \"recurring_cycle\": null,\n        \"product_id\": 1,\n        \"quantity\": 10,\n        \"unit\": \"pcs\",\n        \"rate\": 100,\n        \"bank_id\": 1,\n        \"notes\": \"Thank you for your business.\",\n        \"terms_conditions\": \"Payment is due within 30 days.\",\n        \"total_amount\": 1000,\n        \"signature_image\": null,\n        \"created_at\": \"2024-10-29T09:44:23.000Z\",\n        \"updated_at\": \"2024-10-29T09:44:23.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update invoice",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"invoice_number\": \"INV-001-UPDATED\",\r\n    \"customer_id\": 14,\r\n    \"invoice_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-29\",\r\n    \"reference_number\": \"REF-001-UPDATED\",\r\n    \"status\": \"Paid\",\r\n    \"recurring\": 1,\r\n    \"recurring_cycle\": 1,\r\n    \"product_id\": 1,\r\n    \"quantity\": 15,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 90.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"Updated invoice details.\",\r\n    \"terms_conditions\": \"Payment is due within 15 days.\",\r\n    \"total_amount\": 1350.00\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/invoices/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"invoices",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update invoice",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"invoice_number\": \"INV-001-UPDATED\",\r\n    \"customer_id\": 14,\r\n    \"invoice_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-29\",\r\n    \"reference_number\": \"REF-001-UPDATED\",\r\n    \"status\": \"Paid\",\r\n    \"recurring\": 1,\r\n    \"recurring_cycle\": 1,\r\n    \"product_id\": 1,\r\n    \"quantity\": 15,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 90.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"Updated invoice details.\",\r\n    \"terms_conditions\": \"Payment is due within 15 days.\",\r\n    \"total_amount\": 1350.00\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/invoices/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"invoices",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b-fJDgZYa1VrSTQvk4rStk93mfhxw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 09:45:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invoice updated successfully.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete invoice",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/invoices/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"invoices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "purchase",
+			"item": [
+				{
+					"name": "Get all Purchases ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/purchases",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all Purchases",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"purchases"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-p+PtnEKVShuQGveiLJEwaLeKYIw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 10:44:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Purchases retrieved successfully.\",\n    \"data\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "create purchase",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"purchase_id\": \"PUR-1001\",\r\n    \"vendor_id\": 1,\r\n    \"purchase_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-05\",\r\n    \"reference_no\": \"REF-123456\",\r\n    \"supplier_invoice_serial_no\": \"INV-1001\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"First purchase order\",\r\n    \"terms_conditions\": \"Net 30 days\",\r\n    \"total_amount\": 500.00\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/purchases",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create purchase",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"purchase_id\": \"PUR-1001\",\r\n    \"vendor_id\": 1,\r\n    \"purchase_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-05\",\r\n    \"reference_no\": \"REF-123456\",\r\n    \"supplier_invoice_serial_no\": \"INV-1001\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"First purchase order\",\r\n    \"terms_conditions\": \"Net 30 days\",\r\n    \"total_amount\": 500.00\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"purchases"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-/QRDrwkX4883DgqF11CnmtKdJ2c\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 10:53:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Purchase created successfully.\",\n    \"purchaseId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "purchase by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/purchases/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "purchase by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/purchases/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"purchases",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "500"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1f4-3qwQ+b2b5fJFHI3t/yf7c6ZTgO8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 10:54:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Purchase retrieved successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"purchase_id\": \"PUR-1001\",\n        \"vendor_id\": 1,\n        \"purchase_date\": \"2024-10-28T18:30:00.000Z\",\n        \"due_date\": \"2024-11-04T18:30:00.000Z\",\n        \"reference_no\": \"REF-123456\",\n        \"supplier_invoice_serial_no\": \"INV-1001\",\n        \"product_id\": 1,\n        \"quantity\": 10,\n        \"unit\": \"pcs\",\n        \"rate\": 50,\n        \"bank_id\": 1,\n        \"notes\": \"First purchase order\",\n        \"terms_conditions\": \"Net 30 days\",\n        \"total_amount\": 500,\n        \"signature_image\": null,\n        \"created_at\": \"2024-10-29T10:53:42.000Z\",\n        \"updated_at\": \"2024-10-29T10:53:42.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update purchase",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"purchase_id\": \"PUR-1001\",\r\n    \"vendor_id\": 1,\r\n    \"purchase_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-05\",\r\n    \"reference_no\": \"REF-123456\",\r\n    \"supplier_invoice_serial_no\": \"INV-1001\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 15,  // Updated quantity\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"Updated purchase order\",\r\n    \"terms_conditions\": \"Net 30 days\",\r\n    \"total_amount\": 750.00  // Updated total amount\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/purchases/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update purchase",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"purchase_id\": \"PUR-1001\",\r\n    \"vendor_id\": 1,\r\n    \"purchase_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-05\",\r\n    \"reference_no\": \"REF-123456\",\r\n    \"supplier_invoice_serial_no\": \"INV-1001\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 15,  // Updated quantity\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"Updated purchase order\",\r\n    \"terms_conditions\": \"Net 30 days\",\r\n    \"total_amount\": 750.00  // Updated total amount\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/purchases/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"purchases",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "44"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2c-Sn0BaYhIELLbz+z+QpSyyNB0J5U\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 10:55:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Purchase updated successfully.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete purchase",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/purchases/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "return-debit-notes-purchases",
+			"item": [
+				{
+					"name": "create return-debit-notes-purchases",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"purchase_id\": \"PUR-1001\",\r\n    \"vendor_id\": 1,\r\n    \"purchase_order_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-05\",\r\n    \"reference_no\": \"REF-123456\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"First return debit note\",\r\n    \"terms_conditions\": \"Net 30 days\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": null\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/return-debit-notes-purchases",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"return-debit-notes-purchases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all return-debit-notes-purchases",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/return-debit-notes-purchases",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"return-debit-notes-purchases"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all return-debit-notes-purchases",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/return-debit-notes-purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"return-debit-notes-purchases"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "480"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e0-c2FYBi+A5O9Ic7OD0lM+ZRW1YGs\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 11:57:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Return debit notes retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"purchase_id\": \"PUR-1001\",\n            \"vendor_id\": 1,\n            \"purchase_order_date\": \"2024-10-28T18:30:00.000Z\",\n            \"due_date\": \"2024-11-04T18:30:00.000Z\",\n            \"reference_no\": \"REF-123456\",\n            \"product_id\": 1,\n            \"quantity\": 10,\n            \"unit\": \"pcs\",\n            \"rate\": 50,\n            \"bank_id\": 1,\n            \"notes\": \"First return debit note\",\n            \"terms_conditions\": \"Net 30 days\",\n            \"total_amount\": 500,\n            \"signature_image\": null,\n            \"created_at\": \"2024-10-29T11:29:06.000Z\",\n            \"updated_at\": \"2024-10-29T11:29:06.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get return-debit-notes-purchases by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/return-debit-notes-purchases/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"return-debit-notes-purchases",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get return-debit-notes-purchases by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/return-debit-notes-purchases/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"return-debit-notes-purchases",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "477"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1dd-s20pkg8ImpfGwnN5a7SwbrzEfnA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 11:59:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Return debit note retrieved successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"purchase_id\": \"PUR-1001\",\n        \"vendor_id\": 1,\n        \"purchase_order_date\": \"2024-10-28T18:30:00.000Z\",\n        \"due_date\": \"2024-11-04T18:30:00.000Z\",\n        \"reference_no\": \"REF-123456\",\n        \"product_id\": 1,\n        \"quantity\": 10,\n        \"unit\": \"pcs\",\n        \"rate\": 50,\n        \"bank_id\": 1,\n        \"notes\": \"First return debit note\",\n        \"terms_conditions\": \"Net 30 days\",\n        \"total_amount\": 500,\n        \"signature_image\": null,\n        \"created_at\": \"2024-10-29T11:29:06.000Z\",\n        \"updated_at\": \"2024-10-29T11:59:25.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete return-debit-notes-purchases",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/return-debit-notes-purchases/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"return-debit-notes-purchases",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update return-debit-notes-purchases",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"purchase_id\": \"PUR-1001\",\r\n    \"vendor_id\": 1,\r\n    \"purchase_order_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-05\",\r\n    \"reference_no\": \"REF-123456\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"First return debit note\",\r\n    \"terms_conditions\": \"Net 30 days\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": null\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/return-debit-notes-purchases/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"return-debit-notes-purchases",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update return-debit-notes-purchases",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"purchase_id\": \"PUR-1001\",\r\n    \"vendor_id\": 1,\r\n    \"purchase_order_date\": \"2024-10-29\",\r\n    \"due_date\": \"2024-11-05\",\r\n    \"reference_no\": \"REF-123456\",\r\n    \"product_id\": 1,\r\n    \"quantity\": 10,\r\n    \"unit\": \"pcs\",\r\n    \"rate\": 50.00,\r\n    \"bank_id\": 1,\r\n    \"notes\": \"First return debit note\",\r\n    \"terms_conditions\": \"Net 30 days\",\r\n    \"total_amount\": 500.00,\r\n    \"signature_image\": null\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/return-debit-notes-purchases/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"return-debit-notes-purchases",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "369"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"171-Oa7mRk4xbOjAUi9eDOFw2zw0QGY\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Oct 2024 11:59:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Return debit note updated successfully\",\n    \"data\": {\n        \"id\": \"1\",\n        \"purchase_id\": \"PUR-1001\",\n        \"vendor_id\": 1,\n        \"purchase_order_date\": \"2024-10-29\",\n        \"due_date\": \"2024-11-05\",\n        \"reference_no\": \"REF-123456\",\n        \"product_id\": 1,\n        \"quantity\": 10,\n        \"unit\": \"pcs\",\n        \"rate\": 50,\n        \"bank_id\": 1,\n        \"notes\": \"First return debit note\",\n        \"terms_conditions\": \"Net 30 days\",\n        \"total_amount\": 500,\n        \"signature_image\": null\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
