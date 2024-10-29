@@ -10,18 +10,18 @@ const {
 const router = express.Router();
 
 // Create a new category
-router.post('/categories', createCategoryHandler);
+router.post('/', createCategoryHandler);
 
 // Get a specific category by ID
-router.get('/categories/:id', getCategoryHandler);
+router.get('/:id', getCategoryHandler);
 
 // Get all categories
-router.get('/categories', getCategoriesHandler);
+router.get('/', getCategoriesHandler);
 
 // Update a category by ID
-router.put('/categories/:id', updateCategoryHandler);
+router.put('/:id', updateCategoryHandler);
 
 // Delete a category by ID
-router.delete('/categories/:id', deleteCategoryHandler);
+router.delete('/:id', deleteCategoryHandler);
 
 module.exports = router;
