@@ -1,5 +1,5 @@
 // services/messageService.js
-const db = require('../db');
+const db = require('../config/database');
 
 exports.sendMessage = (senderId, recipientId, messageContent) => {
     return new Promise((resolve, reject) => {

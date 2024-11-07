@@ -18,7 +18,20 @@ const createInvoice = async (invoiceData) => {
 // Get all invoices
 const getAllInvoices = async () => {
     return new Promise((resolve, reject) => {
-        dbconnection.query('SELECT * FROM invoices', (error, results) => {
+        const query = `
+             SELECT 
+                invoices.*, 
+                category.category_name,
+                customers.name AS customer_name,
+                customers.phone AS customer_phone,
+                customers.profile_photo AS customer_profile_photo
+            FROM invoices
+            JOIN products ON invoices.product_id = products.product_id
+            JOIN category ON products.category_id = category.category_id
+            JOIN customers ON invoices.customer_id = customers.customer_id
+        `;
+
+        dbconnection.query(query, (error, results) => {
             if (error) return reject(error);
             resolve(results);
         });

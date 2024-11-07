@@ -51,11 +51,11 @@ const getCustomerService = async (id) => {
     return rows[0];
 };
 
-// Get all customers
+// Get all customers ordered by created_at descending
 const getCustomersService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM customers',
+            'SELECT * FROM customers ORDER BY created_at DESC', // Sorting by created_at in descending order
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

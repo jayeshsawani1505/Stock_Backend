@@ -35,7 +35,9 @@ const getProductService = async (id) => {
 const getProductsService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM products',
+            `SELECT products.*, category.category_name
+             FROM products
+             JOIN category ON products.category_id = category.category_id`,
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
