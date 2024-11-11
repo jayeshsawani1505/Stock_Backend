@@ -35,7 +35,7 @@ const getPaymentService = async (id) => {
 const getPaymentsService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM payments',
+            'SELECT * FROM payments ORDER BY created_at DESC',
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

@@ -35,7 +35,7 @@ const getCategoryService = async (id) => {
 const getCategoriesService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM category',
+            'SELECT * FROM category ORDER BY created_at DESC',
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

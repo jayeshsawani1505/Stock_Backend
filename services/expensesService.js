@@ -35,7 +35,7 @@ const getExpenseService = async (id) => {
 const getExpensesService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM expenses',
+            'SELECT * FROM expenses ORDER BY created_at DESC',
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

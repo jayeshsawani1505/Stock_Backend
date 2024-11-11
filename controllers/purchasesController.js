@@ -1,4 +1,5 @@
 const purchasesService = require('../services/purchasesService');
+const xlsx = require('xlsx');
 
 // Create a new purchase
 const createPurchase = async (req, res) => {
@@ -62,10 +63,56 @@ const deletePurchase = async (req, res) => {
     }
 };
 
+const uploadPurchasesExcel = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+
+        // Read the uploaded Excel file
+        const filePath = req.file.path;
+        const workbook = xlsx.readFile(filePath);
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+
+        // Convert the Excel sheet to JSON format
+        const purchases = xlsx.utils.sheet_to_json(worksheet);
+
+        // Loop through the JSON data and insert each purchase record into the database
+        for (const purchase of purchases) {
+            const purchaseData = {
+                vendor_id: purchase.vendor_id,
+                purchase_date: purchase.purchase_date,
+                due_date: purchase.due_date,
+                reference_no: purchase.reference_no,
+                supplier_invoice_serial_no: purchase.supplier_invoice_serial_no,
+                product_id: purchase.product_id,
+                quantity: purchase.quantity,
+                rate: purchase.rate,
+                notes: purchase.notes || '',
+                terms_conditions: purchase.terms_conditions || '',
+                total_amount: purchase.total_amount,
+                payment_mode: purchase.payment_mode,
+                status: purchase.status || 'pending'
+            };
+
+            // Insert each purchase record using the service function
+            await purchasesService.createPurchaseExcel(purchaseData);
+        }
+
+        res.status(201).json({ message: 'Purchases uploaded and created successfully' });
+    } catch (error) {
+        console.error('Error uploading purchases:', error);
+        res.status(500).json({ message: 'Failed to upload purchases: ' + error.message });
+    }
+};
+
+
 module.exports = {
     createPurchase,
     getAllPurchases,
     getPurchaseById,
     updatePurchase,
-    deletePurchase
+    deletePurchase,
+    uploadPurchasesExcel
 };

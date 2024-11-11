@@ -3,21 +3,21 @@ const dbconnection = require('../config/database');
 // Create a new credit note invoice
 const createCreditNoteInvoiceService = async (creditNoteData) => {
     const {
-        customer_id, creditNote_date, due_date, reference_number, product_name,
-        product_id, quantity, unit, rate, bank_id, notes, terms_conditions,
+        creditNote_date, due_date, reference_number,
+        product_id, quantity, unit, rate, notes, terms_conditions,
         total_amount, signature_image
     } = creditNoteData;
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO creditnoteinvoices 
-            (customer_id, creditNote_date, due_date, reference_number, product_name, 
-            product_id, quantity, unit, rate, bank_id, notes, terms_conditions, 
+            ( creditNote_date, due_date, reference_number, 
+            product_id, quantity, unit, rate, notes, terms_conditions, 
             total_amount, signature_image) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
-                customer_id, creditNote_date, due_date, reference_number, product_name,
-                product_id, quantity, unit, rate, bank_id, notes, terms_conditions,
+                creditNote_date, due_date, reference_number,
+                product_id, quantity, unit, rate, notes, terms_conditions,
                 total_amount, signature_image
             ],
             (error, results) => {
@@ -48,7 +48,7 @@ const getCreditNoteInvoiceService = async (id) => {
 const getCreditNoteInvoicesService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM creditnoteinvoices',
+            'SELECT * FROM creditnoteinvoices ORDER BY created_at DESC',
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -61,8 +61,8 @@ const getCreditNoteInvoicesService = async () => {
 // Update a credit note invoice by ID
 const updateCreditNoteInvoiceService = async (id, creditNoteData) => {
     const {
-        customer_id, creditNote_date, due_date, reference_number, product_name,
-        product_id, quantity, unit, rate, bank_id, notes, terms_conditions,
+        customer_id, creditNote_date, due_date, reference_number,
+        product_id, quantity, unit, rate, notes, terms_conditions,
         total_amount, signature_image
     } = creditNoteData;
 
@@ -70,13 +70,13 @@ const updateCreditNoteInvoiceService = async (id, creditNoteData) => {
         dbconnection.query(
             `UPDATE creditnoteinvoices SET 
             customer_id = ?, creditNote_date = ?, due_date = ?, reference_number = ?, 
-            product_name = ?, product_id = ?, quantity = ?, unit = ?, rate = ?, 
-            bank_id = ?, notes = ?, terms_conditions = ?, total_amount = ?, 
+            product_id = ?, quantity = ?, unit = ?, rate = ?, 
+            notes = ?, terms_conditions = ?, total_amount = ?, 
             signature_image = ?, updated_at = CURRENT_TIMESTAMP 
             WHERE id = ?`,
             [
-                customer_id, creditNote_date, due_date, reference_number, product_name,
-                product_id, quantity, unit, rate, bank_id, notes, terms_conditions,
+                customer_id, creditNote_date, due_date, reference_number,
+                product_id, quantity, unit, rate, notes, terms_conditions,
                 total_amount, signature_image, id
             ],
             (error, results) => {

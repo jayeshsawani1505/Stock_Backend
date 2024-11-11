@@ -24,7 +24,7 @@ const createDeliveryChallanService = async (challanData) => {
 // Get all delivery challans
 const getDeliveryChallansService = async () => {
     const rows = await new Promise((resolve, reject) => {
-        dbconnection.query('SELECT * FROM delivery_challans', (error, results) => {
+        dbconnection.query('SELECT * FROM delivery_challans ORDER BY created_at DESC', (error, results) => {
             if (error) reject(error);
             else resolve(results);
         });

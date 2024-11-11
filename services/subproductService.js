@@ -35,7 +35,7 @@ const getSubproductService = async (id) => {
 const getSubproductsService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM subproducts',
+            'SELECT * FROM subproducts ORDER BY created_at DESC',
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

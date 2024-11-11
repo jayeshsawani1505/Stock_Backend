@@ -5,6 +5,7 @@ const {
     updateCategoryService,
     deleteCategoryService
 } = require('../services/categoryService');
+const xlsx = require('xlsx');
 
 // Create new category
 const createCategoryHandler = async (req, res) => {
@@ -68,11 +69,36 @@ const deleteCategoryHandler = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+// Upload Excel and process data
+const uploadExcelHandler = async (req, res) => {
+    try {
+        const filePath = req.file.path; // File uploaded by multer
+        const workbook = xlsx.readFile(filePath);
+        const sheetName = workbook.SheetNames[0]; // Get the first sheet
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = xlsx.utils.sheet_to_json(worksheet); // Convert to JSON
 
+        // Loop through the Excel data and insert each category
+        for (const row of jsonData) {
+            const { category_name, description } = row;
+
+            if (category_name && description) {
+                // Call the service to create each category
+                await createCategoryService({ category_name, description });
+            }
+        }
+
+        res.status(200).json({ message: 'Categories uploaded successfully' });
+    } catch (error) {
+        console.error('Error in uploadExcelHandler:', error);
+        res.status(500).json({ error: 'Failed to process the Excel file' });
+    }
+};
 module.exports = {
     createCategoryHandler,
     getCategoryHandler,
     getCategoriesHandler,
     updateCategoryHandler,
-    deleteCategoryHandler
+    deleteCategoryHandler,
+    uploadExcelHandler
 };

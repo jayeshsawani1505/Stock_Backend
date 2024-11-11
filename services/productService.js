@@ -2,11 +2,11 @@ const dbconnection = require('../config/database');
 
 // Create a new product
 const createProductService = async (productData) => {
-    const { item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, barcode_code, discount_type, tax, description } = productData;
+    const { item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description } = productData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO products (item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, barcode_code, discount_type, tax, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, barcode_code, discount_type, tax, description],
+            'INSERT INTO products (item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -37,7 +37,7 @@ const getProductsService = async () => {
         dbconnection.query(
             `SELECT products.*, category.category_name
              FROM products
-             JOIN category ON products.category_id = category.category_id`,
+             JOIN category ON products.category_id = category.category_id ORDER BY created_at DESC`,
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

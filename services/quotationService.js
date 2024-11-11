@@ -52,7 +52,7 @@ const getQuotationService = async (id) => {
 const getQuotationsService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM quotations',
+            'SELECT * FROM quotations ORDER BY created_at DESC',
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

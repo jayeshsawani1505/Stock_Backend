@@ -1,4 +1,5 @@
 const creditNoteInvoiceService = require('../services/creditNoteInvoiceService');
+const xlsx = require('xlsx');
 
 // Create a new credit note invoice
 const createCreditNoteInvoice = async (req, res) => {
@@ -58,10 +59,37 @@ const deleteCreditNoteInvoice = async (req, res) => {
     }
 };
 
+// Upload and process Excel file to create multiple credit note invoices
+const uploadCreditNoteInvoicesExcel = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+
+        // Read the Excel file
+        const workbook = xlsx.readFile(req.file.path);
+        const sheetName = workbook.SheetNames[0]; // Assuming data is in the first sheet
+        const sheet = workbook.Sheets[sheetName];
+
+        // Convert the sheet to JSON
+        const creditNotes = xlsx.utils.sheet_to_json(sheet);
+
+        // Loop through each entry and create a credit note invoice
+        for (const creditNoteData of creditNotes) {
+            await creditNoteInvoiceService.createCreditNoteInvoiceService(creditNoteData);
+        }
+
+        res.status(201).json({ message: 'Credit note invoices uploaded and created successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to upload credit note invoices: ' + error.message });
+    }
+};
+
 module.exports = {
     createCreditNoteInvoice,
     getCreditNoteInvoiceById,
     getAllCreditNoteInvoices,
     updateCreditNoteInvoice,
-    deleteCreditNoteInvoice
+    deleteCreditNoteInvoice,
+    uploadCreditNoteInvoicesExcel
 };

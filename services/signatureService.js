@@ -38,7 +38,7 @@ const getSignatureService = async (id) => {
 const getSignaturesService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM signature',
+            'SELECT * FROM signature ORDER BY created_at DESC',
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

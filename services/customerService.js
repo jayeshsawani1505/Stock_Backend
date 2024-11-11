@@ -65,6 +65,21 @@ const getCustomersService = async () => {
     return rows;
 };
 
+// Get total customer count
+const getTotalCustomerCount = async () => {
+    const count = await new Promise((resolve, reject) => {
+        dbconnection.query(
+            'SELECT COUNT(*) AS total_customers FROM customers', // Get total count of customers
+            (error, results) => {
+                if (error) reject(error);
+                else resolve(results[0].total_customers); // Resolving the total count from the first row
+            }
+        );
+    });
+
+    return count;
+};
+
 // Update a customer by ID
 const updateCustomerService = async (id, customerData) => {
     const {
@@ -119,6 +134,7 @@ const deleteCustomerService = async (id) => {
 module.exports = {
     createCustomerService,
     getCustomerService,
+    getTotalCustomerCount,
     getCustomersService,
     updateCustomerService,
     deleteCustomerService

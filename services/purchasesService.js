@@ -2,14 +2,14 @@ const dbconnection = require('../config/database');
 
 // Create a new purchase
 const createPurchase = async (purchaseData) => {
-    const { purchase_id, vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount } = purchaseData;
+    const { vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status } = purchaseData;
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            `INSERT INTO purchases (purchase_id, vendor_id, purchase_date,
+            `INSERT INTO purchases (vendor_id, purchase_date,
              due_date, reference_no, supplier_invoice_serial_no,
-             product_id, quantity, unit, rate, bank_id, notes, 
-             terms_conditions, total_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [purchase_id, vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount],
+             product_id, quantity, rate, notes, 
+             terms_conditions, total_amount, payment_mode, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status],
             (error, results) => {
                 if (error) return reject(error);
                 resolve(results);
@@ -17,15 +17,58 @@ const createPurchase = async (purchaseData) => {
         );
     });
 };
+const createPurchaseExcel = async (purchases) => {
+    const sql = `
+        INSERT INTO purchases 
+        (vendor_id, purchase_date, due_date, reference_no, 
+        supplier_invoice_serial_no, product_id, quantity, rate, 
+        notes, terms_conditions, total_amount, payment_mode, status) 
+        VALUES ?
+    `;
 
-// Get all purchases
-const getAllPurchases = async () => {
+    const values = purchases.map(purchase => [
+        purchase.vendor_id,
+        purchase.purchase_date,
+        purchase.due_date,
+        purchase.reference_no,
+        purchase.supplier_invoice_serial_no,
+        purchase.product_id,
+        purchase.quantity,
+        purchase.rate,
+        purchase.notes,
+        purchase.terms_conditions,
+        purchase.total_amount,
+        purchase.payment_mode,
+        purchase.status
+    ]);
+
     return new Promise((resolve, reject) => {
-        dbconnection.query('SELECT * FROM purchases', (error, results) => {
+        dbconnection.query(sql, [values], (error, results) => {
             if (error) return reject(error);
             resolve(results);
         });
     });
+};
+
+// Get all purchases
+const getAllPurchases = async () => {
+    try {
+        const results = await new Promise((resolve, reject) => {
+            dbconnection.query(`
+                SELECT purchases.*, vendors.vendor_name 
+                FROM purchases 
+                JOIN vendors ON purchases.vendor_id = vendors.vendor_id ORDER BY created_at DESC
+            `, (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(results);
+            });
+        });
+        return results;
+    } catch (error) {
+        throw error;
+    }
 };
 
 // Get a purchase by ID
@@ -40,11 +83,11 @@ const getPurchaseById = async (id) => {
 
 // Update a purchase by ID
 const updatePurchase = async (id, purchaseData) => {
-    const { purchase_id, vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount } = purchaseData;
+    const { vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status } = purchaseData;
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE purchases SET purchase_id = ?, vendor_id = ?, purchase_date = ?, due_date = ?, reference_no = ?, supplier_invoice_serial_no = ?, product_id = ?, quantity = ?, unit = ?, rate = ?, bank_id = ?, notes = ?, terms_conditions = ?, total_amount = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [purchase_id, vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, id],
+            'UPDATE purchases SET vendor_id = ?, purchase_date = ?, due_date = ?, reference_no = ?, supplier_invoice_serial_no = ?, product_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, payment_mode = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status, id],
             (error, results) => {
                 if (error) return reject(error);
                 resolve(results);
@@ -65,6 +108,7 @@ const deletePurchase = async (id) => {
 
 module.exports = {
     createPurchase,
+    createPurchaseExcel,
     getAllPurchases,
     getPurchaseById,
     updatePurchase,

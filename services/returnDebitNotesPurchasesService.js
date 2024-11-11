@@ -3,26 +3,23 @@ const dbconnection = require('../config/database');
 // Create a new return debit note
 const create = async (returnDebitNoteData) => {
     const {
-        purchase_id,
         vendor_id,
         purchase_order_date,
         due_date,
         reference_no,
         product_id,
         quantity,
-        unit,
         rate,
-        bank_id,
         notes,
         terms_conditions,
         total_amount,
-        signature_image
+        signature_image, payment_mode, status
     } = returnDebitNoteData;
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO return_debit_notes_purchases (purchase_id, vendor_id, purchase_order_date, due_date, reference_no, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, signature_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [purchase_id, vendor_id, purchase_order_date, due_date, reference_no, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, signature_image],
+            'INSERT INTO return_debit_notes_purchases ( vendor_id, purchase_order_date, due_date, reference_no, product_id, quantity,  rate, notes, terms_conditions, total_amount, signature_image, payment_mode,status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [vendor_id, purchase_order_date, due_date, reference_no, product_id, quantity, rate, notes, terms_conditions, total_amount, signature_image, payment_mode, status],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -51,7 +48,9 @@ const getById = async (id) => {
 const getAll = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM return_debit_notes_purchases',
+            `SELECT return_debit_notes_purchases.*, vendors.vendor_name 
+            FROM return_debit_notes_purchases 
+            JOIN vendors ON return_debit_notes_purchases.vendor_id = vendors.vendor_id ORDER BY created_at DESC`,
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -64,26 +63,25 @@ const getAll = async () => {
 // Update a return debit note by ID
 const update = async (id, returnDebitNoteData) => {
     const {
-        purchase_id,
         vendor_id,
         purchase_order_date,
         due_date,
         reference_no,
         product_id,
         quantity,
-        unit,
         rate,
-        bank_id,
         notes,
         terms_conditions,
         total_amount,
-        signature_image
+        signature_image,
+        payment_mode,
+        status
     } = returnDebitNoteData;
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE return_debit_notes_purchases SET purchase_id = ?, vendor_id = ?, purchase_order_date = ?, due_date = ?, reference_no = ?, product_id = ?, quantity = ?, unit = ?, rate = ?, bank_id = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_image = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [purchase_id, vendor_id, purchase_order_date, due_date, reference_no, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, signature_image, id],
+            'UPDATE return_debit_notes_purchases SET vendor_id = ?, purchase_order_date = ?, due_date = ?, reference_no = ?, product_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_image = ?, payment_mode = ?, status =  ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [vendor_id, purchase_order_date, due_date, reference_no, product_id, quantity, rate, notes, terms_conditions, total_amount, signature_image, payment_mode, status, id],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

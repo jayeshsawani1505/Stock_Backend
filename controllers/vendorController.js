@@ -1,4 +1,5 @@
 const vendorService = require('../services/vendorService');
+const xlsx = require('xlsx');
 
 const createVendor = async (req, res) => {
     try {
@@ -65,8 +66,33 @@ const deleteVendor = async (req, res) => {
         res.status(500).json({ error: 'Failed to delete vendor: ' + error.message });
     }
 };
+const uploadExcel = async (req, res) => {
+    try {
+        // Check if a file is uploaded
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
 
+        // Read the uploaded Excel file
+        const workbook = xlsx.readFile(req.file.path);
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+
+        // Convert the sheet data to JSON
+        const vendors = xlsx.utils.sheet_to_json(sheet);
+
+        // Loop through each vendor data row and insert it
+        for (const vendorData of vendors) {
+            await vendorService.createVendorService(vendorData);
+        }
+
+        res.status(201).json({ message: 'Vendors uploaded and added successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to upload vendors: ' + error.message });
+    }
+};
 module.exports = {
+    uploadExcel,
     createVendor,
     getVendorById,
     getAllVendors,

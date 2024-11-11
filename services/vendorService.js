@@ -35,7 +35,7 @@ const getVendorService = async (id) => {
 const getVendorsService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM vendors',
+            'SELECT * FROM vendors ORDER BY created_at DESC',
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

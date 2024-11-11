@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const returnDebitNotesPurchasesController = require('../controllers/returnDebitNotesPurchasesController');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // temporary storage for uploaded files
 
 // Create a new return debit note
 router.post('/', returnDebitNotesPurchasesController.createReturnDebitNote);
@@ -16,5 +18,8 @@ router.put('/:id', returnDebitNotesPurchasesController.updateReturnDebitNote);
 
 // Delete a return debit note
 router.delete('/:id', returnDebitNotesPurchasesController.deleteReturnDebitNote);
+
+// API to upload and process Excel file for products
+router.post('/upload-excel', upload.single('file'), returnDebitNotesPurchasesController.uploadExcel);
 
 module.exports = router;
