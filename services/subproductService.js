@@ -2,11 +2,11 @@ const dbconnection = require('../config/database');
 
 // Create a new subproduct
 const createSubproductService = async (subproductData) => {
-    const { product_id, subproduct_name, subproduct_code, quantity, unit_price, units, description } = subproductData;
+    const { product_id, subproduct_name, subproduct_code, quantity, selling_price, purchase_price, units, description } = subproductData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO subproducts (product_id, subproduct_name, subproduct_code, quantity, unit_price, units, description) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [product_id, subproduct_name, subproduct_code, quantity, unit_price, units, description],
+            'INSERT INTO subproducts (product_id, subproduct_name, subproduct_code, quantity, selling_price,purchase_price, units, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [product_id, subproduct_name, subproduct_code, quantity, selling_price, purchase_price, units, description],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -35,7 +35,30 @@ const getSubproductService = async (id) => {
 const getSubproductsService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM subproducts ORDER BY created_at DESC',
+            ` SELECT subproducts.*, products.product_name
+            FROM subproducts
+            JOIN products ON subproducts.product_id = products.product_id
+            ORDER BY subproducts.created_at DESC`,
+            (error, results) => {
+                if (error) reject(error);
+                else resolve(results);
+            }
+        );
+    });
+    return rows;
+};
+
+const getSubproductsByProductId = async (product_id) => {
+    const rows = await new Promise((resolve, reject) => {
+        dbconnection.query(
+            `
+            SELECT subproducts.*, products.product_name
+            FROM subproducts
+            JOIN products ON subproducts.product_id = products.product_id
+            WHERE subproducts.product_id = ?
+            ORDER BY subproducts.created_at DESC
+            `,
+            [product_id], // Pass product_id as a parameter to prevent SQL injection
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -47,11 +70,11 @@ const getSubproductsService = async () => {
 
 // Update a subproduct by ID
 const updateSubproductService = async (id, subproductData) => {
-    const { product_id, subproduct_name, subproduct_code, quantity, unit_price, units, description } = subproductData;
+    const { product_id, subproduct_name, subproduct_code, quantity, selling_price, purchase_price, units, description } = subproductData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE subproducts SET product_id = ?, subproduct_name = ?, subproduct_code = ?, quantity = ?, unit_price = ?, units = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE subproduct_id = ?',
-            [product_id, subproduct_name, subproduct_code, quantity, unit_price, units, description, id],
+            'UPDATE subproducts SET product_id = ?, subproduct_name = ?, subproduct_code = ?, quantity = ?, selling_price = ?, purchase_price = ?, units = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE subproduct_id = ?',
+            [product_id, subproduct_name, subproduct_code, quantity, selling_price, purchase_price, units, description, id],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -81,5 +104,6 @@ module.exports = {
     getSubproductService,
     getSubproductsService,
     updateSubproductService,
-    deleteSubproductService
+    deleteSubproductService,
+    getSubproductsByProductId
 };

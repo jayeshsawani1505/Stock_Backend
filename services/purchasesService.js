@@ -2,14 +2,14 @@ const dbconnection = require('../config/database');
 
 // Create a new purchase
 const createPurchase = async (purchaseData) => {
-    const { vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status } = purchaseData;
+    const { vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status } = purchaseData;
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO purchases (vendor_id, purchase_date,
              due_date, reference_no, supplier_invoice_serial_no,
-             product_id, quantity, rate, notes, 
-             terms_conditions, total_amount, payment_mode, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status],
+             product_id,subproduct_id, quantity, rate, notes, 
+             terms_conditions, total_amount, payment_mode, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status],
             (error, results) => {
                 if (error) return reject(error);
                 resolve(results);
@@ -21,7 +21,7 @@ const createPurchaseExcel = async (purchases) => {
     const sql = `
         INSERT INTO purchases 
         (vendor_id, purchase_date, due_date, reference_no, 
-        supplier_invoice_serial_no, product_id, quantity, rate, 
+        supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, 
         notes, terms_conditions, total_amount, payment_mode, status) 
         VALUES ?
     `;
@@ -33,6 +33,7 @@ const createPurchaseExcel = async (purchases) => {
         purchase.reference_no,
         purchase.supplier_invoice_serial_no,
         purchase.product_id,
+        purchase.subproduct_id,
         purchase.quantity,
         purchase.rate,
         purchase.notes,
@@ -83,11 +84,11 @@ const getPurchaseById = async (id) => {
 
 // Update a purchase by ID
 const updatePurchase = async (id, purchaseData) => {
-    const { vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status } = purchaseData;
+    const { vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status } = purchaseData;
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE purchases SET vendor_id = ?, purchase_date = ?, due_date = ?, reference_no = ?, supplier_invoice_serial_no = ?, product_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, payment_mode = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status, id],
+            'UPDATE purchases SET vendor_id = ?, purchase_date = ?, due_date = ?, reference_no = ?, supplier_invoice_serial_no = ?, product_id = ?, subproduct_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, payment_mode = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, status, id],
             (error, results) => {
                 if (error) return reject(error);
                 resolve(results);

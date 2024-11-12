@@ -43,11 +43,11 @@ const getTotalInvoiceCount = async () => {
 
 // Create a new invoice
 const createInvoice = async (invoiceData) => {
-    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, quantity, unit, rate, notes, terms_conditions, total_amount } = invoiceData;
+    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions, total_amount } = invoiceData;
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO invoices (invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, quantity, unit, rate, notes, terms_conditions, total_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, quantity, unit, rate, notes, terms_conditions, total_amount],
+            'INSERT INTO invoices (invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id,subproduct_id, quantity, unit, rate, notes, terms_conditions, total_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions, total_amount],
             (error, results) => {
                 if (error) return reject(error);
                 resolve(results);
@@ -91,11 +91,11 @@ const getInvoiceById = async (id) => {
 
 // Update an invoice by ID
 const updateInvoice = async (id, invoiceData) => {
-    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount } = invoiceData;
+    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount } = invoiceData;
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, reference_number = ?, status = ?, recurring = ?, recurring_cycle = ?, product_id = ?, quantity = ?, unit = ?, rate = ?, bank_id = ?, notes = ?, terms_conditions = ?, total_amount = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, id],
+            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, reference_number = ?, status = ?, recurring = ?, recurring_cycle = ?, product_id = ?, subproduct_id = ?, quantity = ?, unit = ?, rate = ?, bank_id = ?, notes = ?, terms_conditions = ?, total_amount = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, id],
             (error, results) => {
                 if (error) return reject(error);
                 resolve(results);

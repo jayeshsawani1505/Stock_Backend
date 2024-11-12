@@ -11,6 +11,9 @@ router.get('/', subproductController.getAllSubproducts);
 // Get a subproduct by ID
 router.get('/:id', subproductController.getSubproductById);
 
+// Get Sub Product by Product Id
+router.get('/product/:product_id', subproductController.getSubproductsByProductId);
+
 // Update a subproduct by ID
 router.put('/:id', subproductController.updateSubproduct);
 

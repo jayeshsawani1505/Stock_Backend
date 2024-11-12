@@ -39,6 +39,24 @@ const getAllSubproducts = async (req, res) => {
     }
 };
 
+const getSubproductsByProductId = async (req, res) => {
+    try {
+        const { product_id } = req.params; // Get product_id from URL params
+        const subproducts = await subproductService.getSubproductsByProductId(product_id);
+
+        if (subproducts.length === 0) {
+            return res.status(404).json({ message: 'No subproducts found for this product_id' });
+        }
+
+        res.status(200).json({
+            message: 'Subproducts retrieved successfully',
+            subproducts,
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 const updateSubproduct = async (req, res) => {
     try {
         const updatedSubproduct = await subproductService.updateSubproductService(req.params.id, req.body);
@@ -71,5 +89,6 @@ module.exports = {
     getSubproductById,
     getAllSubproducts,
     updateSubproduct,
-    deleteSubproduct
+    deleteSubproduct,
+    getSubproductsByProductId
 };

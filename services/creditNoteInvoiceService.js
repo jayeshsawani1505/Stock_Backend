@@ -4,7 +4,7 @@ const dbconnection = require('../config/database');
 const createCreditNoteInvoiceService = async (creditNoteData) => {
     const {
         creditNote_date, due_date, reference_number,
-        product_id, quantity, unit, rate, notes, terms_conditions,
+        product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions,
         total_amount, signature_image
     } = creditNoteData;
 
@@ -12,12 +12,12 @@ const createCreditNoteInvoiceService = async (creditNoteData) => {
         dbconnection.query(
             `INSERT INTO creditnoteinvoices 
             ( creditNote_date, due_date, reference_number, 
-            product_id, quantity, unit, rate, notes, terms_conditions, 
+            product_id,subproduct_id, quantity, unit, rate, notes, terms_conditions, 
             total_amount, signature_image) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 creditNote_date, due_date, reference_number,
-                product_id, quantity, unit, rate, notes, terms_conditions,
+                product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions,
                 total_amount, signature_image
             ],
             (error, results) => {
@@ -62,7 +62,7 @@ const getCreditNoteInvoicesService = async () => {
 const updateCreditNoteInvoiceService = async (id, creditNoteData) => {
     const {
         customer_id, creditNote_date, due_date, reference_number,
-        product_id, quantity, unit, rate, notes, terms_conditions,
+        product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions,
         total_amount, signature_image
     } = creditNoteData;
 
@@ -70,13 +70,13 @@ const updateCreditNoteInvoiceService = async (id, creditNoteData) => {
         dbconnection.query(
             `UPDATE creditnoteinvoices SET 
             customer_id = ?, creditNote_date = ?, due_date = ?, reference_number = ?, 
-            product_id = ?, quantity = ?, unit = ?, rate = ?, 
+            product_id = ?, subproduct_id = ?, quantity = ?, unit = ?, rate = ?, 
             notes = ?, terms_conditions = ?, total_amount = ?, 
             signature_image = ?, updated_at = CURRENT_TIMESTAMP 
             WHERE id = ?`,
             [
                 customer_id, creditNote_date, due_date, reference_number,
-                product_id, quantity, unit, rate, notes, terms_conditions,
+                product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions,
                 total_amount, signature_image, id
             ],
             (error, results) => {
