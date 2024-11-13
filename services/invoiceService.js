@@ -89,6 +89,31 @@ const getInvoiceById = async (id) => {
     });
 };
 
+const getInvoiceDetailsForPDF = async (id) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT 
+                invoices.*, 
+                category.category_name,
+                products.product_name,
+                subproducts.subproduct_name,
+                customers.*
+            FROM invoices
+            JOIN products ON invoices.product_id = products.product_id
+            JOIN category ON products.category_id = category.category_id
+            JOIN customers ON invoices.customer_id = customers.customer_id
+            LEFT JOIN subproducts ON invoices.subproduct_id = subproducts.subproduct_id
+            WHERE invoices.id = ?
+        `;
+
+        // Query the database
+        dbconnection.query(query, [id], (error, results) => {
+            if (error) return reject(error);
+            resolve(results);  // Resolve with the query results
+        });
+    });
+};
+
 // Update an invoice by ID
 const updateInvoice = async (id, invoiceData) => {
     const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount } = invoiceData;
@@ -158,5 +183,6 @@ module.exports = {
     updateInvoice,
     deleteInvoice,
     getTotalInvoiceCount,
-    getTotalAmountsByStatus
+    getTotalAmountsByStatus,
+    getInvoiceDetailsForPDF
 };

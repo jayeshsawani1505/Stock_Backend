@@ -21,6 +21,8 @@ router.get('/count', invoiceController.getTotalInvoiceCount);
 // Get an invoice by ID
 router.get('/:id', invoiceController.getInvoiceById);
 
+router.get('/pdf/:id', invoiceController.getInvoiceDetailsForPDF);
+
 // Update an invoice by ID
 router.put('/:id', invoiceController.updateInvoice);
 

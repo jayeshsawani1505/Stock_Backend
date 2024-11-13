@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2024 at 09:52 AM
+-- Generation Time: Nov 13, 2024 at 05:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,6 +35,27 @@ CREATE TABLE `category` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`category_id`, `category_name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'Electronics product', 'Devices, gadgets, and accessories.', '2024-11-07 08:00:19', '2024-11-07 09:34:32'),
+(5, 'acdc', 'rererefdfdfdf', '2024-11-07 08:41:09', '2024-11-07 09:37:18'),
+(6, 'dsdsd', 'dsdsd', '2024-11-07 08:45:08', '2024-11-07 08:45:08'),
+(7, 'saas', 'sasasa', '2024-11-07 09:27:49', '2024-11-07 09:27:49'),
+(8, 'Electronics', 'Devices and gadgets', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(9, 'Furniture', 'Office and home furniture', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(10, 'Clothing', 'Apparel and accessories', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(11, 'Kitchen', 'Kitchen appliances and tools', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(12, 'Books', 'Educational and fiction books', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(13, 'Toys', 'Children toys', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(14, 'Sports Equipment', 'Gear and accessories for sports', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(15, 'Health & Wellness', 'Vitamins, supplements, and wellness products', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(16, 'Beauty', 'Skincare and beauty products', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(17, 'Automotive', 'Car parts and accessories', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(18, 'booksai', 'sasas', '2024-11-11 13:35:57', '2024-11-11 13:35:57');
+
 -- --------------------------------------------------------
 
 --
@@ -47,12 +68,11 @@ CREATE TABLE `creditnoteinvoices` (
   `creditNote_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
   `reference_number` varchar(100) DEFAULT NULL,
-  `product_name` varchar(100) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `subproduct_id` int(10) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `unit` varchar(20) DEFAULT NULL,
   `rate` decimal(10,2) DEFAULT NULL,
-  `bank_id` int(11) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `terms_conditions` text DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
@@ -60,6 +80,15 @@ CREATE TABLE `creditnoteinvoices` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `creditnoteinvoices`
+--
+
+INSERT INTO `creditnoteinvoices` (`id`, `customer_id`, `creditNote_date`, `due_date`, `reference_number`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_image`, `created_at`, `updated_at`) VALUES
+(1, 13, '0000-00-00', '0000-00-00', 'REF123', 1, 0, 10, 'pcs', 100.00, 'Note1', 'Terms A', 1000.00, 'image1.png', '2024-11-09 05:07:13', '2024-11-09 05:35:44'),
+(2, 14, NULL, '0000-00-00', 'REF124', 2, 0, 5, NULL, 200.00, 'Note2', 'Terms B', 1000.00, NULL, '2024-11-09 05:07:13', '2024-11-09 05:44:02'),
+(4, 27, '1969-12-31', '0000-00-00', '23', 1, 1, 323, NULL, 23.00, '2323sdd', 'dsdsdsd', 2323.00, NULL, '2024-11-11 13:41:47', '2024-11-12 11:00:56');
 
 -- --------------------------------------------------------
 
@@ -72,7 +101,7 @@ CREATE TABLE `customers` (
   `profile_photo` varchar(255) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `currency` varchar(50) DEFAULT NULL,
-  `email` varchar(100) NOT NULL UNIQUE,  -- Make email unique
+  `email` varchar(100) NOT NULL,
   `website` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `notes` text DEFAULT NULL,
@@ -98,6 +127,25 @@ CREATE TABLE `customers` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`customer_id`, `profile_photo`, `name`, `currency`, `email`, `website`, `phone`, `notes`, `billing_name`, `billing_address_line1`, `billing_address_line2`, `billing_country`, `billing_state`, `billing_city`, `billing_pincode`, `shipping_name`, `shipping_address_line1`, `shipping_address_line2`, `shipping_country`, `shipping_state`, `shipping_city`, `shipping_pincode`, `bank_name`, `branch`, `account_number`, `account_holder_name`, `ifsc`, `created_at`, `updated_at`) VALUES
+(13, NULL, 'krupalsinh chavda', '₹', 'krupalsinh@gmail.com', 'test.com', '7600230620', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', '7441052212', 'test test test', 'test', '2024-11-07 07:21:26', '2024-11-07 07:37:10'),
+(14, NULL, 'jayesh sawani', '£', 'jayesh@gmail.com', 'dsdsd', '323232323`', 'dsds', 'dsds', 'dsdsd', 'dsd', 'dsd', 'dsdsd', 'dsd', 'dsd', 'dsds', 'dsdsd', 'dsd', 'dsd', 'dsdsd', 'dsd', 'dsd', 'dsdsd', 'dsdsd', 'dsd', 'dsdsd', 'dsdsds', '2024-11-07 07:48:52', '2024-11-07 07:49:04'),
+(16, NULL, 'harsh joshi', '₹', 'hasrsh@gmail.com', 'test@.com', '7600230620', 'no', 'amd', 'amd', 'amd', 'india', 'guj', 'amd', '382330', 'amd', 'amd', 'amd', 'india', 'guj', 'amd', '382330', 'sbi', 'amd', '787778878', 'amd', 'amdDDSDS78', '2024-11-07 13:52:03', '2024-11-07 13:52:03'),
+(17, NULL, 'John Doe', '£', 'johndoe@example.com', 'http://johndoe.com', '1234567890', 'Important client', 'John Doe', '123 Maple St', 'Suite 100', 'USA', 'CA', 'Los Angeles', '90001', 'John Doe', '123 Maple St', 'Suite 100', 'USA', 'CA', 'Los Angeles', '90001', 'Bank of America', 'Downtown', '123456789', 'John Doe', 'BOFAUS3N', '2024-11-07 14:30:55', '2024-11-07 14:33:07'),
+(18, 'photo2.png', 'Jane Smith', 'EUR', 'janesmith@example.com', 'http://janesmith.com', '0987654321', 'Requires follow-up', 'Jane Smith', '456 Oak St', 'Apt 202', 'France', 'Ile-de-France', 'Paris', '75000', 'Jane Smith', '456 Oak St', 'Apt 202', 'France', 'Ile-de-France', 'Paris', '75000', 'BNP Paribas', 'Main', '987654321', 'Jane Smith', 'BNPAFRPP', '2024-11-07 14:30:55', '2024-11-07 14:30:55'),
+(20, 'photo4.jpg', 'Lisa White', 'USD', 'lisa@example.com', 'www.lisawhite.com', '6677889900', 'Note 4', 'Lisa White', '101 Billing Lane', 'Suite 12', 'USA', 'Texas', 'Houston', '77001', 'Lisa White', '101 Shipping Lane', 'Suite 13', 'USA', 'Texas', 'Houston', '77001', 'Wells Fargo', 'East', '4567890123456789', 'Lisa White', 'WFBIUS6S', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
+(21, 'photo5.jpg', 'Steve Black', 'CAD', 'steve@example.com', 'www.steveblack.ca', '4455667788', 'Note 5', 'Steve Black', '202 Billing Blvd', NULL, 'Canada', 'Ontario', 'Toronto', 'M5H 2N2', 'Steve Black', '202 Shipping Blvd', NULL, 'Canada', 'Ontario', 'Toronto', 'M5H 2N2', 'RBC', 'South', '5678901234567890', 'Steve Black', 'ROYCCAT2', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
+(22, 'photo6.jpg', 'Rachel Lee', 'JPY', 'rachel@example.jp', 'www.rachelee.jp', '5566778899', 'Note 6', 'Rachel Lee', '303 Billing Way', NULL, 'Japan', 'Tokyo', 'Tokyo', '100-0001', 'Rachel Lee', '303 Shipping Way', NULL, 'Japan', 'Tokyo', 'Tokyo', '100-0001', 'Mitsubishi UFJ', 'Central', '6789012345678901', 'Rachel Lee', 'BOTKJPJT', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
+(23, 'photo7.jpg', 'Dave Green', 'AUD', 'dave@example.com.au', 'www.davegreen.com', '2233445566', 'Note 7', 'Dave Green', '404 Billing Pl', NULL, 'Australia', 'New South Wales', 'Sydney', '2000', 'Dave Green', '404 Shipping Pl', NULL, 'Australia', 'New South Wales', 'Sydney', '2000', 'NAB', 'West', '7890123456789012', 'Dave Green', 'NATAAU33', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
+(24, 'photo8.jpg', 'Emma Blue', 'INR', 'emma@example.in', 'www.emmablue.in', '9988776655', 'Note 8', 'Emma Blue', '505 Billing Path', NULL, 'India', 'Maharashtra', 'Mumbai', '400001', 'Emma Blue', '505 Shipping Path', NULL, 'India', 'Maharashtra', 'Mumbai', '400001', 'SBI', 'Central', '8901234567890123', 'Emma Blue', 'SBININBB', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
+(25, 'photo9.jpg', 'Max Gray', 'NZD', 'max@example.nz', 'www.maxgray.co.nz', '3344556677', 'Note 9', 'Max Gray', '606 Billing Terrace', NULL, 'New Zealand', 'Auckland', 'Auckland', '1010', 'Max Gray', '606 Shipping Terrace', NULL, 'New Zealand', 'Auckland', 'Auckland', '1010', 'ANZ', 'East', '9012345678901234', 'Max Gray', 'ANZBNZ22', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
+(26, 'photo10.jpg', 'Sara Green', 'SGD', 'sara@example.sg', 'www.saragreen.sg', '7766554433', 'Note 10', 'Sara Green', '707 Billing Circle', NULL, 'Singapore', 'Central', 'Singapore', '069112', 'Sara Green', '707 Shipping Circle', NULL, 'Singapore', 'Central', 'Singapore', '069112', 'DBS', 'West', '1234567890123457', 'Sara Green', 'DBSSSGSG', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
+(27, NULL, 'new test 123', '₹', 'test@gmail.com', 'dsd', '2212121212', 'dsd', 'dsd', 'dsd', 'dsd', 'dsd', 'dsdsd', 'sd', '323232', 'dsd', 'dsd', 'dsd', 'dsd', 'dsdsd', 'sd', '323232', 'ewewe', 'ewewe', '323232323', 'ewewe', 'dsdw323', '2024-11-11 13:32:22', '2024-11-11 13:32:32');
 
 -- --------------------------------------------------------
 
@@ -160,8 +208,28 @@ CREATE TABLE `inventory` (
   `purchase_price` decimal(10,2) NOT NULL,
   `status` enum('In Stock','Out of Stock') NOT NULL DEFAULT 'In Stock',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `notes` varchar(555) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`inventory_id`, `item_name`, `item_code`, `units`, `quantity`, `selling_price`, `purchase_price`, `status`, `created_at`, `updated_at`, `notes`) VALUES
+(1, 'Item AB', 'ITEM001', 'pcs', 118, 20.50, 18.00, '', '2024-11-08 09:57:36', '2024-11-11 09:09:25', 'fdsfdf'),
+(3, 'Item B', 'ITEM002', 'pcs', 190, 25.00, 18.00, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 12:01:28', 'dsdsdsd'),
+(4, 'Item C', 'ITEM003', 'kg', 150, 30.00, 20.00, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 10:32:26', ''),
+(5, 'Item D', 'ITEM004', 'pcs', 50, 10.00, 8.00, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 10:32:26', ''),
+(6, 'Item E', 'ITEM005', 'liters', 300, 15.00, 12.00, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 10:32:26', ''),
+(7, 'Item F', 'ITEM006', 'pcs', 120, 22.50, 16.50, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 10:32:26', ''),
+(8, 'Item G', 'ITEM007', 'kg', 180, 28.00, 18.50, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 10:32:26', ''),
+(9, 'Item H', 'ITEM008', 'pcs', 250, 18.00, 13.50, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 10:32:26', ''),
+(10, 'Item I', 'ITEM009', 'liters', 400, 35.00, 25.00, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 10:32:26', ''),
+(11, 'Item J', 'ITEM010', 'pcs', 500, 40.00, 30.00, 'In Stock', '2024-11-08 10:32:26', '2024-11-08 10:32:26', ''),
+(12, 'Ittem K', 'ITEM011', 'box', 58, 100.00, 95.00, 'In Stock', '2024-11-08 12:06:13', '2024-11-08 12:07:02', 'default notes added'),
+(13, 'dsd', 'dsd', 'sds', 212, 21212.00, 2121.00, '', '2024-11-11 13:39:46', '2024-11-11 13:39:46', 'default notes'),
+(14, 'testq2', 'irttems L', 'box', 156, 1212.00, 1212.00, '', '2024-11-11 13:40:11', '2024-11-11 13:40:29', 'default notes');
 
 -- --------------------------------------------------------
 
@@ -180,6 +248,7 @@ CREATE TABLE `invoices` (
   `recurring` tinyint(1) DEFAULT 0,
   `recurring_cycle` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `subproduct_id` int(10) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `unit` varchar(20) DEFAULT NULL,
   `rate` decimal(10,2) DEFAULT NULL,
@@ -191,6 +260,25 @@ CREATE TABLE `invoices` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`id`, `invoice_number`, `customer_id`, `invoice_date`, `due_date`, `reference_number`, `status`, `recurring`, `recurring_cycle`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `bank_id`, `notes`, `terms_conditions`, `total_amount`, `signature_image`, `created_at`, `updated_at`) VALUES
+(1, 'INV-001', 14, '2024-10-26', '2024-11-26', 'REF-001', 'paid', NULL, 0, 1, NULL, 11, NULL, 25.00, NULL, 'Thank you for your business.', 'Payment is due within 30 days.', 150.00, NULL, '2024-11-07 10:42:53', '2024-11-07 14:19:47'),
+(6, 'INV002', 14, NULL, NULL, 'REF002', 'paid', NULL, 0, 1, NULL, 10, NULL, 150.00, NULL, '-', 'Custom Terms', 1500.00, NULL, '2024-11-08 06:19:52', '2024-11-09 12:07:42'),
+(8, 'INV002', 14, NULL, NULL, 'REF002', 'overdue', NULL, 0, 1, NULL, 10, NULL, 150.00, NULL, '-', 'Custom Terms', 1500.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:49'),
+(9, 'INV003', 14, NULL, NULL, 'REF003', 'unpaid', NULL, 0, 2, NULL, 3, NULL, 100.00, NULL, '-', 'Standard Terms', 300.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:30'),
+(10, 'INV004', 16, NULL, NULL, 'REF004', 'partially_paid', NULL, 0, 2, NULL, 7, NULL, 250.00, NULL, '-', 'Custom Terms', 1750.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:35'),
+(11, 'INV005', 17, NULL, NULL, 'REF005', 'cancelled', NULL, 0, 7, NULL, 8, NULL, 180.00, NULL, '-', 'Standard Terms', 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:08:31'),
+(12, 'INV006', 18, NULL, NULL, 'REF006', 'draft', NULL, 0, 8, NULL, 12, NULL, 120.00, NULL, '-', 'Custom Terms', 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:17'),
+(13, 'INV007', NULL, NULL, NULL, 'REF007', 'refunded', NULL, 0, 7, NULL, 9, NULL, 220.00, NULL, '-', 'Standard Terms', 1980.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:10'),
+(14, 'INV008', 20, NULL, NULL, 'REF008', 'unpaid', NULL, 0, 8, NULL, 6, NULL, 170.00, NULL, '-', 'Custom Terms', 1020.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:25'),
+(15, 'INV009', 21, NULL, NULL, 'REF009', 'paid', NULL, 0, 9, NULL, 4, NULL, 200.00, NULL, '-', 'Standard Terms', 800.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:34'),
+(16, 'INV010', 22, '1970-01-01', '1970-01-01', 'REF010', 'overdue', NULL, 0, 1, NULL, 11, NULL, 130.00, NULL, '-fdfdf', 'Custom Terms', 3322.00, NULL, '2024-11-08 06:25:39', '2024-11-12 08:06:14'),
+(17, 'INV0011', 13, NULL, NULL, 'REF001', 'overdue', NULL, 0, 9, NULL, 5, NULL, 200.00, NULL, '-', 'Standard Terms', 1000.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:41'),
+(18, 'iicss', 27, NULL, NULL, '212', 'unpaid', NULL, 0, 9, 2, 12, NULL, 12.00, NULL, '1212csds', 'sdsdsd', 1212.00, NULL, '2024-11-11 13:41:18', '2024-11-12 10:28:43');
 
 -- --------------------------------------------------------
 
@@ -206,6 +294,13 @@ CREATE TABLE `login` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`login_id`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
+(1, 'user@example.com', '$2a$10$oyQMqq06ACQjgDsxriA1MuHb2QYDu2OXDs9I3jH7jZqEIaD4nGd3G', 'Admin', '2024-10-27 13:18:07', '2024-10-27 13:18:07');
 
 -- --------------------------------------------------------
 
@@ -267,6 +362,18 @@ CREATE TABLE `products` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `item_type`, `product_name`, `product_code`, `category_id`, `quantity`, `selling_price`, `purchase_price`, `units`, `alert_quantity`, `barcode_code`, `discount_type`, `tax`, `description`, `product_image`, `created_at`, `updated_at`) VALUES
+(1, 'Product', 'Sample Product', 'SP001', 6, 100, 25.50, 20.00, 'Box', 10, NULL, NULL, NULL, 'This is a sample product description.', NULL, '2024-11-07 09:46:47', '2024-11-07 10:31:56'),
+(2, 'Product', 'ewewe1212', 'ewewe', 1, 22, 22.00, 22.00, 'Pieces', 22, NULL, NULL, NULL, 'edsdsd', NULL, '2024-11-07 10:26:14', '2024-11-07 10:26:55'),
+(7, '', 'Laptop', 'LAP123', 8, 100, 50000.00, 45000.00, 'pcs', 10, NULL, NULL, NULL, 'High-end laptop', NULL, '2024-11-08 04:37:46', '2024-11-08 04:37:46'),
+(8, '', 'Chair', 'CHR456', 9, 200, 1500.00, 1200.00, 'pcs', 20, NULL, NULL, NULL, 'Ergonomic chair', NULL, '2024-11-08 04:37:46', '2024-11-08 04:37:46'),
+(9, '', 'T-Shirt', 'TSH789', 10, 500, 300.00, 200.00, 'pcs', 50, NULL, NULL, NULL, 'Cotton T-shirt', NULL, '2024-11-08 04:37:46', '2024-11-08 04:37:46'),
+(10, 'Product', 'newe', 'sa2q', 9, 12, 1212.00, 122.00, 'Box', 122, NULL, NULL, NULL, 'dsdsd', NULL, '2024-11-11 13:35:42', '2024-11-11 13:35:42');
+
 -- --------------------------------------------------------
 
 --
@@ -275,24 +382,41 @@ CREATE TABLE `products` (
 
 CREATE TABLE `purchases` (
   `id` int(11) NOT NULL,
-  `purchase_id` varchar(50) NOT NULL,
   `vendor_id` int(11) DEFAULT NULL,
   `purchase_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
   `reference_no` varchar(100) DEFAULT NULL,
   `supplier_invoice_serial_no` varchar(100) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `subproduct_id` int(10) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `unit` varchar(20) DEFAULT NULL,
   `rate` decimal(10,2) DEFAULT NULL,
-  `bank_id` int(11) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `terms_conditions` text DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `signature_image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `payment_mode` varchar(55) DEFAULT NULL,
+  `status` varchar(55) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchases`
+--
+
+INSERT INTO `purchases` (`id`, `vendor_id`, `purchase_date`, `due_date`, `reference_no`, `supplier_invoice_serial_no`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_image`, `created_at`, `updated_at`, `payment_mode`, `status`) VALUES
+(2, 4, '0000-00-00', '0000-00-00', 'fdfdfdf', 'dsdsd', 1, NULL, 10, NULL, 10.00, 'DSDSDSDSD', 'DDSSDSD', 100.00, NULL, '2024-11-09 09:44:52', '2024-11-09 10:02:37', 'cash', 'unpaid'),
+(5, 4, '2023-01-01', '2023-02-01', 'REF001', 'S001', 1, NULL, 10, NULL, 100.00, 'Initial Purchase', 'Terms A', 1000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Cash', 'Pending'),
+(6, 5, '2023-01-05', '2023-02-05', 'REF002', 'S002', 2, NULL, 20, NULL, 150.00, 'Bulk Order', 'Terms B', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Credit', 'Completed'),
+(7, 7, '2023-01-10', '2023-02-10', 'REF003', 'S003', 7, NULL, 15, NULL, 200.00, 'Reorder', 'Terms C', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Bank Transfer', 'Pending'),
+(8, 6, '2023-01-15', '2023-02-15', 'REF004', 'S004', 8, NULL, 25, NULL, 120.00, 'Seasonal Stock', 'Terms D', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Cash', 'Completed'),
+(9, 8, '2023-01-19', '2023-02-19', 'REF005', 'S005', 9, NULL, 30, NULL, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:16:47', 'Credit', 'paid'),
+(10, 9, '2023-01-20', '2023-02-20', 'REF005', 'S006', 8, NULL, 30, NULL, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 10:19:47', '2024-11-09 10:19:47', 'Credit', 'Pending'),
+(11, 15, '0000-00-00', '0000-00-00', '21', '12', 10, NULL, 122, NULL, 212.00, 'dsd', 'sdsd', 1222.00, NULL, '2024-11-11 13:47:25', '2024-11-11 13:47:25', 'cash', 'paid'),
+(12, 14, '0000-00-00', '0000-00-00', 'asas', 'asa', 7, NULL, 212, NULL, 212.00, 'sdsd', 'dsdd', 212.00, NULL, '2024-11-11 13:48:39', '2024-11-11 13:48:39', 'cash', 'partially_paid'),
+(13, 15, '0000-00-00', '0000-00-00', 'sd', 'sdd', 9, 2, 21, NULL, 212.00, 'dds', 'sd', 212.00, NULL, '2024-11-11 13:49:08', '2024-11-12 11:13:42', 'cash', 'paid');
 
 -- --------------------------------------------------------
 
@@ -329,23 +453,36 @@ CREATE TABLE `quotations` (
 
 CREATE TABLE `return_debit_notes_purchases` (
   `id` int(11) NOT NULL,
-  `purchase_id` varchar(50) NOT NULL,
   `vendor_id` int(11) DEFAULT NULL,
   `purchase_order_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
   `reference_no` varchar(100) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `subproduct_id` int(10) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `unit` varchar(20) DEFAULT NULL,
   `rate` decimal(10,2) DEFAULT NULL,
-  `bank_id` int(11) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `terms_conditions` text DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `signature_image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `payment_mode` varchar(55) DEFAULT NULL,
+  `status` varchar(55) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `return_debit_notes_purchases`
+--
+
+INSERT INTO `return_debit_notes_purchases` (`id`, `vendor_id`, `purchase_order_date`, `due_date`, `reference_no`, `product_id`, `subproduct_id`, `quantity`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_image`, `created_at`, `updated_at`, `payment_mode`, `status`) VALUES
+(1, 10, NULL, '0000-00-00', 'dsdsd', 7, NULL, 10, 10.00, 'dsdsdsd', 'dsdsd', 500.00, NULL, '2024-11-09 11:41:58', '2024-11-09 11:55:23', 'cash', 'cancelled'),
+(2, 4, '0000-00-00', '2023-01-28', 'REF001', 1, 1, 10, 100.00, 'Initial Purchase', 'Terms A', 1000.00, NULL, '2024-11-09 11:47:25', '2024-11-12 11:17:23', 'Cash', 'paid'),
+(3, 5, NULL, '2023-02-05', 'REF002', 2, NULL, 20, 150.00, 'Bulk Order', 'Terms B', 3000.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Credit', 'Completed'),
+(4, 7, NULL, '2023-02-10', 'REF003', 7, NULL, 15, 200.00, 'Reorder', 'Terms C', 3000.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Bank Transfer', 'Pending'),
+(5, 6, NULL, '2023-02-15', 'REF004', 8, NULL, 25, 120.00, 'Seasonal Stock', 'Terms D', 3000.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Cash', 'Completed'),
+(6, 8, NULL, '2023-02-20', 'REF005', 9, NULL, 30, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Credit', 'Pending'),
+(7, 9, '2023-02-19', '2023-02-19', 'REF005', 8, NULL, 30, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 11:47:25', '2024-11-12 12:31:08', 'Credit', 'paid');
 
 -- --------------------------------------------------------
 
@@ -374,12 +511,21 @@ CREATE TABLE `subproducts` (
   `subproduct_name` varchar(100) NOT NULL,
   `subproduct_code` varchar(50) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `unit_price` decimal(10,2) NOT NULL,
+  `selling_price` decimal(10,2) NOT NULL,
   `units` varchar(50) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `purchase_price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subproducts`
+--
+
+INSERT INTO `subproducts` (`subproduct_id`, `product_id`, `subproduct_name`, `subproduct_code`, `quantity`, `selling_price`, `units`, `description`, `created_at`, `updated_at`, `purchase_price`) VALUES
+(1, 1, 'Sample Subproduct', 'SSP001', 50, 25.00, 'Pieces', 'This is a sample subproduct description.', '2024-11-12 08:49:46', '2024-11-12 09:24:46', 15.75),
+(2, 9, 'M Size', 'TMSIZE', 100, 150.00, 'Pieces', 'na hoy la', '2024-11-12 09:25:25', '2024-11-12 09:25:25', 100.00);
 
 -- --------------------------------------------------------
 
@@ -396,6 +542,24 @@ CREATE TABLE `vendors` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vendors`
+--
+
+INSERT INTO `vendors` (`vendor_id`, `vendor_name`, `email`, `phone_number`, `closing_balance`, `created_at`, `updated_at`) VALUES
+(4, 'ABC Supplies', 'contact@abcsupplies.com', '1234567890', 100.50, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(5, 'XYZ Wholesalers', 'sales@xyzwholesalers.com', '9876543210', 200.75, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(6, 'Global Goods', 'info@globalgoods.com', '1234509876', 300.00, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(7, 'QuickMart', 'support@quickmart.com', '8765432109', 150.25, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(8, 'Prime Distributors', 'service@primedis.com', '2345678901', 275.00, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(9, 'Central Supplies', 'info@centralsupplies.com', '3456789012', 125.50, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(10, 'National Wholesale', 'contact@nationalws.com', '4567890123', 450.30, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(11, 'Direct Markets', 'support@directmarkets.com', '5678901234', 320.80, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(12, 'WorldWide Products', 'sales@worldwide.com', '6789012345', 210.45, '2024-11-08 09:12:13', '2024-11-08 09:12:13'),
+(13, 'SuperMart Suppliers', 'service@supermart.com', '7890123456', 180.00, '2024-11-08 09:12:13', '2024-11-08 09:12:28'),
+(14, 'new testdsd', 'vp212@gmail.com', '212121212', 32323.00, '2024-11-11 13:34:34', '2024-11-11 13:34:57'),
+(15, '212jjewe', 'vp43434@gmail.com', '323323233', 232323.00, '2024-11-11 13:35:14', '2024-11-11 13:35:14');
 
 --
 -- Indexes for dumped tables
@@ -534,19 +698,19 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `creditnoteinvoices`
 --
 ALTER TABLE `creditnoteinvoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `delivery_challans`
@@ -564,19 +728,19 @@ ALTER TABLE `expenses`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `inventory_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `inventory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -594,13 +758,13 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `quotations`
@@ -612,7 +776,7 @@ ALTER TABLE `quotations`
 -- AUTO_INCREMENT for table `return_debit_notes_purchases`
 --
 ALTER TABLE `return_debit_notes_purchases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `signature`
@@ -624,13 +788,13 @@ ALTER TABLE `signature`
 -- AUTO_INCREMENT for table `subproducts`
 --
 ALTER TABLE `subproducts`
-  MODIFY `subproduct_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subproduct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
