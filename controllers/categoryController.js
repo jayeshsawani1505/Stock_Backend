@@ -11,7 +11,11 @@ const xlsx = require('xlsx');
 const createCategoryHandler = async (req, res) => {
     try {
         const { category_name, description } = req.body;
-        const newCategory = await createCategoryService({ category_name, description });
+        const category_photo = req.file ? `/uploads/category/${req.file.filename}` : null; // Store the path
+
+        // Call service to create category
+        const newCategory = await createCategoryService({ category_name, category_photo, description });
+
         res.status(201).json({ message: 'Category created successfully', data: newCategory });
     } catch (error) {
         console.error('Error in createCategoryHandler:', error);
@@ -46,10 +50,13 @@ const getCategoriesHandler = async (req, res) => {
 // Update a category by ID
 const updateCategoryHandler = async (req, res) => {
     try {
-        const { id } = req.params;
+        const categoryId = req.params.id;
         const { category_name, description } = req.body;
-        const updatedCategory = await updateCategoryService(id, { category_name, description });
-        if (!updatedCategory) return res.status(404).json({ message: 'Category not found' });
+        const category_photo = req.file ? `/uploads/category/${req.file.filename}` : null; // Store the path
+
+        // Call service to update category
+        const updatedCategory = await updateCategoryService(categoryId, { category_name, category_photo, description });
+
         res.status(200).json({ message: 'Category updated successfully', data: updatedCategory });
     } catch (error) {
         console.error('Error in updateCategoryHandler:', error);

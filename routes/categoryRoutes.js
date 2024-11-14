@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const {
     createCategoryHandler,
     getCategoryHandler,
@@ -7,13 +8,24 @@ const {
     deleteCategoryHandler,
     uploadExcelHandler
 } = require('../controllers/categoryController');
-
-const router = express.Router();
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); // temporary storage for uploaded files
+const path = require('path');
+
+// Configure Multer for image uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../uploads/category')); // Ensure 'uploads/category' exists
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname)); // Generate unique filename
+    }
+});
+
+const upload = multer({ storage });
 
 // Create a new category
-router.post('/', createCategoryHandler);
+router.post('/', upload.single('category_photo'), createCategoryHandler);
 
 // Get a specific category by ID
 router.get('/:id', getCategoryHandler);
@@ -22,7 +34,7 @@ router.get('/:id', getCategoryHandler);
 router.get('/', getCategoriesHandler);
 
 // Update a category by ID
-router.put('/:id', updateCategoryHandler);
+router.put('/:id', upload.single('category_photo'), updateCategoryHandler);
 
 // Delete a category by ID
 router.delete('/:id', deleteCategoryHandler);

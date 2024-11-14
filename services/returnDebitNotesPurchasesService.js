@@ -14,13 +14,13 @@ const create = async (returnDebitNoteData) => {
         notes,
         terms_conditions,
         total_amount,
-        signature_image, payment_mode, status
+        signature_id, payment_mode, status
     } = returnDebitNoteData;
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO return_debit_notes_purchases ( vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity,  rate, notes, terms_conditions, total_amount, signature_image, payment_mode,status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_image, payment_mode, status],
+            'INSERT INTO return_debit_notes_purchases ( vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity,  rate, notes, terms_conditions, total_amount, signature_id, payment_mode,status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_id, payment_mode, status],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -75,15 +75,15 @@ const update = async (id, returnDebitNoteData) => {
         notes,
         terms_conditions,
         total_amount,
-        signature_image,
+        signature_id,
         payment_mode,
         status
     } = returnDebitNoteData;
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE return_debit_notes_purchases SET vendor_id = ?, purchase_order_date = ?, due_date = ?, reference_no = ?, product_id = ?, subproduct_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_image = ?, payment_mode = ?, status =  ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_image, payment_mode, status, id],
+            'UPDATE return_debit_notes_purchases SET vendor_id = ?, purchase_order_date = ?, due_date = ?, reference_no = ?, product_id = ?, subproduct_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, payment_mode = ?, status =  ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_id, payment_mode, status, id],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

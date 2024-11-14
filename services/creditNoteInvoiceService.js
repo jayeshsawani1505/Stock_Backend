@@ -5,7 +5,7 @@ const createCreditNoteInvoiceService = async (creditNoteData) => {
     const {
         creditNote_date, due_date, reference_number,
         product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions,
-        total_amount, signature_image
+        total_amount, signature_id
     } = creditNoteData;
 
     const result = await new Promise((resolve, reject) => {
@@ -13,12 +13,12 @@ const createCreditNoteInvoiceService = async (creditNoteData) => {
             `INSERT INTO creditnoteinvoices 
             ( creditNote_date, due_date, reference_number, 
             product_id,subproduct_id, quantity, unit, rate, notes, terms_conditions, 
-            total_amount, signature_image) 
+            total_amount, signature_id) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 creditNote_date, due_date, reference_number,
                 product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions,
-                total_amount, signature_image
+                total_amount, signature_id
             ],
             (error, results) => {
                 if (error) reject(error);
@@ -63,7 +63,7 @@ const updateCreditNoteInvoiceService = async (id, creditNoteData) => {
     const {
         customer_id, creditNote_date, due_date, reference_number,
         product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions,
-        total_amount, signature_image
+        total_amount, signature_id
     } = creditNoteData;
 
     const result = await new Promise((resolve, reject) => {
@@ -72,12 +72,12 @@ const updateCreditNoteInvoiceService = async (id, creditNoteData) => {
             customer_id = ?, creditNote_date = ?, due_date = ?, reference_number = ?, 
             product_id = ?, subproduct_id = ?, quantity = ?, unit = ?, rate = ?, 
             notes = ?, terms_conditions = ?, total_amount = ?, 
-            signature_image = ?, updated_at = CURRENT_TIMESTAMP 
+            signature_id = ?, updated_at = CURRENT_TIMESTAMP 
             WHERE id = ?`,
             [
                 customer_id, creditNote_date, due_date, reference_number,
                 product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions,
-                total_amount, signature_image, id
+                total_amount, signature_id, id
             ],
             (error, results) => {
                 if (error) reject(error);

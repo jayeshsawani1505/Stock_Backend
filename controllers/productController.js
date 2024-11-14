@@ -3,19 +3,25 @@ const xlsx = require('xlsx');
 
 const createProduct = async (req, res) => {
     try {
-        const product = await productService.createProductService(req.body);
+        const productData = req.body;
+        if (req.file) {
+            productData.product_image = `/uploads/product/${req.file.filename}`; // Store file path
+        }
+        const product = await productService.createProductService(productData);
         res.status(201).json({
             message: 'Product created successfully',
             product
         });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create product: ' + error.message });
+        res.status(500).json({
+            error: 'Failed to create product: ' + error.message
+        });
     }
 };
 
 const getProductById = async (req, res) => {
     try {
-        const product = await productService.getProductService(req.params.id);
+        const product = await productService.getProductByID(req.params.id);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
@@ -42,10 +48,16 @@ const getAllProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     try {
-        const updatedProduct = await productService.updateProductService(req.params.id, req.body);
-        if (!updatedProduct) {
+        const productId = req.params.id;
+        const product = await productService.getProductByID(productId);
+        if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
+        const updatedProductData = req.body;
+        if (req.file) {
+            updatedProductData.product_image = `/uploads/product/${req.file.filename}`;
+        }
+        const updatedProduct = await productService.updateProductService(productId, updatedProductData);
         res.status(200).json({
             message: 'Product updated successfully',
             updatedProduct

@@ -2,11 +2,11 @@ const dbconnection = require('../config/database');
 
 // Create a new product
 const createProductService = async (productData) => {
-    const { item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description } = productData;
+    const { item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description, product_image } = productData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO products (item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description],
+            'INSERT INTO products (item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description, product_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, description, product_image],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -17,7 +17,7 @@ const createProductService = async (productData) => {
 };
 
 // Get a product by ID
-const getProductService = async (id) => {
+const getProductByID = async (id) => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
             'SELECT * FROM products WHERE product_id = ?',
@@ -49,11 +49,11 @@ const getProductsService = async () => {
 
 // Update a product by ID
 const updateProductService = async (id, productData) => {
-    const { item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, barcode_code, discount_type, tax, description } = productData;
+    const { item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, barcode_code, discount_type, tax, description, product_image } = productData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE products SET item_type = ?, product_name = ?, product_code = ?, category_id = ?, quantity = ?, selling_price = ?, purchase_price = ?, units = ?, alert_quantity = ?, barcode_code = ?, discount_type = ?, tax = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE product_id = ?',
-            [item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, barcode_code, discount_type, tax, description, id],
+            'UPDATE products SET item_type = ?, product_name = ?, product_code = ?, category_id = ?, quantity = ?, selling_price = ?, purchase_price = ?, units = ?, alert_quantity = ?, barcode_code = ?, discount_type = ?, tax = ?, description = ?, product_image = ?, updated_at = CURRENT_TIMESTAMP WHERE product_id = ?',
+            [item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, barcode_code, discount_type, tax, description, product_image, id],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -80,7 +80,7 @@ const deleteProductService = async (id) => {
 
 module.exports = {
     createProductService,
-    getProductService,
+    getProductByID,
     getProductsService,
     updateProductService,
     deleteProductService

@@ -32,6 +32,7 @@ const userLogin = async (loginData) => {
         return {
             token,
             message: 'Login successful',
+            user: user
         };
     } catch (error) {
         console.error("Login error:", error.message);

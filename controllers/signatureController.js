@@ -3,13 +3,19 @@ const signatureService = require('../services/signatureService');
 
 const createSignature = async (req, res) => {
     try {
-        const signature = await signatureService.createSignatureService(req.body);
-        res.status(201).json({ 
-            message: 'Signature created successfully', 
-            signature 
+        const signatureData = req.body;
+        if (req.file) {
+            signatureData.signature_photo = `/uploads/signature/${req.file.filename}`; // Store file path
+        }
+        const signature = await signatureService.createSignatureService(signatureData);
+        res.status(201).json({
+            message: 'Signature created successfully',
+            signature
         });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create signature: ' + error.message });
+        res.status(500).json({
+            error: 'Failed to create signature: ' + error.message
+        });
     }
 };
 
@@ -19,9 +25,9 @@ const getSignatureById = async (req, res) => {
         if (!signature) {
             return res.status(404).json({ message: 'Signature not found' });
         }
-        res.status(200).json({ 
-            message: 'Signature retrieved successfully', 
-            signature 
+        res.status(200).json({
+            message: 'Signature retrieved successfully',
+            signature
         });
     } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve signature: ' + error.message });
@@ -31,9 +37,9 @@ const getSignatureById = async (req, res) => {
 const getAllSignatures = async (req, res) => {
     try {
         const signatures = await signatureService.getSignaturesService();
-        res.status(200).json({ 
-            message: 'Signatures retrieved successfully', 
-            signatures 
+        res.status(200).json({
+            message: 'Signatures retrieved successfully',
+            signatures
         });
     } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve signatures: ' + error.message });
@@ -42,16 +48,22 @@ const getAllSignatures = async (req, res) => {
 
 const updateSignature = async (req, res) => {
     try {
-        const updatedSignature = await signatureService.updateSignatureService(req.params.id, req.body);
+        const signatureData = req.body;
+        if (req.file) {
+            signatureData.signature_photo = `/uploads/signature/${req.file.filename}`;
+        }
+        const updatedSignature = await signatureService.updateSignatureService(req.params.id, signatureData);
         if (!updatedSignature) {
             return res.status(404).json({ message: 'Signature not found' });
         }
-        res.status(200).json({ 
-            message: 'Signature updated successfully', 
-            updatedSignature 
+        res.status(200).json({
+            message: 'Signature updated successfully',
+            updatedSignature
         });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update signature: ' + error.message });
+        res.status(500).json({
+            error: 'Failed to update signature: ' + error.message
+        });
     }
 };
 

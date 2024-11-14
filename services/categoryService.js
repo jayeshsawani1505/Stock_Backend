@@ -2,11 +2,11 @@ const dbconnection = require('../config/database');
 
 // Create a new category
 const createCategoryService = async (categoryData) => {
-    const { category_name, description } = categoryData;
+    const { category_name, category_photo, description } = categoryData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO category (category_name, description) VALUES (?, ?)',
-            [category_name, description],
+            'INSERT INTO category (category_name, category_photo, description) VALUES (?, ?, ?)',
+            [category_name, category_photo, description],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -47,11 +47,11 @@ const getCategoriesService = async () => {
 
 // Update a category by ID
 const updateCategoryService = async (id, categoryData) => {
-    const { category_name, description } = categoryData;
+    const { category_name, category_photo, description } = categoryData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE category SET category_name = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE category_id = ?',
-            [category_name, description, id],
+            'UPDATE category SET category_name = ?, category_photo = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE category_id = ?',
+            [category_name, category_photo, description, id],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

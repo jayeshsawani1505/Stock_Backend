@@ -5,6 +5,9 @@ const xlsx = require('xlsx');
 const createCustomer = async (req, res) => {
     try {
         const customerData = req.body;
+        if (req.file) {
+            customerData.profile_photo = `/uploads/customer/${req.file.filename}`; // Store file path
+        }
         const result = await customerService.createCustomerService(customerData);
         res.status(201).json({ message: 'Customer created successfully', customerId: result.customerId });
     } catch (error) {
@@ -55,8 +58,17 @@ const updateCustomer = async (req, res) => {
     try {
         const id = req.params.id;
         const updatedData = req.body;
+
+        // If a new profile photo is uploaded, add the file path to updatedData
+        if (req.file) {
+            updatedData.profile_photo = `/uploads/customer/${req.file.filename}`;
+        }
+
         const result = await customerService.updateCustomerService(id, updatedData);
-        if (!result) return res.status(404).json({ message: 'Customer not found' });
+        if (!result) {
+            return res.status(404).json({ message: 'Customer not found' });
+        }
+
         res.status(200).json({ message: 'Customer updated successfully', customer: result });
     } catch (error) {
         res.status(500).json({ error: 'Failed to update customer: ' + error.message });
