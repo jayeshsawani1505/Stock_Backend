@@ -50,7 +50,7 @@ INSERT INTO `category` (`category_id`, `category_name`, `category_photo`, `descr
 (10, 'Clothing', NULL, 'Apparel and accessories', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (11, 'Kitchen', NULL, 'Kitchen appliances and tools', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (12, 'Books', NULL, 'Educational and fiction books', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
-(13, 'Toys', NULL, 'Children\'s toys', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(13, 'Toys', NULL, 'Children toys', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (14, 'Sports Equipment', NULL, 'Gear and accessories for sports', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (15, 'Health & Wellness', NULL, 'Vitamins, supplements, and wellness products', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (16, 'Beauty', NULL, 'Skincare and beauty products', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
