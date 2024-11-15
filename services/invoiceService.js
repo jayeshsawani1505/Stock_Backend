@@ -44,8 +44,59 @@ const createInvoice = async (invoiceData) => {
         dbconnection.query(
             'INSERT INTO invoices (invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id,subproduct_id, quantity, unit, rate, notes, terms_conditions, total_amount,signature_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions, total_amount, signature_id],
-            (error, results) => {
+            async (error, results) => {
                 if (error) return reject(error);
+
+                try {
+                    if (subproduct_id > 0) {
+                        // Call inStock for subproducts
+                        await outStockSubProduct(subproduct_id, quantity);
+                    } else {
+                        // Call outStockProduct for products
+                        await outStockProduct(product_id, quantity);
+                    }
+                } catch (stockError) {
+                    return reject(stockError); // Reject if stock update fails
+                }
+
+                resolve(results); // Resolve with the original results if everything succeeds
+            }
+        );
+    });
+};
+
+// OutStock function for sub product
+const outStockSubProduct = async (id, quantity) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE subproducts SET quantity = quantity - ? WHERE subproduct_id = ? AND quantity >= ?',
+            [quantity, id, quantity], // Add 'quantity' for the third placeholder
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                if (results.affectedRows === 0) {
+                    return reject(new Error('Not enough stock available'));
+                }
+                resolve(results);
+            }
+        );
+    });
+};
+
+// OutStock function for product
+const outStockProduct = async (id, quantity) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE products SET quantity = quantity - ? WHERE product_id = ? AND quantity >= ?',
+            [quantity, id, quantity],
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                if (results.affectedRows === 0) {
+                    return reject(new Error('Not enough stock available'));
+                }
                 resolve(results);
             }
         );
@@ -120,9 +171,22 @@ const updateInvoice = async (id, invoiceData) => {
         dbconnection.query(
             'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, reference_number = ?, status = ?, recurring = ?, recurring_cycle = ?, product_id = ?, subproduct_id = ?, quantity = ?, unit = ?, rate = ?, bank_id = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
             [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, signature_id, id],
-            (error, results) => {
+            async (error, results) => {
                 if (error) return reject(error);
-                resolve(results);
+
+                try {
+                    if (subproduct_id > 0) {
+                        // Call inStock for subproducts
+                        await outStockSubProduct(subproduct_id, quantity);
+                    } else {
+                        // Call outStockProduct for products
+                        await outStockProduct(product_id, quantity);
+                    }
+                } catch (stockError) {
+                    return reject(stockError); // Reject if stock update fails
+                }
+
+                resolve(results); // Resolve with the original results if everything succeeds
             }
         );
     });

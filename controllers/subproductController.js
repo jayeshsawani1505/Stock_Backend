@@ -84,11 +84,38 @@ const deleteSubproduct = async (req, res) => {
     }
 };
 
+// In-stock (Add to stock)
+const addStock = async (req, res) => {
+    const { id } = req.params;
+    const { quantity } = req.body;
+
+    try {
+        const result = await subproductService.inStock(id, quantity);
+        res.json({ message: 'Stock updated successfully', result });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Out-stock (Remove from stock)
+const removeStock = async (req, res) => {
+    const { id } = req.params;
+    const { quantity } = req.body;
+
+    try {
+        const result = await subproductService.outStock(id, quantity);
+        res.json({ message: 'Stock updated successfully', result });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     createSubproduct,
     getSubproductById,
     getAllSubproducts,
     updateSubproduct,
     deleteSubproduct,
-    getSubproductsByProductId
+    getSubproductsByProductId,
+    addStock, removeStock
 };

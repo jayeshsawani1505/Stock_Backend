@@ -55,7 +55,19 @@ const getCustomerService = async (id) => {
 const getCustomersService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM customers ORDER BY created_at DESC', // Sorting by created_at in descending order
+            `
+            SELECT 
+                customers.*, 
+                COALESCE(SUM(invoices.total_amount), 0) AS total_amount 
+            FROM 
+                customers 
+            LEFT JOIN 
+                invoices ON customers.customer_id = invoices.customer_id 
+            GROUP BY 
+                customers.customer_id 
+            ORDER BY 
+                customers.created_at DESC
+            `,
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

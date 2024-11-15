@@ -20,4 +20,10 @@ router.put('/:id', subproductController.updateSubproduct);
 // Delete a subproduct by ID
 router.delete('/:id', subproductController.deleteSubproduct);
 
+// Route to add items to stock (in-stock)
+router.post('/in-stock/:id', subproductController.addStock);
+
+// Route to remove items from stock (out-stock)
+router.post('/out-stock/:id', subproductController.removeStock);
+
 module.exports = router;

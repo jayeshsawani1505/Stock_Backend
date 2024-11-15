@@ -78,10 +78,44 @@ const deleteProductService = async (id) => {
     return result.affectedRows > 0;
 };
 
+const inStock = async (id, quantity) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE products SET quantity = quantity + ? WHERE product_id = ?',
+            [quantity, id],
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(results);
+            }
+        );
+    });
+};
+
+const outStock = async (id, quantity) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE products SET quantity = quantity - ? WHERE product_id = ? AND quantity >= ?',
+            [quantity, id, quantity],
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                if (results.affectedRows === 0) {
+                    return reject(new Error('Not enough stock available'));
+                }
+                resolve(results);
+            }
+        );
+    });
+};
+
 module.exports = {
     createProductService,
     getProductByID,
     getProductsService,
     updateProductService,
-    deleteProductService
+    deleteProductService,
+    inStock, outStock
 };

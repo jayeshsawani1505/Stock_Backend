@@ -35,4 +35,10 @@ router.delete('/:id', productController.deleteProduct);
 // API to upload and process Excel file for products
 router.post('/upload-excel', upload.single('file'), productController.uploadExcel);
 
+// Route to add items to stock (in-stock)
+router.post('/in-stock/:id', productController.addStock);
+
+// Route to remove items from stock (out-stock)
+router.post('/out-stock/:id', productController.removeStock);
+
 module.exports = router;

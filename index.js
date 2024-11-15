@@ -2,6 +2,32 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+
+// Ensure 'uploads/customer' directory exists
+const customerUploadsDir = path.join(__dirname, 'uploads/customer');
+if (!fs.existsSync(customerUploadsDir)) {
+    fs.mkdirSync(customerUploadsDir, { recursive: true });
+}
+
+// Ensure 'uploads/category' directory exists
+const categoryUploadsDir = path.join(__dirname, 'uploads/category');
+if (!fs.existsSync(categoryUploadsDir)) {
+    fs.mkdirSync(categoryUploadsDir, { recursive: true });
+}
+
+// Ensure 'uploads/product' directory exists
+const productUploadsDir = path.join(__dirname, 'uploads/product');
+if (!fs.existsSync(productUploadsDir)) {
+    fs.mkdirSync(productUploadsDir, { recursive: true });
+}
+
+// Ensure 'uploads/signature' directory exists
+const signatureUploadsDir = path.join(__dirname, 'uploads/signature');
+if (!fs.existsSync(signatureUploadsDir)) {
+    fs.mkdirSync(signatureUploadsDir, { recursive: true });
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,6 +61,7 @@ const returnDebitNotesPurchasesRoutes = require('./routes/returnDebitNotesPurcha
 const messageRoutes = require('./routes/messageRoutes');
 const commonRoutes = require('./routes/commonRoutes');
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
