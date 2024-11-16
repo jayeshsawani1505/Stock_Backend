@@ -30,6 +30,25 @@ const getDeliveryChallans = async (req, res) => {
     }
 };
 
+// Get generate DeliveryChallanNumber
+const generateDeliveryChallanNumber = async (req, res) => {
+    try {
+        // Call the service to generate a new Delivery Challan number
+        const newChallanNumber = await deliveryChallanService.generateDeliveryChallanNumber();
+
+        // Send the response with the generated Delivery Challan number
+        res.status(200).json({
+            message: "Delivery Challan number generated successfully.",
+            data: { Delivery_Challan_number: newChallanNumber }
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error generating Delivery Challan number.",
+            error: error.message
+        });
+    }
+};
+
 
 const getDeliveryChallanById = async (req, res) => {
     const { id } = req.params;
@@ -100,5 +119,6 @@ module.exports = {
     getDeliveryChallans,
     getDeliveryChallanById,
     updateDeliveryChallan,
-    deleteDeliveryChallan
+    deleteDeliveryChallan,
+    generateDeliveryChallanNumber
 }

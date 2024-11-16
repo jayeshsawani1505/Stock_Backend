@@ -8,6 +8,8 @@ router.post('/', quotationController.createQuotation);
 // Get all quotations
 router.get('/', quotationController.getAllQuotations);
 
+router.get('/generateQuotationNumber', quotationController.generateQuotationNumber);
+
 // Get a quotation by ID
 router.get('/:id', quotationController.getQuotationById);
 

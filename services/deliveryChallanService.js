@@ -1,17 +1,38 @@
 const dbconnection = require('../config/database');
 
+const generateDeliveryChallanNumber = async () => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query('SELECT MAX(id) AS last_challan_id FROM delivery_challans', (error, results) => {
+            if (error) return reject(error);
+
+            let lastChallanId = results[0].last_challan_id;
+            let newChallanNumber;
+
+            if (!lastChallanId) {
+                // Start with the first id (you can adjust this logic as needed)
+                newChallanNumber = "DCN-001"; // The first Delivery Challan will have "DCN-001"
+            } else {
+                // Increment the id by 1
+                newChallanNumber = `DCN-${String(lastChallanId + 1).padStart(3, '0')}`;
+            }
+
+            resolve(newChallanNumber);
+        });
+    });
+};
+
 // Create a new delivery challan
 const createDeliveryChallanService = async (challanData) => {
     const result = await new Promise((resolve, reject) => {
         const query = `INSERT INTO delivery_challans 
-                       (delivery_number, customer_id, delivery_date, due_date, reference_number, product_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, signature_image) 
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                       (delivery_number, customer_id, delivery_date, due_date,  product_id, subproduct_id, quantity,  rate, notes, terms_conditions, total_amount, signature_id, status) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const values = [
             challanData.delivery_number, challanData.customer_id, challanData.delivery_date,
-            challanData.due_date, challanData.reference_number, challanData.product_id,
-            challanData.quantity, challanData.unit, challanData.rate, challanData.bank_id,
+            challanData.due_date, challanData.product_id, challanData.subproduct_id,
+            challanData.quantity, challanData.rate,
             challanData.notes, challanData.terms_conditions, challanData.total_amount,
-            challanData.signature_image
+            challanData.signature_id, challanData.status
         ];
         dbconnection.query(query, values, (error, results) => {
             if (error) reject(error);
@@ -24,10 +45,22 @@ const createDeliveryChallanService = async (challanData) => {
 // Get all delivery challans
 const getDeliveryChallansService = async () => {
     const rows = await new Promise((resolve, reject) => {
-        dbconnection.query('SELECT * FROM delivery_challans ORDER BY created_at DESC', (error, results) => {
-            if (error) reject(error);
-            else resolve(results);
-        });
+        dbconnection.query(`
+            SELECT 
+                delivery_challans.*, 
+                category.category_name,
+                customers.name AS customer_name,
+                customers.phone AS customer_phone,
+                customers.profile_photo AS customer_profile_photo
+            FROM delivery_challans
+            JOIN products ON delivery_challans.product_id = products.product_id
+            JOIN category ON products.category_id = category.category_id
+            JOIN customers ON delivery_challans.customer_id = customers.customer_id 
+            ORDER BY delivery_challans.created_at DESC`,
+            (error, results) => {
+                if (error) reject(error);
+                else resolve(results);
+            });
     });
     return rows;
 };
@@ -48,15 +81,15 @@ const updateDeliveryChallanService = async (id, challanData) => {
     const result = await new Promise((resolve, reject) => {
         const query = `UPDATE delivery_challans SET 
                        delivery_number = ?, customer_id = ?, delivery_date = ?, due_date = ?, 
-                       reference_number = ?, product_id = ?, quantity = ?, unit = ?, rate = ?, 
-                       bank_id = ?, notes = ?, terms_conditions = ?, total_amount = ?, 
-                       signature_image = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
+                        product_id = ?, subproduct_id = ?, quantity = ?, rate = ?, 
+                       notes = ?, terms_conditions = ?, total_amount = ?, 
+                       signature_id = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
         const values = [
             challanData.delivery_number, challanData.customer_id, challanData.delivery_date,
-            challanData.due_date, challanData.reference_number, challanData.product_id,
-            challanData.quantity, challanData.unit, challanData.rate, challanData.bank_id,
+            challanData.due_date, challanData.product_id, challanData.subproduct_id,
+            challanData.quantity, challanData.rate,
             challanData.notes, challanData.terms_conditions, challanData.total_amount,
-            challanData.signature_image, id
+            challanData.signature_id, challanData.status, id
         ];
         dbconnection.query(query, values, (error, results) => {
             if (error) reject(error);
@@ -78,6 +111,7 @@ const deleteDeliveryChallanService = async (id) => {
 };
 
 module.exports = {
+    generateDeliveryChallanNumber,
     createDeliveryChallanService,
     getDeliveryChallansService,
     getDeliveryChallanService,

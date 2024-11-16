@@ -29,6 +29,12 @@ if (!fs.existsSync(signatureUploadsDir)) {
     fs.mkdirSync(signatureUploadsDir, { recursive: true });
 }
 
+// Ensure 'uploads/expenses' directory exists
+const expensesUploadsDir = path.join(__dirname, 'uploads/expenses');
+if (!fs.existsSync(expensesUploadsDir)) {
+    fs.mkdirSync(expensesUploadsDir, { recursive: true });
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 

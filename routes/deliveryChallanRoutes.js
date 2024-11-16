@@ -4,6 +4,7 @@ const deliveryChallanController = require('../controllers/deliveryChallanControl
 
 router.post('/', deliveryChallanController.createDeliveryChallan);
 router.get('/', deliveryChallanController.getDeliveryChallans);
+router.get('/generateDeliveryChallanNumber', deliveryChallanController.generateDeliveryChallanNumber);
 router.get('/:id', deliveryChallanController.getDeliveryChallanById);
 router.put('/:id', deliveryChallanController.updateDeliveryChallan);
 router.delete('/:id', deliveryChallanController.deleteDeliveryChallan);

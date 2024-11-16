@@ -11,6 +11,25 @@ const createQuotation = async (req, res) => {
     }
 };
 
+// Get generate QuotationNumber
+const generateQuotationNumber = async (req, res) => {
+    try {
+        // Call the service to generate a new Quotation number
+        const newQuotationNumber = await quotationService.generateQuotationNumber();
+
+        // Send the response with the generated Quotation number
+        res.status(200).json({
+            message: "Quotation number generated successfully.",
+            data: { Quotation_number: newQuotationNumber }
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error generating Quotation number.",
+            error: error.message
+        });
+    }
+};
+
 // Get a quotation by ID
 const getQuotationById = async (req, res) => {
     try {
@@ -73,6 +92,7 @@ const getQuotationsByCustomerId = async (req, res) => {
     }
 };
 module.exports = {
+    generateQuotationNumber,
     createQuotation,
     getQuotationById,
     getAllQuotations,

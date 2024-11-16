@@ -4,14 +4,17 @@ const ExpenseService = require('../services/expensesService');
 const createExpense = async (req, res) => {
     try {
         const expenseData = req.body;
+        if (req.file) {
+            expenseData.attachment = `/uploads/expenses/${req.file.filename}`;
+        }
         const result = await ExpenseService.createExpenseService(expenseData);
         res.status(201).json({
-            message: "Expense created successfully.",
+            message: "Expense created successfully with attachment.",
             expenseId: result.expenseId,
         });
     } catch (error) {
         res.status(500).json({
-            message: "Error creating expense: " + error.message,
+            message: "Error creating expense with attachment: " + error.message,
         });
     }
 };
@@ -57,7 +60,11 @@ const getExpenseById = async (req, res) => {
 const updateExpense = async (req, res) => {
     const { id } = req.params;
     try {
-        const updatedExpense = await ExpenseService.updateExpenseService(id, req.body);
+        const expenseData = req.body;
+        if (req.file) {
+            expenseData.attachment = `/uploads/expenses/${req.file.filename}`;
+        }
+        const updatedExpense = await ExpenseService.updateExpenseService(id, expenseData);
         if (updatedExpense) {
             res.status(200).json({
                 message: "Expense updated successfully.",
