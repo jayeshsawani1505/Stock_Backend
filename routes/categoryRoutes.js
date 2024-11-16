@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + path.extname(file.originalname)); // Generate unique filename
     }
 });
-
+ 
 const upload = multer({ storage });
 
 // Create a new category
