@@ -49,6 +49,19 @@ const generateDeliveryChallanNumber = async (req, res) => {
     }
 };
 
+// Get Delivery Challan details by id for PDF
+const getDeliveryChallanDetailsForPDF = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const rows = await deliveryChallanService.getDeliveryChallanDetailsForPDF(id);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "Delivery Challan not found." });
+        }
+        res.status(200).json({ message: "Delivery Challan retrieved successfully.", data: rows[0] });
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving delivery challan.", error });
+    }
+};
 
 const getDeliveryChallanById = async (req, res) => {
     const { id } = req.params;
@@ -116,6 +129,7 @@ const deleteDeliveryChallan = async (req, res) => {
 
 module.exports = {
     createDeliveryChallan,
+    getDeliveryChallanDetailsForPDF,
     getDeliveryChallans,
     getDeliveryChallanById,
     updateDeliveryChallan,

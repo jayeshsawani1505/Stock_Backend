@@ -76,6 +76,35 @@ const getDeliveryChallanService = async (id) => {
     return row;
 };
 
+const getDeliveryChallanDetailsForPDF = async (id) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+           SELECT 
+            delivery_challans.*, 
+            category.category_name,
+            products.product_name,
+            subproducts.subproduct_name,
+            customers.*,
+            signature.signature_name,
+            signature.signature_photo
+        FROM delivery_challans
+        JOIN products ON delivery_challans.product_id = products.product_id
+        JOIN category ON products.category_id = category.category_id
+        JOIN customers ON delivery_challans.customer_id = customers.customer_id
+        LEFT JOIN subproducts ON delivery_challans.subproduct_id = subproducts.subproduct_id
+        LEFT JOIN signature ON delivery_challans.signature_id = signature.signature_id
+        WHERE delivery_challans.id = ?
+        `;
+
+        // Query the database
+        dbconnection.query(query, [id], (error, results) => {
+            if (error) return reject(error);
+            resolve(results);  // Resolve with the query results
+        });
+    });
+};
+
+
 // Update delivery challan by ID
 const updateDeliveryChallanService = async (id, challanData) => {
     const result = await new Promise((resolve, reject) => {
@@ -116,5 +145,6 @@ module.exports = {
     getDeliveryChallansService,
     getDeliveryChallanService,
     updateDeliveryChallanService,
-    deleteDeliveryChallanService
+    deleteDeliveryChallanService,
+    getDeliveryChallanDetailsForPDF
 };
