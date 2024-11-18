@@ -39,27 +39,67 @@ const getTotalInvoiceCount = async () => {
 
 // Create a new invoice
 const createInvoice = async (invoiceData) => {
-    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions, total_amount, signature_id } = invoiceData;
+    const {
+        invoice_number,
+        customer_id,
+        invoice_date,
+        due_date,
+        reference_number,
+        status,
+        recurring,
+        recurring_cycle,
+        notes,
+        terms_conditions,
+        signature_id,
+        total_amount,
+        invoice_details
+    } = invoiceData;
+
+    // Convert invoice_details to a JSON string
+    const invoiceDetailsJSON = JSON.stringify(invoice_details);
+
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO invoices (invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id,subproduct_id, quantity, unit, rate, notes, terms_conditions, total_amount,signature_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, notes, terms_conditions, total_amount, signature_id],
+            `INSERT INTO invoices 
+            (invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, notes, terms_conditions, signature_id, total_amount, invoice_details) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                invoice_number,
+                customer_id,
+                invoice_date,
+                due_date,
+                reference_number,
+                status,
+                recurring,
+                recurring_cycle,
+                notes,
+                terms_conditions,
+                signature_id,
+                total_amount,
+                invoiceDetailsJSON
+            ],
             async (error, results) => {
-                if (error) return reject(error);
-
-                try {
-                    if (subproduct_id > 0) {
-                        // Call inStock for subproducts
-                        await outStockSubProduct(subproduct_id, quantity);
-                    } else {
-                        // Call outStockProduct for products
-                        await outStockProduct(product_id, quantity);
-                    }
-                } catch (stockError) {
-                    return reject(stockError); // Reject if stock update fails
+                if (error) {
+                    console.error('Error executing query:', error);
+                    return reject({ message: 'Error creating invoice.', error });
                 }
 
-                resolve(results); // Resolve with the original results if everything succeeds
+                try {
+                    for (const detail of invoice_details) {
+                        const { product_id, subproduct_id, quantity } = detail;
+
+                        if (subproduct_id > 0) {
+                            await outStockSubProduct(subproduct_id, quantity);
+                        } else {
+                            await outStockProduct(product_id, quantity);
+                        }
+                    }
+                } catch (stockError) {
+                    console.error('Stock adjustment error:', stockError);
+                    return reject({ message: 'Stock adjustment failed.', stockError });
+                }
+
+                resolve(results); // Resolve with the results
             }
         );
     });
@@ -109,13 +149,10 @@ const getAllInvoices = async () => {
         const query = `
              SELECT 
                 invoices.*, 
-                category.category_name,
                 customers.name AS customer_name,
                 customers.phone AS customer_phone,
                 customers.profile_photo AS customer_profile_photo
             FROM invoices
-            JOIN products ON invoices.product_id = products.product_id
-            JOIN category ON products.category_id = category.category_id
             JOIN customers ON invoices.customer_id = customers.customer_id ORDER BY invoices.created_at DESC
         `;
 
@@ -138,49 +175,100 @@ const getInvoiceById = async (id) => {
 
 const getInvoiceDetailsForPDF = async (id) => {
     return new Promise((resolve, reject) => {
-        const query = `
-           SELECT 
-            invoices.*, 
-            category.category_name,
-            products.product_name,
-            subproducts.subproduct_name,
-            customers.*,
-            signature.signature_name,
-            signature.signature_photo
-        FROM invoices
-        JOIN products ON invoices.product_id = products.product_id
-        JOIN category ON products.category_id = category.category_id
-        JOIN customers ON invoices.customer_id = customers.customer_id
-        LEFT JOIN subproducts ON invoices.subproduct_id = subproducts.subproduct_id
-        LEFT JOIN signature ON invoices.signature_id = signature.signature_id
-        WHERE invoices.id = ?
+        const invoiceQuery = `
+            SELECT 
+                invoices.*, 
+                customers.*, 
+                signature.signature_name, 
+                signature.signature_photo
+            FROM invoices
+            JOIN customers ON invoices.customer_id = customers.customer_id
+            LEFT JOIN signature ON invoices.signature_id = signature.signature_id
+            WHERE invoices.id = ?
         `;
 
-        // Query the database
-        dbconnection.query(query, [id], (error, results) => {
-            if (error) return reject(error);
-            resolve(results);  // Resolve with the query results
+        // Fetch the invoice and its associated data
+        dbconnection.query(invoiceQuery, [id], async (invoiceError, invoiceResults) => {
+            if (invoiceError) return reject(invoiceError);
+            if (invoiceResults.length === 0) return reject(new Error("Invoice not found"));
+
+            const invoice = invoiceResults[0]; // Assuming only one invoice is fetched
+            let invoiceDetails = [];
+
+            try {
+                // Parse the JSON string in `invoice_details`
+                invoiceDetails = JSON.parse(invoice.invoice_details);
+                console.log("Invoice Details Parsed: ", invoiceDetails);
+            } catch (error) {
+                return reject(new Error("Invalid invoice_details JSON"));
+            }
+
+            if (invoiceDetails.length === 0) {
+                invoice.invoice_details = [];
+                return resolve(invoice);
+            }
+
+            // Create dynamic placeholders for the query
+            const productIds = invoiceDetails.map((detail) => detail.product_id);
+            const subproductIds = invoiceDetails.map((detail) => detail.subproduct_id);
+
+            const detailsQuery = `
+                SELECT 
+                    products.product_id, 
+                    products.product_name, 
+                    subproducts.subproduct_id, 
+                    subproducts.subproduct_name
+                FROM products
+                LEFT JOIN subproducts ON products.product_id = subproducts.product_id
+                WHERE products.product_id IN (?) 
+                AND (subproducts.subproduct_id IN (?) OR subproducts.subproduct_id IS NULL)
+            `;
+
+            // Query to get product and subproduct names
+            dbconnection.query(detailsQuery, [productIds, subproductIds], (detailsError, detailsResults) => {
+                if (detailsError) return reject(detailsError);
+
+                // Map product and subproduct names back to invoiceDetails
+                invoiceDetails = invoiceDetails.map((detail) => {
+                    const product = detailsResults.find((item) => item.product_id === detail.product_id);
+                    const subproduct = detailsResults.find((item) => item.subproduct_id === detail.subproduct_id);
+
+                    return {
+                        ...detail,
+                        product_name: product ? product.product_name : null,
+                        subproduct_name: subproduct ? subproduct.subproduct_name : null,
+                    };
+                });
+
+                invoice.invoice_details = invoiceDetails; // Update the invoice with enriched details
+                resolve([invoice]);  // Wrap in an array as expected in the controller
+            });
         });
     });
 };
 
 // Update an invoice by ID
 const updateInvoice = async (id, invoiceData) => {
-    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, signature_id } = invoiceData;
+    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring_cycle, notes, terms_conditions, total_amount, signature_id, invoice_details } = invoiceData;
+
     return new Promise((resolve, reject) => {
+        const serializedInvoiceDetails = JSON.stringify(invoice_details); // Serialize invoice_details
+
         dbconnection.query(
-            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, reference_number = ?, status = ?, recurring = ?, recurring_cycle = ?, product_id = ?, subproduct_id = ?, quantity = ?, unit = ?, rate = ?, bank_id = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, product_id, subproduct_id, quantity, unit, rate, bank_id, notes, terms_conditions, total_amount, signature_id, id],
+            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, reference_number = ?, status = ?, recurring_cycle = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring_cycle, notes, terms_conditions, total_amount, signature_id, serializedInvoiceDetails, id],
             async (error, results) => {
                 if (error) return reject(error);
 
                 try {
-                    if (subproduct_id > 0) {
-                        // Call inStock for subproducts
-                        await outStockSubProduct(subproduct_id, quantity);
-                    } else {
-                        // Call outStockProduct for products
-                        await outStockProduct(product_id, quantity);
+                    for (const detail of invoice_details) {
+                        const { product_id, subproduct_id, quantity } = detail;
+
+                        if (subproduct_id > 0) {
+                            await outStockSubProduct(subproduct_id, quantity);
+                        } else {
+                            await outStockProduct(product_id, quantity);
+                        }
                     }
                 } catch (stockError) {
                     return reject(stockError); // Reject if stock update fails
