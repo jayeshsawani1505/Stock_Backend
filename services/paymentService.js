@@ -2,11 +2,11 @@ const dbconnection = require('../config/database');
 
 // Create a new payment
 const createPaymentService = async (paymentData) => {
-    const { customer_id, amount, payment_mode, payment_date, payment_status, description } = paymentData;
+    const { invoice_id, amount, payment_mode, payment_date, payment_status, description } = paymentData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO payments (customer_id, amount, payment_mode, payment_date, payment_status, description) VALUES (?, ?, ?, ?, ?, ?)',
-            [customer_id, amount, payment_mode, payment_date, payment_status, description],
+            'INSERT INTO payments (invoice_id, amount, payment_mode, payment_date, payment_status, description) VALUES (?, ?, ?, ?, ?, ?)',
+            [invoice_id, amount, payment_mode, payment_date, payment_status, description],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -35,7 +35,11 @@ const getPaymentService = async (id) => {
 const getPaymentsService = async () => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM payments ORDER BY created_at DESC',
+            `SELECT payments.*, invoices.*, customers.name AS customer_name
+             FROM payments
+             JOIN invoices ON payments.invoice_id = invoices.id
+             JOIN customers ON invoices.customer_id = customers.customer_id
+             ORDER BY payments.created_at DESC`,
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -47,11 +51,11 @@ const getPaymentsService = async () => {
 
 // Update a payment by ID
 const updatePaymentService = async (id, paymentData) => {
-    const { customer_id, amount, payment_mode, payment_date, payment_status, description } = paymentData;
+    const { invoice_id, amount, payment_mode, payment_date, payment_status, description } = paymentData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE payments SET customer_id = ?, amount = ?, payment_mode = ?, payment_date = ?, payment_status = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE payment_id = ?',
-            [customer_id, amount, payment_mode, payment_date, payment_status, description, id],
+            'UPDATE payments SET invoice_id = ?, amount = ?, payment_mode = ?, payment_date = ?, payment_status = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE payment_id = ?',
+            [invoice_id, amount, payment_mode, payment_date, payment_status, description, id],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -75,11 +79,11 @@ const deletePaymentService = async (id) => {
     });
     return result.affectedRows > 0;
 };
-// Get payments by customer ID
+// Get payments by invoice ID
 const getPaymentsByCustomerIdService = async (customerId) => {
     const rows = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'SELECT * FROM payments WHERE customer_id = ?',
+            'SELECT * FROM payments WHERE invoice_id = ?',
             [customerId],
             (error, results) => {
                 if (error) reject(error);
