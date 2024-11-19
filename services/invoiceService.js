@@ -46,8 +46,6 @@ const createInvoice = async (invoiceData) => {
         due_date,
         reference_number,
         status,
-        recurring,
-        recurring_cycle,
         notes,
         terms_conditions,
         signature_id,
@@ -61,8 +59,8 @@ const createInvoice = async (invoiceData) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO invoices 
-            (invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring, recurring_cycle, notes, terms_conditions, signature_id, total_amount, invoice_details) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (invoice_number, customer_id, invoice_date, due_date, reference_number, status, notes, terms_conditions, signature_id, total_amount, invoice_details) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 invoice_number,
                 customer_id,
@@ -70,8 +68,6 @@ const createInvoice = async (invoiceData) => {
                 due_date,
                 reference_number,
                 status,
-                recurring,
-                recurring_cycle,
                 notes,
                 terms_conditions,
                 signature_id,
@@ -173,6 +169,24 @@ const getInvoiceById = async (id) => {
     });
 };
 
+const updateInvoiceStatus = async (id, status) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE invoices SET status = ? WHERE id = ?',
+            [status, id],
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                if (results.affectedRows === 0) {
+                    return reject(new Error('Invoice not found'));
+                }
+                resolve(results);
+            }
+        );
+    });
+};
+
 const getInvoiceDetailsForPDF = async (id) => {
     return new Promise((resolve, reject) => {
         const invoiceQuery = `
@@ -249,14 +263,14 @@ const getInvoiceDetailsForPDF = async (id) => {
 
 // Update an invoice by ID
 const updateInvoice = async (id, invoiceData) => {
-    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring_cycle, notes, terms_conditions, total_amount, signature_id, invoice_details } = invoiceData;
+    const { invoice_number, customer_id, invoice_date, due_date, reference_number, status, notes, terms_conditions, total_amount, signature_id, invoice_details } = invoiceData;
 
     return new Promise((resolve, reject) => {
         const serializedInvoiceDetails = JSON.stringify(invoice_details); // Serialize invoice_details
 
         dbconnection.query(
-            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, reference_number = ?, status = ?, recurring_cycle = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, recurring_cycle, notes, terms_conditions, total_amount, signature_id, serializedInvoiceDetails, id],
+            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, reference_number = ?, status = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [invoice_number, customer_id, invoice_date, due_date, reference_number, status, notes, terms_conditions, total_amount, signature_id, serializedInvoiceDetails, id],
             async (error, results) => {
                 if (error) return reject(error);
 
@@ -334,5 +348,6 @@ module.exports = {
     deleteInvoice,
     getTotalInvoiceCount,
     getTotalAmountsByStatus,
-    getInvoiceDetailsForPDF
+    getInvoiceDetailsForPDF,
+    updateInvoiceStatus
 };

@@ -2,14 +2,43 @@ const dbconnection = require('../config/database');
 
 // Create a new purchase
 const createPurchase = async (purchaseData) => {
-    const { vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, signature_id, status } = purchaseData;
+    const {
+        vendor_id,
+        purchase_date,
+        due_date,
+        reference_no,
+        supplier_invoice_serial_no,
+        notes,
+        terms_conditions,
+        total_amount,
+        payment_mode,
+        signature_id,
+        status,
+        invoice_details
+    } = purchaseData;
+
+    // Serialize invoice_details
+    const serializedInvoiceDetails = JSON.stringify(invoice_details);
+
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO purchases (vendor_id, purchase_date,
-             due_date, reference_no, supplier_invoice_serial_no,
-             product_id,subproduct_id, quantity, rate, notes, 
-             terms_conditions, total_amount, payment_mode, signature_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, signature_id, status],
+             due_date, reference_no, supplier_invoice_serial_no, notes, 
+             terms_conditions, total_amount, payment_mode, signature_id, status, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                vendor_id,
+                purchase_date,
+                due_date,
+                reference_no,
+                supplier_invoice_serial_no,
+                notes,
+                terms_conditions,
+                total_amount,
+                payment_mode,
+                signature_id,
+                status,
+                serializedInvoiceDetails
+            ],
             (error, results) => {
                 if (error) return reject(error);
                 resolve(results);
@@ -17,6 +46,7 @@ const createPurchase = async (purchaseData) => {
         );
     });
 };
+
 const createPurchaseExcel = async (purchases) => {
     const sql = `
         INSERT INTO purchases 
@@ -84,11 +114,56 @@ const getPurchaseById = async (id) => {
 
 // Update a purchase by ID
 const updatePurchase = async (id, purchaseData) => {
-    const { vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, signature_id, status } = purchaseData;
+    const {
+        vendor_id,
+        purchase_date,
+        due_date,
+        reference_no,
+        supplier_invoice_serial_no,
+        notes,
+        terms_conditions,
+        total_amount,
+        payment_mode,
+        signature_id,
+        status,
+        invoice_details
+    } = purchaseData;
+
+    // Serialize invoice_details
+    const serializedInvoiceDetails = JSON.stringify(invoice_details);
+
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE purchases SET vendor_id = ?, purchase_date = ?, due_date = ?, reference_no = ?, supplier_invoice_serial_no = ?, product_id = ?, subproduct_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, payment_mode = ?, signature_id = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [vendor_id, purchase_date, due_date, reference_no, supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, payment_mode, signature_id, status, id],
+            `UPDATE purchases 
+             SET vendor_id = ?, 
+                 purchase_date = ?, 
+                 due_date = ?, 
+                 reference_no = ?, 
+                 supplier_invoice_serial_no = ?, 
+                 notes = ?, 
+                 terms_conditions = ?, 
+                 total_amount = ?, 
+                 payment_mode = ?, 
+                 signature_id = ?, 
+                 status = ?, 
+                 invoice_details = ?, 
+                 updated_at = CURRENT_TIMESTAMP 
+             WHERE id = ?`,
+            [
+                vendor_id,
+                purchase_date,
+                due_date,
+                reference_no,
+                supplier_invoice_serial_no,
+                notes,
+                terms_conditions,
+                total_amount,
+                payment_mode,
+                signature_id,
+                status,
+                serializedInvoiceDetails,
+                id
+            ],
             (error, results) => {
                 if (error) return reject(error);
                 resolve(results);

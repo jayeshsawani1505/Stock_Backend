@@ -30,26 +30,38 @@ const createQuotationService = async (quotationData) => {
         quotation_date,
         due_date,
         status,
-        product_id,
-        subproduct_id,
-        quantity,
-        rate,
         notes,
         terms_conditions,
         total_amount,
-        signature_id
+        signature_id,
+        invoice_details
     } = quotationData;
+
+    // Stringify invoice_details if necessary (if it's an object/array)
+    const invoiceDetailsString = JSON.stringify(invoice_details);
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO quotations (quotation_number, customer_id, quotation_date, due_date,  status, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [quotation_number, customer_id, quotation_date, due_date, status, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_id],
+            'INSERT INTO quotations (quotation_number, customer_id, quotation_date, due_date, status, notes, terms_conditions, total_amount, signature_id, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [
+                quotation_number,
+                customer_id,
+                quotation_date,
+                due_date,
+                status,
+                notes,
+                terms_conditions,
+                total_amount,
+                signature_id,
+                invoiceDetailsString
+            ],
             (error, results) => {
-                if (error) reject(error);
+                if (error) reject(new Error(`Error creating quotation: ${error.message}`));
                 else resolve(results);
             }
         );
     });
+
     return { quotationId: result.insertId };
 };
 
@@ -74,13 +86,10 @@ const getQuotationsService = async () => {
         const query = `
              SELECT 
                 quotations.*, 
-                category.category_name,
                 customers.name AS customer_name,
                 customers.phone AS customer_phone,
                 customers.profile_photo AS customer_profile_photo
             FROM quotations
-            JOIN products ON quotations.product_id = products.product_id
-            JOIN category ON products.category_id = category.category_id
             JOIN customers ON quotations.customer_id = customers.customer_id ORDER BY quotations.created_at DESC
         `;
 
@@ -99,26 +108,39 @@ const updateQuotationService = async (id, quotationData) => {
         quotation_date,
         due_date,
         status,
-        product_id,
-        subproduct_id,
-        quantity,
-        rate,
         notes,
         terms_conditions,
         total_amount,
-        signature_id
+        signature_id,
+        invoice_details // Assuming you want to update this field as well
     } = quotationData;
+
+    // Stringify invoice_details if it's an object/array
+    const invoiceDetailsString = JSON.stringify(invoice_details);
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE quotations SET quotation_number = ?, customer_id = ?, quotation_date = ?, due_date = ?, status = ?, product_id = ?,subproduct_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [quotation_number, customer_id, quotation_date, due_date, status, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_id, id],
+            'UPDATE quotations SET quotation_number = ?, customer_id = ?, quotation_date = ?, due_date = ?, status = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [
+                quotation_number,
+                customer_id,
+                quotation_date,
+                due_date,
+                status,
+                notes,
+                terms_conditions,
+                total_amount,
+                signature_id,
+                invoiceDetailsString,
+                id
+            ],
             (error, results) => {
-                if (error) reject(error);
+                if (error) reject(new Error(`Error updating quotation: ${error.message}`));
                 else resolve(results);
             }
         );
     });
+
     return result.affectedRows > 0 ? { id, ...quotationData } : null;
 };
 

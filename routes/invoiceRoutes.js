@@ -26,6 +26,8 @@ router.get('/pdf/:id', invoiceController.getInvoiceDetailsForPDF);
 // Update an invoice by ID
 router.put('/:id', invoiceController.updateInvoice);
 
+router.put('/status/:id', invoiceController.updateInvoiceStatus);
+
 // Delete an invoice by ID
 router.delete('/:id', invoiceController.deleteInvoice);
 

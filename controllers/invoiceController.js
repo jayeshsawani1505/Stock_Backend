@@ -92,6 +92,25 @@ const getInvoiceById = async (req, res) => {
     }
 };
 
+const updateInvoiceStatus = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+        return res.status(400).json({ message: "Status is required." });
+    }
+
+    try {
+        const result = await invoiceService.updateInvoiceStatus(id, status);
+        res.status(200).json({ message: "Invoice status updated successfully.", data: result });
+    } catch (error) {
+        if (error.message === 'Invoice not found') {
+            return res.status(404).json({ message: error.message });
+        }
+        res.status(500).json({ message: "Error updating invoice status.", error: error.message });
+    }
+};
+
 // Get Invoice details by id for pdf
 const getInvoiceDetailsForPDF = async (req, res) => {
     const { id } = req.params;
@@ -185,5 +204,6 @@ module.exports = {
     uploadExcel,
     getInvoiceTotalsByStatus,
     getTotalInvoiceCount,
-    getInvoiceDetailsForPDF
+    getInvoiceDetailsForPDF,
+    updateInvoiceStatus
 };

@@ -7,20 +7,22 @@ const create = async (returnDebitNoteData) => {
         purchase_order_date,
         due_date,
         reference_no,
-        product_id,
-        subproduct_id,
-        quantity,
-        rate,
         notes,
         terms_conditions,
         total_amount,
-        signature_id, payment_mode, status
+        signature_id,
+        payment_mode,
+        status,
+        invoice_details
     } = returnDebitNoteData;
+
+    // Convert invoice_details to a JSON string if required by the table
+    const invoiceDetailsString = JSON.stringify(invoice_details);
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO return_debit_notes_purchases ( vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity,  rate, notes, terms_conditions, total_amount, signature_id, payment_mode,status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_id, payment_mode, status],
+            'INSERT INTO return_debit_notes_purchases (vendor_id, purchase_order_date, due_date, reference_no, notes, terms_conditions, total_amount, signature_id, payment_mode, status, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [vendor_id, purchase_order_date, due_date, reference_no, notes, terms_conditions, total_amount, signature_id, payment_mode, status, invoiceDetailsString],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -68,29 +70,46 @@ const update = async (id, returnDebitNoteData) => {
         purchase_order_date,
         due_date,
         reference_no,
-        product_id,
-        subproduct_id,
-        quantity,
-        rate,
         notes,
         terms_conditions,
         total_amount,
         signature_id,
         payment_mode,
-        status
+        status,
+        invoice_details
     } = returnDebitNoteData;
+
+    // Stringify invoice_details if necessary
+    const invoiceDetailsString = JSON.stringify(invoice_details);
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE return_debit_notes_purchases SET vendor_id = ?, purchase_order_date = ?, due_date = ?, reference_no = ?, product_id = ?, subproduct_id = ?, quantity = ?, rate = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, payment_mode = ?, status =  ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [vendor_id, purchase_order_date, due_date, reference_no, product_id, subproduct_id, quantity, rate, notes, terms_conditions, total_amount, signature_id, payment_mode, status, id],
+            'UPDATE return_debit_notes_purchases SET vendor_id = ?, purchase_order_date = ?, due_date = ?, reference_no = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, payment_mode = ?, status = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [
+                vendor_id,
+                purchase_order_date,
+                due_date,
+                reference_no,
+                notes,
+                terms_conditions,
+                total_amount,
+                signature_id,
+                payment_mode,
+                status,
+                invoiceDetailsString,
+                id
+            ],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
             }
         );
     });
-    return result.affectedRows > 0 ? { id, ...returnDebitNoteData } : null;
+
+    // Check if the update was successful
+    return result.affectedRows > 0
+        ? { id, ...returnDebitNoteData }
+        : null;
 };
 
 // Delete a return debit note by ID
