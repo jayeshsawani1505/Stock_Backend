@@ -44,7 +44,7 @@ const createInvoice = async (invoiceData) => {
         customer_id,
         invoice_date,
         due_date,
-        transpoter_name,
+        transporter_name,
         status,
         notes,
         terms_conditions,
@@ -59,14 +59,14 @@ const createInvoice = async (invoiceData) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO invoices 
-            (invoice_number, customer_id, invoice_date, due_date, transpoter_name, status, notes, terms_conditions, signature_id, total_amount, invoice_details) 
+            (invoice_number, customer_id, invoice_date, due_date, transporter_name, status, notes, terms_conditions, signature_id, total_amount, invoice_details) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 invoice_number,
                 customer_id,
                 invoice_date,
                 due_date,
-                transpoter_name,
+                transporter_name,
                 status,
                 notes,
                 terms_conditions,
@@ -263,14 +263,14 @@ const getInvoiceDetailsForPDF = async (id) => {
 
 // Update an invoice by ID
 const updateInvoice = async (id, invoiceData) => {
-    const { invoice_number, customer_id, invoice_date, due_date, transpoter_name, status, notes, terms_conditions, total_amount, signature_id, invoice_details } = invoiceData;
+    const { invoice_number, customer_id, invoice_date, due_date, transporter_name, status, notes, terms_conditions, total_amount, signature_id, invoice_details } = invoiceData;
 
     return new Promise((resolve, reject) => {
         const serializedInvoiceDetails = JSON.stringify(invoice_details); // Serialize invoice_details
 
         dbconnection.query(
-            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, transpoter_name = ?, status = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [invoice_number, customer_id, invoice_date, due_date, transpoter_name, status, notes, terms_conditions, total_amount, signature_id, serializedInvoiceDetails, id],
+            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, transporter_name = ?, status = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            [invoice_number, customer_id, invoice_date, due_date, transporter_name, status, notes, terms_conditions, total_amount, signature_id, serializedInvoiceDetails, id],
             async (error, results) => {
                 if (error) return reject(error);
 
