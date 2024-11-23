@@ -46,6 +46,23 @@ const getAllProducts = async (req, res) => {
     }
 };
 
+const getProductByCategoryId = async (req, res) => {
+    const { categoryId } = req.params; // Extract categoryId from request params
+
+    try {
+        const products = await productService.getProductsByCategoryId(categoryId);
+        if (products.length === 0) {
+            return res.status(404).json({ message: 'No products found for the given category ID' });
+        }
+        res.status(200).json({
+            message: 'Products retrieved successfully',
+            products
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve products: ' + error.message });
+    }
+};
+
 const updateProduct = async (req, res) => {
     try {
         const productId = req.params.id;
@@ -145,5 +162,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     uploadExcel,
-    addStock, removeStock
+    addStock, removeStock,
+    getProductByCategoryId
 };

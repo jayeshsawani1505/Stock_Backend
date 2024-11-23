@@ -23,6 +23,9 @@ router.post('/', upload.single('product_image'), productController.createProduct
 // Get all products
 router.get('/', productController.getAllProducts);
 
+// Get product by category Id
+router.get('/category/:categoryId', productController.getProductByCategoryId);
+
 // Get a product by ID
 router.get('/:id', productController.getProductById);
 

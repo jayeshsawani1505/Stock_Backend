@@ -47,6 +47,24 @@ const getProductsService = async () => {
     return rows;
 };
 
+const getProductsByCategoryId = async (categoryId) => {
+    const rows = await new Promise((resolve, reject) => {
+        dbconnection.query(
+            `SELECT products.*, category.category_name
+             FROM products
+             JOIN category ON products.category_id = category.category_id
+             WHERE products.category_id = ?
+             ORDER BY created_at DESC`,
+            [categoryId], // Passing categoryId as a parameter to avoid SQL injection
+            (error, results) => {
+                if (error) reject(error);
+                else resolve(results);
+            }
+        );
+    });
+    return rows;
+};
+
 // Update a product by ID
 const updateProductService = async (id, productData) => {
     const { item_type, product_name, product_code, category_id, quantity, selling_price, purchase_price, units, alert_quantity, barcode_code, discount_type, tax, description, product_image } = productData;
@@ -117,5 +135,6 @@ module.exports = {
     getProductsService,
     updateProductService,
     deleteProductService,
-    inStock, outStock
+    inStock, outStock,
+    getProductsByCategoryId
 };
