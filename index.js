@@ -66,6 +66,7 @@ const purchasesRoutes = require('./routes/purchasesRoutes');
 const returnDebitNotesPurchasesRoutes = require('./routes/returnDebitNotesPurchasesRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const commonRoutes = require('./routes/commonRoutes');
+const purchasePaymentRoutes = require('./routes/purchasePaymentRoutes');
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -87,6 +88,7 @@ app.use('/api/purchases', purchasesRoutes);
 app.use('/api/return-debit-notes-purchases', returnDebitNotesPurchasesRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/common', commonRoutes);
+app.use('/api/purchase-payments', purchasePaymentRoutes);
 
 
 app.listen(PORT, () => {

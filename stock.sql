@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2024 at 07:08 AM
+-- Generation Time: Nov 30, 2024 at 10:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,12 +50,33 @@ INSERT INTO `category` (`category_id`, `category_name`, `category_photo`, `descr
 (10, 'Clothing', NULL, 'Apparel and accessories', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (11, 'Kitchen', NULL, 'Kitchen appliances and tools', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (12, 'Books', NULL, 'Educational and fiction books', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
-(13, 'Toys', NULL, 'Children toys', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
+(13, 'Toys', NULL, 'Children\'s toys', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (14, 'Sports Equipment', NULL, 'Gear and accessories for sports', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (15, 'Health & Wellness', NULL, 'Vitamins, supplements, and wellness products', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (16, 'Beauty', NULL, 'Skincare and beauty products', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (17, 'Automotive', NULL, 'Car parts and accessories', '2024-11-08 03:59:02', '2024-11-08 03:59:02'),
 (18, 'booksai', '/uploads/category/1731567330409-644110513.jpg', 'sasas', '2024-11-11 13:35:57', '2024-11-14 06:55:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company`
+--
+
+CREATE TABLE `company` (
+  `company_id` int(11) NOT NULL,
+  `company_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`company_id`, `company_name`) VALUES
+(1, 'PEC Treding'),
+(2, 'PEC Naroda'),
+(3, 'PEC Nagpur'),
+(4, 'PEC Nanded');
 
 -- --------------------------------------------------------
 
@@ -146,7 +167,7 @@ INSERT INTO `customers` (`customer_id`, `profile_photo`, `name`, `currency`, `em
 (24, 'photo8.jpg', 'Emma Blue', 'INR', 'emma@example.in', 'www.emmablue.in', '9988776655', 'Note 8', 'Emma Blue', '505 Billing Path', NULL, 'India', 'Maharashtra', 'Mumbai', '400001', 'Emma Blue', '505 Shipping Path', NULL, 'India', 'Maharashtra', 'Mumbai', '400001', 'SBI', 'Central', '8901234567890123', 'Emma Blue', 'SBININBB', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
 (25, 'photo9.jpg', 'Max Gray', 'NZD', 'max@example.nz', 'www.maxgray.co.nz', '3344556677', 'Note 9', 'Max Gray', '606 Billing Terrace', NULL, 'New Zealand', 'Auckland', 'Auckland', '1010', 'Max Gray', '606 Shipping Terrace', NULL, 'New Zealand', 'Auckland', 'Auckland', '1010', 'ANZ', 'East', '9012345678901234', 'Max Gray', 'ANZBNZ22', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
 (26, 'photo10.jpg', 'Sara Green', 'SGD', 'sara@example.sg', 'www.saragreen.sg', '7766554433', 'Note 10', 'Sara Green', '707 Billing Circle', NULL, 'Singapore', 'Central', 'Singapore', '069112', 'Sara Green', '707 Shipping Circle', NULL, 'Singapore', 'Central', 'Singapore', '069112', 'DBS', 'West', '1234567890123457', 'Sara Green', 'DBSSSGSG', '2024-11-08 03:25:24', '2024-11-08 03:25:24'),
-(27, NULL, 'new test 123', '₹', 'test@gmail.com', 'dsd', '2212121212', 'dsd', 'dsd', 'dsd', 'dsd', 'dsd', 'dsdsd', 'sd', '323232', 'dsd', 'dsd', 'dsd', 'dsd', 'dsdsd', 'sd', '323232', 'ewewe', 'ewewe', '323232323', 'ewewe', 'dsdw323', '2024-11-11 13:32:22', '2024-11-11 13:32:32'),
+(27, 'null', 'new test 12345', '₹', 'test@gmail.com', 'dsd', '2212121212', 'dsd', 'dsd', 'dsd', 'dsd', 'dsd', 'dsdsd', 'sd', '323232', 'dsd', 'dsd', 'dsd', 'dsd', 'dsdsd', 'sd', '323232', 'ewewe', 'ewewe', '323232323', 'ewewe', 'dsdw323', '2024-11-11 13:32:22', '2024-11-26 13:23:19'),
 (28, '/uploads/customer/1731562441892-510194116.jpg', 'drashti', '₹', 'drashti@gmail.com', 'no.com', '7878784547', 'no', 'drashti', 'naroda', 'naroda', 'india', 'guj', 'amd', '382330', 'drashti', 'naroda', 'naroda', 'india', 'guj', 'amd', '382330', 'naroda', 'naroda', '21212122212', 'drashti naroda', 'naroda123', '2024-11-14 05:15:09', '2024-11-14 05:34:02');
 
 -- --------------------------------------------------------
@@ -182,7 +203,8 @@ CREATE TABLE `delivery_challans` (
 INSERT INTO `delivery_challans` (`id`, `delivery_number`, `customer_id`, `delivery_date`, `due_date`, `product_id`, `subproduct_id`, `quantity`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `status`, `invoice_details`) VALUES
 (1, 'DCN-001', 28, '2024-11-14', '2024-11-19', 9, 2, 3323, 3232.00, 'esdsd', 'dsdsd', 32323.00, 2, '2024-11-16 10:44:18', '2024-11-16 10:58:58', 'unpaid', ''),
 (2, 'DCN-002', 13, '2024-11-16', '2024-11-17', 1, 1, 12, 12.00, 'dsdsd', 'dsd', 540.00, 2, '2024-11-16 10:56:20', '2024-11-19 08:47:18', 'paid', '[{\"product_id\":10,\"subproduct_id\":null,\"quantity\":4,\"unit\":\"box\",\"rate\":110,\"total_amount\":440},{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100}]'),
-(3, 'DCN-003', 28, '2024-11-19', '2024-11-13', NULL, 0, NULL, NULL, 'bo9,o', 'huoo', 200.00, 1, '2024-11-19 08:46:50', '2024-11-19 08:46:50', 'unpaid', '[{\"product_id\":10,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100},{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100}]');
+(3, 'DCN-003', 28, '2024-11-19', '2024-11-13', NULL, 0, NULL, NULL, 'bo9,o', 'huoo', 200.00, 1, '2024-11-19 08:46:50', '2024-11-19 08:46:50', 'unpaid', '[{\"product_id\":10,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100},{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100}]'),
+(4, 'DCN-004', 28, '2024-11-26', '2024-11-28', NULL, 0, NULL, NULL, 'll', 'll', 100.00, 2, '2024-11-27 12:01:47', '2024-11-27 12:01:47', 'unpaid', '[{\"category_id\":8,\"product_id\":11,\"quantity\":10,\"unit\":\"cartoon\",\"rate\":10,\"total_amount\":100}]');
 
 -- --------------------------------------------------------
 
@@ -261,10 +283,11 @@ CREATE TABLE `invoices` (
   `customer_id` int(11) DEFAULT NULL,
   `invoice_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
-  `transpoter_name` varchar(100) DEFAULT NULL,
+  `transporter_name` varchar(100) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   `recurring` tinyint(1) DEFAULT 0,
   `recurring_cycle` varchar(55) DEFAULT NULL,
+  `category_id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `subproduct_id` int(10) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
@@ -273,6 +296,9 @@ CREATE TABLE `invoices` (
   `bank_id` int(11) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `terms_conditions` text DEFAULT NULL,
+  `adjustmentType` varchar(255) DEFAULT NULL,
+  `adjustmentValue` varchar(255) DEFAULT NULL,
+  `subtotal_amount` varchar(255) DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `signature_id` int(10) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -284,21 +310,33 @@ CREATE TABLE `invoices` (
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`id`, `invoice_number`, `customer_id`, `invoice_date`, `due_date`, `transpoter_name`, `status`, `recurring`, `recurring_cycle`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `bank_id`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `invoice_details`) VALUES
-(1, 'INV-001', 14, '2024-10-26', '2024-11-26', 'REF-001', 'paid', NULL, '0', 1, NULL, 11, NULL, 25.00, NULL, 'Thank you for your business.', 'Payment is due within 30 days.', 150.00, NULL, '2024-11-07 10:42:53', '2024-11-07 14:19:47', NULL),
-(8, 'INV-002', 14, '2024-11-06', '2024-11-10', 'REF002', 'unpaid', NULL, '0', 1, 1, 10, NULL, 150.00, NULL, 'teser', 'Custom Terms', 1500.00, 2, '2024-11-08 06:25:39', '2024-11-15 12:23:41', NULL),
-(9, 'INV003', 14, NULL, NULL, 'REF003', 'unpaid', NULL, '0', 2, NULL, 3, NULL, 100.00, NULL, '-', 'Standard Terms', 300.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:30', NULL),
-(10, 'INV004', 16, NULL, NULL, 'REF004', 'partially_paid', NULL, '0', 2, NULL, 7, NULL, 250.00, NULL, '-', 'Custom Terms', 1750.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:35', NULL),
-(11, 'INV-005', 17, '1970-01-01', '1970-01-01', 'REF005', 'cancelled', NULL, '0', 7, NULL, 8, NULL, 180.00, NULL, '-', 'Standard Terms', 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-15 12:25:25', NULL),
-(12, 'INV006', 18, NULL, NULL, 'REF006', 'draft', NULL, '0', 8, NULL, 12, NULL, 120.00, NULL, '-', 'Custom Terms', 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:17', NULL),
-(13, 'INV007', 18, NULL, NULL, 'REF007', 'refunded', NULL, '0', 7, NULL, 9, NULL, 220.00, NULL, '-', 'Standard Terms', 1980.00, NULL, '2024-11-08 06:25:39', '2024-11-14 11:03:41', NULL),
-(14, 'INV008', 20, NULL, NULL, 'REF008', 'unpaid', NULL, '0', 8, NULL, 6, NULL, 170.00, NULL, '-', 'Custom Terms', 1020.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:25', NULL),
-(15, 'INV009', 21, NULL, NULL, 'REF009', 'paid', NULL, '0', 9, NULL, 4, NULL, 200.00, NULL, '-', 'Standard Terms', 800.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:34', NULL),
-(16, 'INV010', 22, '1970-01-01', '1970-01-01', 'REF010', 'overdue', NULL, '0', 1, NULL, 11, NULL, 130.00, NULL, '-fdfdf', 'Custom Terms', 3322.00, NULL, '2024-11-08 06:25:39', '2024-11-12 08:06:14', NULL),
-(17, 'INV0011', 13, NULL, NULL, 'REF001', 'overdue', NULL, '0', 9, NULL, 5, NULL, 200.00, NULL, '-', 'Standard Terms', 1000.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:41', NULL),
-(19, 'INV-018', 28, '2024-11-15', '2024-11-19', 'hhh', 'unpaid', NULL, '02', NULL, NULL, NULL, NULL, NULL, NULL, 'jhhj', 'jhhgh', 8000.00, 2, '2024-11-18 11:59:41', '2024-11-18 13:52:33', '[{\"product_id\":8,\"subproduct_id\":null,\"quantity\":20,\"unit\":\"box\",\"rate\":400,\"total_amount\":8000}]'),
-(20, 'INV-020', 13, '2024-11-19', '2024-11-22', 'rere', 'unpaid', NULL, 'june', NULL, NULL, NULL, NULL, NULL, NULL, 'dfd', 'fdfdf', 2000.00, 1, '2024-11-18 13:55:53', '2024-11-18 13:55:53', '[{\"subproduct_id\":3,\"product_id\":9,\"quantity\":20,\"unit\":\"box\",\"rate\":100,\"total_amount\":2000},{\"subproduct_id\":2,\"product_id\":9,\"quantity\":20,\"unit\":\"box\",\"rate\":100,\"total_amount\":2000}]'),
-(21, 'INV-021', 14, '2024-11-16', '2024-11-17', 'dsd', 'paid', NULL, 'dsd', NULL, NULL, NULL, NULL, NULL, NULL, 'fdfdf', 'fdfdf', 800.00, 2, '2024-11-18 14:45:36', '2024-11-19 05:18:13', '[{\"product_id\":8,\"subproduct_id\":null,\"quantity\":4,\"unit\":\"box\",\"rate\":200,\"total_amount\":800},{\"product_id\":9,\"subproduct_id\":null,\"quantity\":4,\"unit\":\"box\",\"rate\":100,\"total_amount\":400}]');
+INSERT INTO `invoices` (`id`, `invoice_number`, `customer_id`, `invoice_date`, `due_date`, `transporter_name`, `status`, `recurring`, `recurring_cycle`, `category_id`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `bank_id`, `notes`, `terms_conditions`, `adjustmentType`, `adjustmentValue`, `subtotal_amount`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `invoice_details`) VALUES
+(1, 'INV-001', 14, '2024-10-26', '2024-11-26', 'REF-001', 'paid', NULL, '0', 0, 1, NULL, 11, NULL, 25.00, NULL, 'Thank you for your business.', 'Payment is due within 30 days.', NULL, NULL, NULL, 150.00, NULL, '2024-11-07 10:42:53', '2024-11-07 14:19:47', NULL),
+(8, 'INV-002', 14, '2024-11-06', '2024-11-10', 'REF002', 'unpaid', NULL, '0', 0, 1, 1, 10, NULL, 150.00, NULL, 'teser', 'Custom Terms', NULL, NULL, NULL, 1500.00, 2, '2024-11-08 06:25:39', '2024-11-15 12:23:41', NULL),
+(9, 'INV003', 14, NULL, NULL, 'REF003', 'unpaid', NULL, '0', 0, 2, NULL, 3, NULL, 100.00, NULL, '-', 'Standard Terms', NULL, NULL, NULL, 300.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:30', NULL),
+(10, 'INV004', 16, NULL, NULL, 'REF004', 'partially_paid', NULL, '0', 0, 2, NULL, 7, NULL, 250.00, NULL, '-', 'Custom Terms', NULL, NULL, NULL, 1750.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:35', NULL),
+(11, 'INV-005', 17, '1970-01-01', '1970-01-01', 'REF005', 'cancelled', NULL, '0', 0, 7, NULL, 8, NULL, 180.00, NULL, '-', 'Standard Terms', NULL, NULL, NULL, 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-15 12:25:25', NULL),
+(12, 'INV006', 18, NULL, NULL, 'REF006', 'draft', NULL, '0', 0, 8, NULL, 12, NULL, 120.00, NULL, '-', 'Custom Terms', NULL, NULL, NULL, 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:17', NULL),
+(13, 'INV007', 18, NULL, NULL, 'REF007', 'refunded', NULL, '0', 0, 7, NULL, 9, NULL, 220.00, NULL, '-', 'Standard Terms', NULL, NULL, NULL, 1980.00, NULL, '2024-11-08 06:25:39', '2024-11-14 11:03:41', NULL),
+(14, 'INV008', 20, NULL, NULL, 'REF008', 'unpaid', NULL, '0', 0, 8, NULL, 6, NULL, 170.00, NULL, '-', 'Custom Terms', NULL, NULL, NULL, 1020.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:25', NULL),
+(15, 'INV009', 21, NULL, NULL, 'REF009', 'paid', NULL, '0', 0, 9, NULL, 4, NULL, 200.00, NULL, '-', 'Standard Terms', NULL, NULL, NULL, 800.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:34', NULL),
+(16, 'INV010', 22, '1970-01-01', '1970-01-01', 'REF010', 'overdue', NULL, '0', 0, 1, NULL, 11, NULL, 130.00, NULL, '-fdfdf', 'Custom Terms', NULL, NULL, NULL, 3322.00, NULL, '2024-11-08 06:25:39', '2024-11-12 08:06:14', NULL),
+(17, 'INV0011', 13, NULL, NULL, 'REF001', 'overdue', NULL, '0', 0, 9, NULL, 5, NULL, 200.00, NULL, '-', 'Standard Terms', NULL, NULL, NULL, 1000.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:41', NULL),
+(19, 'INV-018', 28, '2024-11-15', '2024-11-19', 'hhh', 'unpaid', NULL, '02', 0, NULL, NULL, NULL, NULL, NULL, NULL, 'jhhj', 'jhhgh', NULL, NULL, NULL, 8000.00, 2, '2024-11-18 11:59:41', '2024-11-18 13:52:33', '[{\"product_id\":8,\"subproduct_id\":null,\"quantity\":20,\"unit\":\"box\",\"rate\":400,\"total_amount\":8000}]'),
+(20, 'INV-020', 13, '2024-11-19', '2024-11-22', 'rere', 'unpaid', NULL, 'june', 0, NULL, NULL, NULL, NULL, NULL, NULL, 'dfd', 'fdfdf', NULL, NULL, NULL, 2000.00, 1, '2024-11-18 13:55:53', '2024-11-18 13:55:53', '[{\"subproduct_id\":3,\"product_id\":9,\"quantity\":20,\"unit\":\"box\",\"rate\":100,\"total_amount\":2000},{\"subproduct_id\":2,\"product_id\":9,\"quantity\":20,\"unit\":\"box\",\"rate\":100,\"total_amount\":2000}]'),
+(21, 'INV-021', 14, '2024-11-16', '2024-11-17', 'dsd', 'paid', NULL, 'dsd', 0, NULL, NULL, NULL, NULL, NULL, NULL, 'fdfdf', 'fdfdf', NULL, NULL, NULL, 800.00, 2, '2024-11-18 14:45:36', '2024-11-19 05:18:13', '[{\"product_id\":8,\"subproduct_id\":null,\"quantity\":4,\"unit\":\"box\",\"rate\":200,\"total_amount\":800},{\"product_id\":9,\"subproduct_id\":null,\"quantity\":4,\"unit\":\"box\",\"rate\":100,\"total_amount\":400}]'),
+(22, 'INV-022', 27, '2024-11-20', '2024-11-21', 'test', 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'klk', 'lkl', NULL, NULL, NULL, 0.00, 2, '2024-11-21 15:47:48', '2024-11-21 15:47:48', '[{\"product_id\":8,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":100,\"total_amount\":1000}]'),
+(23, 'INV-023', 20, '2024-11-22', '2024-11-24', NULL, 'unpaid', 0, NULL, 8, NULL, NULL, NULL, NULL, NULL, NULL, 'dsds', 'dsd', NULL, NULL, NULL, 200.00, 2, '2024-11-23 08:32:10', '2024-11-23 08:32:10', '[{\"product_id\":11,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100},{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100}]'),
+(24, 'INV-024', 28, '2024-11-27', '2024-11-27', NULL, 'partially_paid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'cxcx', 'cxcx', NULL, NULL, NULL, 2100.00, 2, '2024-11-27 09:29:52', '2024-11-27 09:29:52', '[{\"category_id\":10,\"product_id\":8,\"quantity\":10,\"unit\":\"piece\",\"rate\":10},{\"category_id\":8,\"product_id\":9,\"quantity\":10,\"unit\":\"piece\",\"rate\":100},{\"category_id\":11,\"product_id\":10,\"quantity\":100,\"unit\":\"piece\",\"rate\":10}]'),
+(25, 'INV-025', 20, '2024-11-12', '2024-11-29', NULL, 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'dfdff', 'fdf', NULL, NULL, NULL, 600.00, 2, '2024-11-28 08:06:28', '2024-11-28 08:06:28', '[{\"category_id\":8,\"product_id\":11,\"quantity\":10,\"unit\":\"cartoon\",\"rate\":10,\"total_amount\":100},{\"category_id\":10,\"product_id\":9,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100},{\"category_id\":9,\"product_id\":8,\"quantity\":20,\"unit\":\"box\",\"rate\":10,\"total_amount\":200},{\"category_id\":8,\"product_id\":7,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100},{\"category_id\":9,\"product_id\":10,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100}]'),
+(27, 'INV-026', 13, '2024-11-27', '2024-11-29', NULL, 'refunded', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'dsddsd', 'dsdsd', NULL, NULL, NULL, 500.00, 2, '2024-11-28 13:39:36', '2024-11-28 13:46:56', '[{\"category_id\":8,\"product_id\":11,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100},{\"category_id\":10,\"product_id\":9,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100},{\"category_id\":8,\"product_id\":7,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100},{\"category_id\":9,\"product_id\":10,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100},{\"category_id\":9,\"product_id\":8,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100}]'),
+(28, 'INV-028', 20, '2024-11-28', '2024-11-29', NULL, 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'ds', 'dsdd', 'add', '10', '10100', 10110.00, 2, '2024-11-29 12:02:18', '2024-11-29 12:02:18', '[{\"category_id\":8,\"product_id\":11,\"quantity\":100,\"unit\":\"piece\",\"rate\":100,\"subtotal_amount\":10000},{\"category_id\":10,\"product_id\":9,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"subtotal_amount\":100},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0}]'),
+(29, 'INV-028', 20, '2024-11-28', '2024-11-29', NULL, 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'ds', 'dsdd', 'add', '10', '10100', 10110.00, 2, '2024-11-29 12:03:23', '2024-11-29 12:03:23', '[{\"category_id\":8,\"product_id\":11,\"quantity\":100,\"unit\":\"piece\",\"rate\":100,\"subtotal_amount\":10000},{\"category_id\":10,\"product_id\":9,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"subtotal_amount\":100},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0}]'),
+(30, 'INV-030', 20, '2024-11-28', '2024-11-28', NULL, 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'kkii', 'rere', 'add', '11', '1000', 1011.00, 2, '2024-11-29 12:17:08', '2024-11-29 12:17:08', '[{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":10,\"unit\":\"piece\",\"rate\":100,\"subtotal_amount\":1000}]'),
+(31, 'INV-030', 20, '2024-11-28', '2024-11-28', NULL, 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'kkii', 'rere', 'add', '11', '1000', 1011.00, 2, '2024-11-29 12:17:57', '2024-11-29 12:17:57', '[{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":null,\"product_id\":null,\"quantity\":0,\"unit\":\"piece\",\"rate\":0,\"subtotal_amount\":0},{\"category_id\":8,\"product_id\":11,\"quantity\":10,\"unit\":\"piece\",\"rate\":100,\"subtotal_amount\":1000}]'),
+(33, 'INV-032', 28, '2024-11-28', '2024-11-29', NULL, 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'ds', 'dsd', 'add', '1', '10', 11.00, 1, '2024-11-29 12:40:47', '2024-11-29 12:40:47', '[{\"category_id\":9,\"product_id\":8,\"quantity\":1,\"unit\":\"piece\",\"rate\":10,\"subtotal_amount\":10}]'),
+(34, 'INV-034', 28, '2024-11-28', '2024-11-29', NULL, 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'dd', 'dsd', 'add', '10', '10', 20.00, 0, '2024-11-30 05:35:28', '2024-11-30 05:35:28', '[{\"category_id\":6,\"product_id\":1,\"quantity\":1,\"unit\":\"piece\",\"rate\":10,\"subtotal_amount\":10}]'),
+(35, 'INV-035', 20, '2024-11-29', '2024-12-01', NULL, 'unpaid', 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'dsddsd', 'dsdsd', 'add', '1', '200', 201.00, 2, '2024-11-30 06:30:32', '2024-11-30 06:30:32', '[{\"category_name\":\"Clothing\",\"product_name\":\"T-Shirt\",\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"subtotal_amount\":100},{\"category_name\":\"Furniture\",\"product_name\":\"Chair\",\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"subtotal_amount\":100}]');
 
 -- --------------------------------------------------------
 
@@ -348,7 +386,8 @@ CREATE TABLE `messages` (
 CREATE TABLE `payments` (
   `payment_id` int(11) NOT NULL,
   `invoice_id` int(11) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
+  `receiveAmount` decimal(10,2) NOT NULL,
+  `pendingAmount` decimal(10,2) NOT NULL,
   `payment_mode` varchar(55) NOT NULL,
   `payment_date` date NOT NULL,
   `payment_status` varchar(55) NOT NULL DEFAULT 'Pending',
@@ -361,10 +400,13 @@ CREATE TABLE `payments` (
 -- Dumping data for table `payments`
 --
 
-INSERT INTO `payments` (`payment_id`, `invoice_id`, `amount`, `payment_mode`, `payment_date`, `payment_status`, `description`, `created_at`, `updated_at`) VALUES
-(3, 20, 10.00, 'credit_card', '2024-11-19', 'Pending', 'na', '2024-11-19 13:40:57', '2024-11-19 13:40:57'),
-(6, 19, 1400.00, 'paypal', '2024-11-19', 'unpaid', 'no', '2024-11-19 14:31:52', '2024-11-19 14:31:52'),
-(7, 21, 400.00, 'credit_card', '2024-11-19', 'unpaid', 'no', '2024-11-19 15:46:51', '2024-11-19 15:46:51');
+INSERT INTO `payments` (`payment_id`, `invoice_id`, `receiveAmount`, `pendingAmount`, `payment_mode`, `payment_date`, `payment_status`, `description`, `created_at`, `updated_at`) VALUES
+(3, 20, 10.00, 0.00, 'credit_card', '2024-11-19', 'Pending', 'na', '2024-11-19 13:40:57', '2024-11-19 13:40:57'),
+(6, 19, 1400.00, 0.00, 'paypal', '2024-11-19', 'unpaid', 'no', '2024-11-19 14:31:52', '2024-11-19 14:31:52'),
+(7, 21, 400.00, 0.00, 'credit_card', '2024-11-19', 'unpaid', 'no', '2024-11-19 15:46:51', '2024-11-19 15:46:51'),
+(8, 25, 300.00, 0.00, 'credit_card', '2024-11-29', 'partially_paid', 'kslas', '2024-11-29 09:37:42', '2024-11-29 09:37:42'),
+(9, 33, 4.00, 7.00, 'credit_card', '2024-11-29', 'unpaid', 'ewe', '2024-11-29 13:17:43', '2024-11-29 13:17:43'),
+(10, 35, 201.00, 0.00, 'paypal', '2024-11-29', 'paid', 'aai jase', '2024-11-30 07:01:35', '2024-11-30 07:01:50');
 
 -- --------------------------------------------------------
 
@@ -397,13 +439,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `item_type`, `product_name`, `product_code`, `category_id`, `quantity`, `selling_price`, `purchase_price`, `units`, `alert_quantity`, `barcode_code`, `discount_type`, `tax`, `description`, `product_image`, `created_at`, `updated_at`) VALUES
-(1, 'Product', 'Sample Product', 'SP001', 6, 100, 25.50, 20.00, 'Box', 10, NULL, NULL, NULL, 'This is a sample product description.', NULL, '2024-11-07 09:46:47', '2024-11-07 10:31:56'),
+(1, 'Product', 'Sample Product', 'SP001', 6, 99, 25.50, 20.00, 'Box', 10, NULL, NULL, NULL, 'This is a sample product description.', NULL, '2024-11-07 09:46:47', '2024-11-30 05:35:28'),
 (2, 'Product', 'ewewe1212', 'ewewe', 1, 22, 22.00, 22.00, 'Pieces', 22, NULL, NULL, NULL, 'edsdsd', NULL, '2024-11-07 10:26:14', '2024-11-07 10:26:55'),
-(7, '', 'Laptop', 'LAP123', 8, 112, 50000.00, 45000.00, 'pcs', 10, NULL, NULL, NULL, 'High-end laptop', NULL, '2024-11-08 04:37:46', '2024-11-15 12:24:19'),
-(8, '', 'Chair', 'CHR456', 9, 116, 1500.00, 1200.00, 'pcs', 20, NULL, NULL, NULL, 'Ergonomic chair', NULL, '2024-11-08 04:37:46', '2024-11-18 15:42:08'),
-(9, '', 'T-Shirt', 'TSH789', 10, 482, 300.00, 200.00, 'pcs', 50, NULL, NULL, NULL, 'Cotton T-shirt', NULL, '2024-11-08 04:37:46', '2024-11-18 15:42:08'),
-(10, 'Product', 'newe', 'sa2q', 9, 62, 1212.00, 122.00, 'Box', 122, NULL, NULL, NULL, 'dsdsd', '/uploads/product/1731573684314-267880745.png', '2024-11-11 13:35:42', '2024-11-15 11:08:45'),
-(11, 'Product', 'home speacker', 'homeKU', 8, 100, 500.00, 250.00, 'piece', 10, NULL, NULL, NULL, 'na', '', '2024-11-19 10:16:33', '2024-11-19 10:16:33');
+(7, '', 'Laptop', 'LAP123', 8, 82, 50000.00, 45000.00, 'pcs', 10, NULL, NULL, NULL, 'High-end laptop', NULL, '2024-11-08 04:37:46', '2024-11-28 13:39:36'),
+(8, '', 'Chair', 'CHR456', 9, 45, 1500.00, 1200.00, 'pcs', 20, NULL, NULL, NULL, 'Ergonomic chair', NULL, '2024-11-08 04:37:46', '2024-11-30 06:30:32'),
+(9, '', 'T-Shirt', 'TSH789', 10, 421, 300.00, 200.00, 'pcs', 50, NULL, NULL, NULL, 'Cotton T-shirt', NULL, '2024-11-08 04:37:46', '2024-11-30 06:30:32'),
+(10, 'Product', 'newe', 'sa2q', 9, 22, 1212.00, 122.00, 'Box', 122, NULL, NULL, NULL, 'dsdsd', '/uploads/product/1731573684314-267880745.png', '2024-11-11 13:35:42', '2024-11-28 13:39:36'),
+(11, 'Product', 'home speacker', 'homeKU', 8, 70, 500.00, 250.00, 'piece', 10, NULL, NULL, NULL, 'na', '', '2024-11-19 10:16:33', '2024-11-28 13:39:36');
 
 -- --------------------------------------------------------
 
@@ -449,7 +491,8 @@ INSERT INTO `purchases` (`id`, `vendor_id`, `purchase_date`, `due_date`, `refere
 (11, 15, '0000-00-00', '0000-00-00', '21', '12', 10, NULL, 122, NULL, 212.00, 'dsd', 'sdsd', 1222.00, NULL, '2024-11-11 13:47:25', '2024-11-11 13:47:25', 'cash', 'paid', ''),
 (12, 14, '0000-00-00', '0000-00-00', 'asas', 'asa', 7, NULL, 212, NULL, 212.00, 'sdsd', 'dsdd', 212.00, NULL, '2024-11-11 13:48:39', '2024-11-11 13:48:39', 'cash', 'partially_paid', ''),
 (13, 15, '2024-11-12', '2024-11-13', 'sd', 'sdd', 9, 2, 21, NULL, 212.00, 'dds', 'sd', 212.00, 2, '2024-11-11 13:49:08', '2024-11-15 06:26:22', 'cash', 'paid', ''),
-(14, 5, '2024-11-17', '2024-11-19', 'jkjkk', 'kjjj', NULL, NULL, NULL, NULL, NULL, 'yuhgvh', 'jbhjb;', 2000.00, 2, '2024-11-19 07:24:37', '2024-11-19 10:23:52', 'credit_card', 'paid', '[{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":100,\"total_amount\":1000},{\"product_id\":8,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":100,\"total_amount\":1000}]');
+(14, 5, '2024-11-17', '2024-11-19', 'jkjkk', 'kjjj', NULL, NULL, NULL, NULL, NULL, 'yuhgvh', 'jbhjb;', 2000.00, 2, '2024-11-19 07:24:37', '2024-11-19 10:23:52', 'credit_card', 'paid', '[{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":100,\"total_amount\":1000},{\"product_id\":8,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":100,\"total_amount\":1000}]'),
+(15, 13, '2024-11-13', '2024-11-27', '00', '32', NULL, NULL, NULL, NULL, NULL, 'fdff', 'fdf', 150.00, 2, '2024-11-27 10:57:03', '2024-11-27 10:57:03', 'credit_card', 'unpaid', '[{\"category_id\":8,\"product_id\":10,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100},{\"category_id\":9,\"product_id\":10,\"quantity\":10,\"unit\":\"piece\",\"rate\":5,\"total_amount\":50}]');
 
 -- --------------------------------------------------------
 
@@ -525,7 +568,8 @@ INSERT INTO `return_debit_notes_purchases` (`id`, `vendor_id`, `purchase_order_d
 (5, 6, NULL, '2023-02-15', 'REF004', 8, NULL, 25, 120.00, 'Seasonal Stock', 'Terms D', 3000.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Cash', 'Completed', ''),
 (6, 8, NULL, '2023-02-20', 'REF005', 9, NULL, 30, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Credit', 'Pending', ''),
 (7, 9, '2023-02-19', '2023-02-19', 'REF005', 8, NULL, 30, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 11:47:25', '2024-11-12 12:31:08', 'Credit', 'paid', ''),
-(8, 5, '2024-11-18', '2024-11-20', 'klknlk', NULL, NULL, NULL, NULL, 'vdfv', 'vfvdfv', 500.00, 1, '2024-11-19 07:44:58', '2024-11-19 07:46:44', 'Cash', 'unpaid', '[{\"product_id\":9,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":50,\"total_amount\":500}]');
+(8, 5, '2024-11-18', '2024-11-20', 'klknlk', NULL, NULL, NULL, NULL, 'vdfv', 'vfvdfv', 500.00, 1, '2024-11-19 07:44:58', '2024-11-19 07:46:44', 'Cash', 'unpaid', '[{\"product_id\":9,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":50,\"total_amount\":500}]'),
+(9, 11, '2024-11-20', '2024-11-27', '00', NULL, NULL, NULL, NULL, 'ewewe', 'ewewe', 200.00, 2, '2024-11-27 11:06:18', '2024-11-27 11:06:18', 'credit_card', 'partially_paid', '[{\"category_id\":18,\"product_id\":11,\"quantity\":10,\"unit\":\"piece\",\"rate\":10,\"total_amount\":100},{\"category_id\":9,\"product_id\":8,\"quantity\":10,\"unit\":\"cartoon\",\"rate\":10,\"total_amount\":100}]');
 
 -- --------------------------------------------------------
 
@@ -623,6 +667,12 @@ INSERT INTO `vendors` (`vendor_id`, `vendor_name`, `email`, `phone_number`, `clo
 ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`),
   ADD UNIQUE KEY `category_name` (`category_name`);
+
+--
+-- Indexes for table `company`
+--
+ALTER TABLE `company`
+  ADD PRIMARY KEY (`company_id`);
 
 --
 -- Indexes for table `creditnoteinvoices`
@@ -752,6 +802,12 @@ ALTER TABLE `category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT for table `company`
+--
+ALTER TABLE `company`
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `creditnoteinvoices`
 --
 ALTER TABLE `creditnoteinvoices`
@@ -767,7 +823,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `delivery_challans`
 --
 ALTER TABLE `delivery_challans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -785,7 +841,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -803,7 +859,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -815,7 +871,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `quotations`
@@ -827,7 +883,7 @@ ALTER TABLE `quotations`
 -- AUTO_INCREMENT for table `return_debit_notes_purchases`
 --
 ALTER TABLE `return_debit_notes_purchases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `signature`
