@@ -172,6 +172,61 @@ const getQuotationsByCustomerIdService = async (customerId) => {
     });
     return rows;
 };
+const getFilteredQuotationsService = async (filters) => {
+    try {
+        const { startDate, endDate, customerId } = filters;
+
+        // Base SQL query
+        let query = `
+            SELECT 
+                quotations.*, 
+                customers.name AS customer_name,
+                customers.phone AS customer_phone,
+                customers.profile_photo AS customer_profile_photo
+            FROM quotations
+            JOIN customers ON quotations.customer_id = customers.customer_id
+        `;
+
+        // Collect conditions and values for prepared statement
+        const conditions = [];
+        const values = [];
+
+        if (startDate) {
+            conditions.push("quotations.created_at >= ?");
+            values.push(startDate);
+        }
+
+        if (endDate) {
+            conditions.push("quotations.created_at <= ?");
+            values.push(endDate);
+        }
+
+        if (customerId) {
+            conditions.push("quotations.customer_id = ?");
+            values.push(customerId);
+        }
+
+        // Add WHERE clause if there are any conditions
+        if (conditions.length > 0) {
+            query += ` WHERE ${conditions.join(" AND ")}`;
+        }
+
+        // Add ORDER BY clause
+        query += ` ORDER BY quotations.created_at DESC`;
+
+        // Execute the query
+        return new Promise((resolve, reject) => {
+            dbconnection.query(query, values, (error, results) => {
+                if (error) return reject(error);
+                resolve(results);
+            });
+        });
+    } catch (error) {
+        console.error("Error in getFilteredQuotationsService:", error);
+        throw error;
+    }
+};
+
 module.exports = {
     generateQuotationNumber,
     createQuotationService,
@@ -179,5 +234,6 @@ module.exports = {
     getQuotationsService,
     updateQuotationService,
     deleteQuotationService,
-    getQuotationsByCustomerIdService
+    getQuotationsByCustomerIdService,
+    getFilteredQuotationsService
 };

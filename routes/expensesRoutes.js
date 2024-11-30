@@ -4,7 +4,8 @@ const {
     getAllExpenses,
     getExpenseById,
     updateExpense,
-    deleteExpense
+    deleteExpense,
+    getFilteredExpenses
 } = require('../controllers/expensesController');
 
 const router = express.Router();
@@ -37,5 +38,7 @@ router.put('/:id', upload.single('attachment'), updateExpense);
 
 // Delete an expense by ID
 router.delete('/:id', deleteExpense);
+
+router.get('/report2/filter', getFilteredExpenses);
 
 module.exports = router;

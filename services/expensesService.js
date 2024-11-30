@@ -76,10 +76,52 @@ const deleteExpenseService = async (id) => {
     return result.affectedRows > 0;
 };
 
+const getFilteredExpensesService = async (filters) => {
+    try {
+        const { startDate, endDate } = filters;
+
+        // Base SQL query
+        let query = 'SELECT * FROM expenses';
+        const conditions = [];
+        const values = [];
+
+        // Add conditions for date range filter if provided
+        if (startDate) {
+            conditions.push('created_at >= ?');
+            values.push(startDate);
+        }
+
+        if (endDate) {
+            conditions.push('created_at <= ?');
+            values.push(endDate);
+        }
+
+        // If any conditions are added, append them to the query
+        if (conditions.length > 0) {
+            query += ` WHERE ${conditions.join(' AND ')}`;
+        }
+
+        query += ' ORDER BY created_at DESC';
+
+        const rows = await new Promise((resolve, reject) => {
+            dbconnection.query(query, values, (error, results) => {
+                if (error) return reject(error);
+                resolve(results);
+            });
+        });
+
+        return rows;
+    } catch (error) {
+        console.error('Error in getFilteredExpensesService:', error);
+        throw error;
+    }
+};
+
 module.exports = {
     createExpenseService,
     getExpenseService,
     getExpensesService,
     updateExpenseService,
-    deleteExpenseService
+    deleteExpenseService,
+    getFilteredExpensesService
 };

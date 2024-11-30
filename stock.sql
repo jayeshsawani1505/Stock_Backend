@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2024 at 01:34 PM
+-- Generation Time: Nov 20, 2024 at 07:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -161,19 +161,28 @@ CREATE TABLE `delivery_challans` (
   `customer_id` int(11) DEFAULT NULL,
   `delivery_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
-  `reference_number` varchar(100) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `subproduct_id` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `unit` varchar(20) DEFAULT NULL,
   `rate` decimal(10,2) DEFAULT NULL,
-  `bank_id` int(11) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `terms_conditions` text DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `signature_id` int(10) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` varchar(255) NOT NULL,
+  `invoice_details` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `delivery_challans`
+--
+
+INSERT INTO `delivery_challans` (`id`, `delivery_number`, `customer_id`, `delivery_date`, `due_date`, `product_id`, `subproduct_id`, `quantity`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `status`, `invoice_details`) VALUES
+(1, 'DCN-001', 28, '2024-11-14', '2024-11-19', 9, 2, 3323, 3232.00, 'esdsd', 'dsdsd', 32323.00, 2, '2024-11-16 10:44:18', '2024-11-16 10:58:58', 'unpaid', ''),
+(2, 'DCN-002', 13, '2024-11-16', '2024-11-17', 1, 1, 12, 12.00, 'dsdsd', 'dsd', 540.00, 2, '2024-11-16 10:56:20', '2024-11-19 08:47:18', 'paid', '[{\"product_id\":10,\"subproduct_id\":null,\"quantity\":4,\"unit\":\"box\",\"rate\":110,\"total_amount\":440},{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100}]'),
+(3, 'DCN-003', 28, '2024-11-19', '2024-11-13', NULL, 0, NULL, NULL, 'bo9,o', 'huoo', 200.00, 1, '2024-11-19 08:46:50', '2024-11-19 08:46:50', 'unpaid', '[{\"product_id\":10,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100},{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100}]');
 
 -- --------------------------------------------------------
 
@@ -193,6 +202,13 @@ CREATE TABLE `expenses` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`expense_id`, `reference`, `amount`, `payment_mode`, `expense_date`, `payment_status`, `description`, `attachment`, `created_at`, `updated_at`) VALUES
+(2, '2wqw', 212.00, 'Cash', '2024-11-15', 'Paid', 'fdfd', '/uploads/expenses/1731740364126-591387732.jpg', '2024-11-16 06:59:24', '2024-11-16 06:59:24');
 
 -- --------------------------------------------------------
 
@@ -245,10 +261,10 @@ CREATE TABLE `invoices` (
   `customer_id` int(11) DEFAULT NULL,
   `invoice_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
-  `reference_number` varchar(100) DEFAULT NULL,
+  `transpoter_name` varchar(100) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   `recurring` tinyint(1) DEFAULT 0,
-  `recurring_cycle` int(11) DEFAULT NULL,
+  `recurring_cycle` varchar(55) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   `subproduct_id` int(10) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
@@ -260,25 +276,29 @@ CREATE TABLE `invoices` (
   `total_amount` decimal(10,2) DEFAULT NULL,
   `signature_id` int(10) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `invoice_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`invoice_details`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`id`, `invoice_number`, `customer_id`, `invoice_date`, `due_date`, `reference_number`, `status`, `recurring`, `recurring_cycle`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `bank_id`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`) VALUES
-(1, 'INV-001', 14, '2024-10-26', '2024-11-26', 'REF-001', 'paid', NULL, 0, 1, NULL, 11, NULL, 25.00, NULL, 'Thank you for your business.', 'Payment is due within 30 days.', 150.00, NULL, '2024-11-07 10:42:53', '2024-11-07 14:19:47'),
-(8, 'INV-002', 14, '2024-11-06', '2024-11-10', 'REF002', 'unpaid', NULL, 0, 1, 1, 10, NULL, 150.00, NULL, 'teser', 'Custom Terms', 1500.00, 2, '2024-11-08 06:25:39', '2024-11-15 12:23:41'),
-(9, 'INV003', 14, NULL, NULL, 'REF003', 'unpaid', NULL, 0, 2, NULL, 3, NULL, 100.00, NULL, '-', 'Standard Terms', 300.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:30'),
-(10, 'INV004', 16, NULL, NULL, 'REF004', 'partially_paid', NULL, 0, 2, NULL, 7, NULL, 250.00, NULL, '-', 'Custom Terms', 1750.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:35'),
-(11, 'INV-005', 17, '1970-01-01', '1970-01-01', 'REF005', 'cancelled', NULL, 0, 7, NULL, 8, NULL, 180.00, NULL, '-', 'Standard Terms', 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-15 12:25:25'),
-(12, 'INV006', 18, NULL, NULL, 'REF006', 'draft', NULL, 0, 8, NULL, 12, NULL, 120.00, NULL, '-', 'Custom Terms', 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:17'),
-(13, 'INV007', 18, NULL, NULL, 'REF007', 'refunded', NULL, 0, 7, NULL, 9, NULL, 220.00, NULL, '-', 'Standard Terms', 1980.00, NULL, '2024-11-08 06:25:39', '2024-11-14 11:03:41'),
-(14, 'INV008', 20, NULL, NULL, 'REF008', 'unpaid', NULL, 0, 8, NULL, 6, NULL, 170.00, NULL, '-', 'Custom Terms', 1020.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:25'),
-(15, 'INV009', 21, NULL, NULL, 'REF009', 'paid', NULL, 0, 9, NULL, 4, NULL, 200.00, NULL, '-', 'Standard Terms', 800.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:34'),
-(16, 'INV010', 22, '1970-01-01', '1970-01-01', 'REF010', 'overdue', NULL, 0, 1, NULL, 11, NULL, 130.00, NULL, '-fdfdf', 'Custom Terms', 3322.00, NULL, '2024-11-08 06:25:39', '2024-11-12 08:06:14'),
-(17, 'INV0011', 13, NULL, NULL, 'REF001', 'overdue', NULL, 0, 9, NULL, 5, NULL, 200.00, NULL, '-', 'Standard Terms', 1000.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:41');
+INSERT INTO `invoices` (`id`, `invoice_number`, `customer_id`, `invoice_date`, `due_date`, `transpoter_name`, `status`, `recurring`, `recurring_cycle`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `bank_id`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `invoice_details`) VALUES
+(1, 'INV-001', 14, '2024-10-26', '2024-11-26', 'REF-001', 'paid', NULL, '0', 1, NULL, 11, NULL, 25.00, NULL, 'Thank you for your business.', 'Payment is due within 30 days.', 150.00, NULL, '2024-11-07 10:42:53', '2024-11-07 14:19:47', NULL),
+(8, 'INV-002', 14, '2024-11-06', '2024-11-10', 'REF002', 'unpaid', NULL, '0', 1, 1, 10, NULL, 150.00, NULL, 'teser', 'Custom Terms', 1500.00, 2, '2024-11-08 06:25:39', '2024-11-15 12:23:41', NULL),
+(9, 'INV003', 14, NULL, NULL, 'REF003', 'unpaid', NULL, '0', 2, NULL, 3, NULL, 100.00, NULL, '-', 'Standard Terms', 300.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:30', NULL),
+(10, 'INV004', 16, NULL, NULL, 'REF004', 'partially_paid', NULL, '0', 2, NULL, 7, NULL, 250.00, NULL, '-', 'Custom Terms', 1750.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:07:35', NULL),
+(11, 'INV-005', 17, '1970-01-01', '1970-01-01', 'REF005', 'cancelled', NULL, '0', 7, NULL, 8, NULL, 180.00, NULL, '-', 'Standard Terms', 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-15 12:25:25', NULL),
+(12, 'INV006', 18, NULL, NULL, 'REF006', 'draft', NULL, '0', 8, NULL, 12, NULL, 120.00, NULL, '-', 'Custom Terms', 1440.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:17', NULL),
+(13, 'INV007', 18, NULL, NULL, 'REF007', 'refunded', NULL, '0', 7, NULL, 9, NULL, 220.00, NULL, '-', 'Standard Terms', 1980.00, NULL, '2024-11-08 06:25:39', '2024-11-14 11:03:41', NULL),
+(14, 'INV008', 20, NULL, NULL, 'REF008', 'unpaid', NULL, '0', 8, NULL, 6, NULL, 170.00, NULL, '-', 'Custom Terms', 1020.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:25', NULL),
+(15, 'INV009', 21, NULL, NULL, 'REF009', 'paid', NULL, '0', 9, NULL, 4, NULL, 200.00, NULL, '-', 'Standard Terms', 800.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:34', NULL),
+(16, 'INV010', 22, '1970-01-01', '1970-01-01', 'REF010', 'overdue', NULL, '0', 1, NULL, 11, NULL, 130.00, NULL, '-fdfdf', 'Custom Terms', 3322.00, NULL, '2024-11-08 06:25:39', '2024-11-12 08:06:14', NULL),
+(17, 'INV0011', 13, NULL, NULL, 'REF001', 'overdue', NULL, '0', 9, NULL, 5, NULL, 200.00, NULL, '-', 'Standard Terms', 1000.00, NULL, '2024-11-08 06:25:39', '2024-11-09 12:15:41', NULL),
+(19, 'INV-018', 28, '2024-11-15', '2024-11-19', 'hhh', 'unpaid', NULL, '02', NULL, NULL, NULL, NULL, NULL, NULL, 'jhhj', 'jhhgh', 8000.00, 2, '2024-11-18 11:59:41', '2024-11-18 13:52:33', '[{\"product_id\":8,\"subproduct_id\":null,\"quantity\":20,\"unit\":\"box\",\"rate\":400,\"total_amount\":8000}]'),
+(20, 'INV-020', 13, '2024-11-19', '2024-11-22', 'rere', 'unpaid', NULL, 'june', NULL, NULL, NULL, NULL, NULL, NULL, 'dfd', 'fdfdf', 2000.00, 1, '2024-11-18 13:55:53', '2024-11-18 13:55:53', '[{\"subproduct_id\":3,\"product_id\":9,\"quantity\":20,\"unit\":\"box\",\"rate\":100,\"total_amount\":2000},{\"subproduct_id\":2,\"product_id\":9,\"quantity\":20,\"unit\":\"box\",\"rate\":100,\"total_amount\":2000}]'),
+(21, 'INV-021', 14, '2024-11-16', '2024-11-17', 'dsd', 'paid', NULL, 'dsd', NULL, NULL, NULL, NULL, NULL, NULL, 'fdfdf', 'fdfdf', 800.00, 2, '2024-11-18 14:45:36', '2024-11-19 05:18:13', '[{\"product_id\":8,\"subproduct_id\":null,\"quantity\":4,\"unit\":\"box\",\"rate\":200,\"total_amount\":800},{\"product_id\":9,\"subproduct_id\":null,\"quantity\":4,\"unit\":\"box\",\"rate\":100,\"total_amount\":400}]');
 
 -- --------------------------------------------------------
 
@@ -300,7 +320,8 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`login_id`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'user@example.com', '$2a$10$oyQMqq06ACQjgDsxriA1MuHb2QYDu2OXDs9I3jH7jZqEIaD4nGd3G', 'Admin', '2024-10-27 13:18:07', '2024-10-27 13:18:07');
+(1, 'user@example.com', '$2a$10$oyQMqq06ACQjgDsxriA1MuHb2QYDu2OXDs9I3jH7jZqEIaD4nGd3G', 'Admin', '2024-10-27 13:18:07', '2024-10-27 13:18:07'),
+(3, 'Pectrading@gmail.com', '$2a$10$C/zXt5qQPmr8ljFwgq5y1ufuia0r1jnuf0x8Awz0dfyoD1oo.YIve', 'Admin', '2024-11-16 07:09:11', '2024-11-16 07:09:11');
 
 -- --------------------------------------------------------
 
@@ -326,15 +347,24 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `payments` (
   `payment_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `payment_mode` enum('Cash','Credit Card','Debit Card','Bank Transfer','Other') NOT NULL,
+  `payment_mode` varchar(55) NOT NULL,
   `payment_date` date NOT NULL,
-  `payment_status` enum('Completed','Pending','Failed') NOT NULL DEFAULT 'Pending',
+  `payment_status` varchar(55) NOT NULL DEFAULT 'Pending',
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`payment_id`, `invoice_id`, `amount`, `payment_mode`, `payment_date`, `payment_status`, `description`, `created_at`, `updated_at`) VALUES
+(3, 20, 10.00, 'credit_card', '2024-11-19', 'Pending', 'na', '2024-11-19 13:40:57', '2024-11-19 13:40:57'),
+(6, 19, 1400.00, 'paypal', '2024-11-19', 'unpaid', 'no', '2024-11-19 14:31:52', '2024-11-19 14:31:52'),
+(7, 21, 400.00, 'credit_card', '2024-11-19', 'unpaid', 'no', '2024-11-19 15:46:51', '2024-11-19 15:46:51');
 
 -- --------------------------------------------------------
 
@@ -370,9 +400,10 @@ INSERT INTO `products` (`product_id`, `item_type`, `product_name`, `product_code
 (1, 'Product', 'Sample Product', 'SP001', 6, 100, 25.50, 20.00, 'Box', 10, NULL, NULL, NULL, 'This is a sample product description.', NULL, '2024-11-07 09:46:47', '2024-11-07 10:31:56'),
 (2, 'Product', 'ewewe1212', 'ewewe', 1, 22, 22.00, 22.00, 'Pieces', 22, NULL, NULL, NULL, 'edsdsd', NULL, '2024-11-07 10:26:14', '2024-11-07 10:26:55'),
 (7, '', 'Laptop', 'LAP123', 8, 112, 50000.00, 45000.00, 'pcs', 10, NULL, NULL, NULL, 'High-end laptop', NULL, '2024-11-08 04:37:46', '2024-11-15 12:24:19'),
-(8, '', 'Chair', 'CHR456', 9, 180, 1500.00, 1200.00, 'pcs', 20, NULL, NULL, NULL, 'Ergonomic chair', NULL, '2024-11-08 04:37:46', '2024-11-15 11:12:01'),
-(9, '', 'T-Shirt', 'TSH789', 10, 500, 300.00, 200.00, 'pcs', 50, NULL, NULL, NULL, 'Cotton T-shirt', NULL, '2024-11-08 04:37:46', '2024-11-08 04:37:46'),
-(10, 'Product', 'newe', 'sa2q', 9, 62, 1212.00, 122.00, 'Box', 122, NULL, NULL, NULL, 'dsdsd', '/uploads/product/1731573684314-267880745.png', '2024-11-11 13:35:42', '2024-11-15 11:08:45');
+(8, '', 'Chair', 'CHR456', 9, 116, 1500.00, 1200.00, 'pcs', 20, NULL, NULL, NULL, 'Ergonomic chair', NULL, '2024-11-08 04:37:46', '2024-11-18 15:42:08'),
+(9, '', 'T-Shirt', 'TSH789', 10, 482, 300.00, 200.00, 'pcs', 50, NULL, NULL, NULL, 'Cotton T-shirt', NULL, '2024-11-08 04:37:46', '2024-11-18 15:42:08'),
+(10, 'Product', 'newe', 'sa2q', 9, 62, 1212.00, 122.00, 'Box', 122, NULL, NULL, NULL, 'dsdsd', '/uploads/product/1731573684314-267880745.png', '2024-11-11 13:35:42', '2024-11-15 11:08:45'),
+(11, 'Product', 'home speacker', 'homeKU', 8, 100, 500.00, 250.00, 'piece', 10, NULL, NULL, NULL, 'na', '', '2024-11-19 10:16:33', '2024-11-19 10:16:33');
 
 -- --------------------------------------------------------
 
@@ -399,24 +430,26 @@ CREATE TABLE `purchases` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `payment_mode` varchar(55) DEFAULT NULL,
-  `status` varchar(55) DEFAULT NULL
+  `status` varchar(55) DEFAULT NULL,
+  `invoice_details` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `purchases`
 --
 
-INSERT INTO `purchases` (`id`, `vendor_id`, `purchase_date`, `due_date`, `reference_no`, `supplier_invoice_serial_no`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `payment_mode`, `status`) VALUES
-(2, 4, '0000-00-00', '0000-00-00', 'fdfdfdf', 'dsdsd', 1, NULL, 10, NULL, 10.00, 'DSDSDSDSD', 'DDSSDSD', 100.00, NULL, '2024-11-09 09:44:52', '2024-11-09 10:02:37', 'cash', 'unpaid'),
-(5, 4, '2023-01-01', '2023-02-01', 'REF001', 'S001', 1, NULL, 10, NULL, 100.00, 'Initial Purchase', 'Terms A', 1000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Cash', 'Pending'),
-(6, 5, '2023-01-05', '2023-02-05', 'REF002', 'S002', 2, NULL, 20, NULL, 150.00, 'Bulk Order', 'Terms B', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Credit', 'Completed'),
-(7, 7, '2023-01-10', '2023-02-10', 'REF003', 'S003', 7, NULL, 15, NULL, 200.00, 'Reorder', 'Terms C', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Bank Transfer', 'Pending'),
-(8, 6, '2023-01-15', '2023-02-15', 'REF004', 'S004', 8, NULL, 25, NULL, 120.00, 'Seasonal Stock', 'Terms D', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Cash', 'Completed'),
-(9, 8, '2023-01-19', '2023-02-19', 'REF005', 'S005', 9, NULL, 30, NULL, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:16:47', 'Credit', 'paid'),
-(10, 9, '2023-01-19', '2023-02-19', 'REF005', 'S006', 8, NULL, 30, NULL, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, 2, '2024-11-09 10:19:47', '2024-11-14 14:10:17', 'Credit', 'unpaid'),
-(11, 15, '0000-00-00', '0000-00-00', '21', '12', 10, NULL, 122, NULL, 212.00, 'dsd', 'sdsd', 1222.00, NULL, '2024-11-11 13:47:25', '2024-11-11 13:47:25', 'cash', 'paid'),
-(12, 14, '0000-00-00', '0000-00-00', 'asas', 'asa', 7, NULL, 212, NULL, 212.00, 'sdsd', 'dsdd', 212.00, NULL, '2024-11-11 13:48:39', '2024-11-11 13:48:39', 'cash', 'partially_paid'),
-(13, 15, '2024-11-12', '2024-11-13', 'sd', 'sdd', 9, 2, 21, NULL, 212.00, 'dds', 'sd', 212.00, 2, '2024-11-11 13:49:08', '2024-11-15 06:26:22', 'cash', 'paid');
+INSERT INTO `purchases` (`id`, `vendor_id`, `purchase_date`, `due_date`, `reference_no`, `supplier_invoice_serial_no`, `product_id`, `subproduct_id`, `quantity`, `unit`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `payment_mode`, `status`, `invoice_details`) VALUES
+(2, 4, '0000-00-00', '0000-00-00', 'fdfdfdf', 'dsdsd', 1, NULL, 10, NULL, 10.00, 'DSDSDSDSD', 'DDSSDSD', 100.00, NULL, '2024-11-09 09:44:52', '2024-11-09 10:02:37', 'cash', 'unpaid', ''),
+(5, 4, '2023-01-01', '2023-02-01', 'REF001', 'S001', 1, NULL, 10, NULL, 100.00, 'Initial Purchase', 'Terms A', 1000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Cash', 'Pending', ''),
+(6, 5, '2023-01-05', '2023-02-05', 'REF002', 'S002', 2, NULL, 20, NULL, 150.00, 'Bulk Order', 'Terms B', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Credit', 'Completed', ''),
+(7, 7, '2023-01-10', '2023-02-10', 'REF003', 'S003', 7, NULL, 15, NULL, 200.00, 'Reorder', 'Terms C', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Bank Transfer', 'Pending', ''),
+(8, 6, '2023-01-15', '2023-02-15', 'REF004', 'S004', 8, NULL, 25, NULL, 120.00, 'Seasonal Stock', 'Terms D', 3000.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:14:32', 'Cash', 'Completed', ''),
+(9, 8, '2023-01-19', '2023-02-19', 'REF005', 'S005', 9, NULL, 30, NULL, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 10:14:32', '2024-11-09 10:16:47', 'Credit', 'paid', ''),
+(10, 9, '2023-01-19', '2023-02-19', 'REF005', 'S006', 8, NULL, 30, NULL, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, 2, '2024-11-09 10:19:47', '2024-11-14 14:10:17', 'Credit', 'unpaid', ''),
+(11, 15, '0000-00-00', '0000-00-00', '21', '12', 10, NULL, 122, NULL, 212.00, 'dsd', 'sdsd', 1222.00, NULL, '2024-11-11 13:47:25', '2024-11-11 13:47:25', 'cash', 'paid', ''),
+(12, 14, '0000-00-00', '0000-00-00', 'asas', 'asa', 7, NULL, 212, NULL, 212.00, 'sdsd', 'dsdd', 212.00, NULL, '2024-11-11 13:48:39', '2024-11-11 13:48:39', 'cash', 'partially_paid', ''),
+(13, 15, '2024-11-12', '2024-11-13', 'sd', 'sdd', 9, 2, 21, NULL, 212.00, 'dds', 'sd', 212.00, 2, '2024-11-11 13:49:08', '2024-11-15 06:26:22', 'cash', 'paid', ''),
+(14, 5, '2024-11-17', '2024-11-19', 'jkjkk', 'kjjj', NULL, NULL, NULL, NULL, NULL, 'yuhgvh', 'jbhjb;', 2000.00, 2, '2024-11-19 07:24:37', '2024-11-19 10:23:52', 'credit_card', 'paid', '[{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":100,\"total_amount\":1000},{\"product_id\":8,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":100,\"total_amount\":1000}]');
 
 -- --------------------------------------------------------
 
@@ -430,20 +463,28 @@ CREATE TABLE `quotations` (
   `customer_id` int(11) DEFAULT NULL,
   `quotation_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
-  `reference_number` varchar(100) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `subproduct_id` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `unit` varchar(20) DEFAULT NULL,
   `rate` decimal(10,2) DEFAULT NULL,
-  `bank_id` int(11) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `terms_conditions` text DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
-  `signature_image` varchar(255) DEFAULT NULL,
+  `signature_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `invoice_details` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quotations`
+--
+
+INSERT INTO `quotations` (`id`, `quotation_number`, `customer_id`, `quotation_date`, `due_date`, `status`, `product_id`, `subproduct_id`, `quantity`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `invoice_details`) VALUES
+(1, 'QTN-001', 28, '2024-11-13', '2024-11-15', 'paid', 9, 2, 22, 22.00, 'sdcd', 'cddsc', 2222.00, 1, '2024-11-16 09:24:01', '2024-11-16 10:08:19', ''),
+(2, 'QTN-002', 28, '2024-11-19', '2024-11-12', 'unpaid', NULL, 0, NULL, NULL, 'vfv', 'vfvffv', 200.00, 1, '2024-11-19 09:27:58', '2024-11-19 09:27:58', '[{\"product_id\":10,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100},{\"product_id\":7,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100}]'),
+(3, 'QTN-003', 13, '2024-11-18', '2024-11-21', 'unpaid', NULL, 0, NULL, NULL, 'fvzfz', 'fvfv', 200.00, 2, '2024-11-19 09:28:31', '2024-11-19 09:28:31', '[{\"product_id\":9,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100},{\"product_id\":2,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":10,\"total_amount\":100}]');
 
 -- --------------------------------------------------------
 
@@ -468,21 +509,23 @@ CREATE TABLE `return_debit_notes_purchases` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `payment_mode` varchar(55) DEFAULT NULL,
-  `status` varchar(55) DEFAULT NULL
+  `status` varchar(55) DEFAULT NULL,
+  `invoice_details` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `return_debit_notes_purchases`
 --
 
-INSERT INTO `return_debit_notes_purchases` (`id`, `vendor_id`, `purchase_order_date`, `due_date`, `reference_no`, `product_id`, `subproduct_id`, `quantity`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `payment_mode`, `status`) VALUES
-(1, 10, NULL, '0000-00-00', 'dsdsd', 7, NULL, 10, 10.00, 'dsdsdsd', 'dsdsd', 500.00, NULL, '2024-11-09 11:41:58', '2024-11-09 11:55:23', 'cash', 'cancelled'),
-(2, 4, '2024-11-12', '2023-01-26', 'REF001', 1, 1, 10, 100.00, 'Initial Purchase', 'Terms A', 1000.00, 2, '2024-11-09 11:47:25', '2024-11-15 07:22:45', 'Cash', 'paid'),
-(3, 5, '2024-11-14', '2024-12-31', 'REF002', 2, NULL, 20, 150.00, 'Bulk Order', 'Terms B', 3000.00, 1, '2024-11-09 11:47:25', '2024-11-14 14:18:03', 'Credit', 'paid'),
-(4, 7, NULL, '2023-02-10', 'REF003', 7, NULL, 15, 200.00, 'Reorder', 'Terms C', 3000.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Bank Transfer', 'Pending'),
-(5, 6, NULL, '2023-02-15', 'REF004', 8, NULL, 25, 120.00, 'Seasonal Stock', 'Terms D', 3000.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Cash', 'Completed'),
-(6, 8, NULL, '2023-02-20', 'REF005', 9, NULL, 30, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Credit', 'Pending'),
-(7, 9, '2023-02-19', '2023-02-19', 'REF005', 8, NULL, 30, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 11:47:25', '2024-11-12 12:31:08', 'Credit', 'paid');
+INSERT INTO `return_debit_notes_purchases` (`id`, `vendor_id`, `purchase_order_date`, `due_date`, `reference_no`, `product_id`, `subproduct_id`, `quantity`, `rate`, `notes`, `terms_conditions`, `total_amount`, `signature_id`, `created_at`, `updated_at`, `payment_mode`, `status`, `invoice_details`) VALUES
+(1, 10, NULL, '0000-00-00', 'dsdsd', 7, NULL, 10, 10.00, 'dsdsdsd', 'dsdsd', 500.00, NULL, '2024-11-09 11:41:58', '2024-11-09 11:55:23', 'cash', 'cancelled', ''),
+(2, 4, '2024-11-12', '2023-01-26', 'REF001', 1, 1, 10, 100.00, 'Initial Purchase', 'Terms A', 1000.00, 2, '2024-11-09 11:47:25', '2024-11-15 07:22:45', 'Cash', 'paid', ''),
+(3, 5, '2024-11-14', '2024-12-31', 'REF002', 2, NULL, 20, 150.00, 'Bulk Order', 'Terms B', 3000.00, 1, '2024-11-09 11:47:25', '2024-11-14 14:18:03', 'Credit', 'paid', ''),
+(4, 7, NULL, '2023-02-10', 'REF003', 7, NULL, 15, 200.00, 'Reorder', 'Terms C', 3000.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Bank Transfer', 'Pending', ''),
+(5, 6, NULL, '2023-02-15', 'REF004', 8, NULL, 25, 120.00, 'Seasonal Stock', 'Terms D', 3000.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Cash', 'Completed', ''),
+(6, 8, NULL, '2023-02-20', 'REF005', 9, NULL, 30, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 11:47:25', '2024-11-09 11:47:25', 'Credit', 'Pending', ''),
+(7, 9, '2023-02-19', '2023-02-19', 'REF005', 8, NULL, 30, 130.00, 'Urgent Purchase', 'Terms E', 3900.00, NULL, '2024-11-09 11:47:25', '2024-11-12 12:31:08', 'Credit', 'paid', ''),
+(8, 5, '2024-11-18', '2024-11-20', 'klknlk', NULL, NULL, NULL, NULL, 'vdfv', 'vfvdfv', 500.00, 1, '2024-11-19 07:44:58', '2024-11-19 07:46:44', 'Cash', 'unpaid', '[{\"product_id\":9,\"subproduct_id\":null,\"quantity\":10,\"unit\":\"box\",\"rate\":50,\"total_amount\":500}]');
 
 -- --------------------------------------------------------
 
@@ -533,7 +576,8 @@ CREATE TABLE `subproducts` (
 
 INSERT INTO `subproducts` (`subproduct_id`, `product_id`, `subproduct_name`, `subproduct_code`, `quantity`, `selling_price`, `units`, `description`, `created_at`, `updated_at`, `purchase_price`) VALUES
 (1, 1, 'Sample Subproduct', 'SSP001', 190, 25.00, 'Pieces', 'This is a sample subproduct description.', '2024-11-12 08:49:46', '2024-11-15 12:22:15', 15.75),
-(2, 9, 'M Size', 'TMSIZE', 100, 150.00, 'Pieces', 'na hoy la', '2024-11-12 09:25:25', '2024-11-12 09:25:25', 100.00);
+(2, 9, 'M Size', 'TMSIZE', 80, 150.00, 'Pieces', 'na hoy la', '2024-11-12 09:25:25', '2024-11-18 13:55:53', 100.00),
+(3, 9, 's tshirt', 'skusmall', 91, 100.00, 'Box', 'cdcc', '2024-11-18 08:42:25', '2024-11-18 13:55:53', 90.00);
 
 -- --------------------------------------------------------
 
@@ -642,8 +686,7 @@ ALTER TABLE `messages`
 -- Indexes for table `payments`
 --
 ALTER TABLE `payments`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `customer_id` (`customer_id`);
+  ADD PRIMARY KEY (`payment_id`);
 
 --
 -- Indexes for table `products`
@@ -724,13 +767,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `delivery_challans`
 --
 ALTER TABLE `delivery_challans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `inventory`
@@ -742,13 +785,13 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -760,31 +803,31 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `quotations`
 --
 ALTER TABLE `quotations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `return_debit_notes_purchases`
 --
 ALTER TABLE `return_debit_notes_purchases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `signature`
@@ -796,7 +839,7 @@ ALTER TABLE `signature`
 -- AUTO_INCREMENT for table `subproducts`
 --
 ALTER TABLE `subproducts`
-  MODIFY `subproduct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `subproduct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `vendors`
@@ -835,12 +878,6 @@ ALTER TABLE `invoices`
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `login` (`login_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`recipient_id`) REFERENCES `login` (`login_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `payments`
---
-ALTER TABLE `payments`
-  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `products`

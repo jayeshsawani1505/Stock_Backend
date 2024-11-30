@@ -81,6 +81,21 @@ const getPaymentsByCustomerId = async (req, res) => {
     }
 };
 
+const getFilteredPayments = async (req, res) => {
+    try {
+        const filters = req.query; // Get query parameters (startDate, endDate, customerId)
+        const results = await paymentService.getFilteredPaymentsService(filters);
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: "No payments found." });
+        }
+
+        res.status(200).json({ message: "Payments retrieved successfully.", data: results });
+    } catch (error) {
+        console.error("Error in getFilteredPayments controller:", error);
+        res.status(500).json({ message: "Error retrieving payments.", error });
+    }
+};
 
 module.exports = {
     createPayment,
@@ -88,5 +103,6 @@ module.exports = {
     getAllPayments,
     updatePayment,
     deletePayment,
-    getPaymentsByCustomerId
+    getPaymentsByCustomerId,
+    getFilteredPayments
 };

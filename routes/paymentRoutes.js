@@ -19,4 +19,6 @@ router.delete('/:id', paymentController.deletePayment);
 
 router.get('/customer/:customerId', paymentController.getPaymentsByCustomerId);
 
+router.get('/report/filter', paymentController.getFilteredPayments);
+
 module.exports = router;

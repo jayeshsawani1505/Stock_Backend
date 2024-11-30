@@ -6,6 +6,8 @@ const upload = multer({ dest: 'uploads/' }); // temporary storage for uploaded f
 
 // Create a new purchase
 router.post('/', purchasesController.createPurchase);
+// filter purchase report
+router.get('/report/filter', purchasesController.getFilteredPurchases);
 
 // Get all purchases
 router.get('/', purchasesController.getAllPurchases);
@@ -21,5 +23,6 @@ router.delete('/:id', purchasesController.deletePurchase);
 
 // Route to upload and process Excel file for categories
 router.post('/upload-excel', upload.single('file'), purchasesController.uploadPurchasesExcel);
+
 
 module.exports = router;

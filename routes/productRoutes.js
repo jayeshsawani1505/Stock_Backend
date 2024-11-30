@@ -44,4 +44,6 @@ router.post('/in-stock/:id', productController.addStock);
 // Route to remove items from stock (out-stock)
 router.post('/out-stock/:id', productController.removeStock);
 
+router.get('/report/filter', productController.getFilteredProducts);
+
 module.exports = router;

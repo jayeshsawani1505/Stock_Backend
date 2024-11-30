@@ -50,6 +50,9 @@ const createInvoice = async (invoiceData) => {
         notes,
         terms_conditions,
         signature_id,
+        adjustmentType,
+        adjustmentValue,
+        subtotal_amount,
         total_amount,
         invoice_details
     } = invoiceData;
@@ -60,8 +63,8 @@ const createInvoice = async (invoiceData) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO invoices 
-            (invoice_number, customer_id, invoice_date, due_date, transporter_name, category_id, status, notes, terms_conditions, signature_id, total_amount, invoice_details) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (invoice_number, customer_id, invoice_date, due_date, transporter_name, category_id, status, notes, terms_conditions, signature_id,adjustmentType, adjustmentValue, subtotal_amount, total_amount, invoice_details) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 invoice_number,
                 customer_id,
@@ -73,6 +76,9 @@ const createInvoice = async (invoiceData) => {
                 notes,
                 terms_conditions,
                 signature_id,
+                adjustmentType,
+                adjustmentValue,
+                subtotal_amount,
                 total_amount,
                 invoiceDetailsJSON
             ],
@@ -84,12 +90,12 @@ const createInvoice = async (invoiceData) => {
 
                 try {
                     for (const detail of invoice_details) {
-                        const { product_id, subproduct_id, quantity } = detail;
+                        const { product_name, subproduct_id, quantity } = detail;
 
                         if (subproduct_id > 0) {
                             await outStockSubProduct(subproduct_id, quantity);
                         } else {
-                            await outStockProduct(product_id, quantity);
+                            await outStockProduct(product_name, quantity);
                         }
                     }
                 } catch (stockError) {
@@ -126,7 +132,7 @@ const outStockSubProduct = async (id, quantity) => {
 const outStockProduct = async (id, quantity) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE products SET quantity = quantity - ? WHERE product_id = ? AND quantity >= ?',
+            'UPDATE products SET quantity = quantity - ? WHERE product_name = ? AND quantity >= ?',
             [quantity, id, quantity],
             (error, results) => {
                 if (error) {
@@ -194,73 +200,38 @@ const getInvoiceDetailsForPDF = async (id) => {
         const invoiceQuery = `
             SELECT 
                 invoices.*, 
-                customers.*,
-                category.category_name,
+                customers.*, 
                 signature.signature_name, 
                 signature.signature_photo
             FROM invoices
-            JOIN category ON invoices.category_id = category.category_id
             JOIN customers ON invoices.customer_id = customers.customer_id
             LEFT JOIN signature ON invoices.signature_id = signature.signature_id
             WHERE invoices.id = ?
         `;
 
-        // Fetch the invoice and its associated data
-        dbconnection.query(invoiceQuery, [id], async (invoiceError, invoiceResults) => {
-            if (invoiceError) return reject(invoiceError);
-            if (invoiceResults.length === 0) return reject(new Error("Invoice not found"));
+        dbconnection.query(invoiceQuery, [id], (invoiceError, invoiceResults) => {
+            if (invoiceError) {
+                console.error("Database Query Error: ", invoiceError);
+                return reject(invoiceError);
+            }
 
-            const invoice = invoiceResults[0]; // Assuming only one invoice is fetched
-            let invoiceDetails = [];
+            if (invoiceResults.length === 0) {
+                return reject(new Error("Invoice not found"));
+            }
+
+            const invoice = invoiceResults[0];
+            let invoiceDetails;
 
             try {
-                // Parse the JSON string in `invoice_details`
-                invoiceDetails = JSON.parse(invoice.invoice_details);
-                console.log("Invoice Details Parsed: ", invoiceDetails);
+                invoiceDetails = JSON.parse(invoice.invoice_details || "[]");
+                console.log("Parsed Invoice Details: ", invoiceDetails);
             } catch (error) {
+                console.error("Invalid JSON in invoice_details: ", invoice.invoice_details);
                 return reject(new Error("Invalid invoice_details JSON"));
             }
 
-            if (invoiceDetails.length === 0) {
-                invoice.invoice_details = [];
-                return resolve(invoice);
-            }
-
-            // Create dynamic placeholders for the query
-            const productIds = invoiceDetails.map((detail) => detail.product_id);
-            const subproductIds = invoiceDetails.map((detail) => detail.subproduct_id);
-
-            const detailsQuery = `
-                SELECT 
-                    products.product_id, 
-                    products.product_name, 
-                    subproducts.subproduct_id, 
-                    subproducts.subproduct_name
-                FROM products
-                LEFT JOIN subproducts ON products.product_id = subproducts.product_id
-                WHERE products.product_id IN (?) 
-                AND (subproducts.subproduct_id IN (?) OR subproducts.subproduct_id IS NULL)
-            `;
-
-            // Query to get product and subproduct names
-            dbconnection.query(detailsQuery, [productIds, subproductIds], (detailsError, detailsResults) => {
-                if (detailsError) return reject(detailsError);
-
-                // Map product and subproduct names back to invoiceDetails
-                invoiceDetails = invoiceDetails.map((detail) => {
-                    const product = detailsResults.find((item) => item.product_id === detail.product_id);
-                    const subproduct = detailsResults.find((item) => item.subproduct_id === detail.subproduct_id);
-
-                    return {
-                        ...detail,
-                        product_name: product ? product.product_name : null,
-                        subproduct_name: subproduct ? subproduct.subproduct_name : null,
-                    };
-                });
-
-                invoice.invoice_details = invoiceDetails; // Update the invoice with enriched details
-                resolve([invoice]);  // Wrap in an array as expected in the controller
-            });
+            invoice.invoice_details = invoiceDetails;
+            resolve(invoice);
         });
     });
 };
@@ -280,12 +251,12 @@ const updateInvoice = async (id, invoiceData) => {
 
                 try {
                     for (const detail of invoice_details) {
-                        const { product_id, subproduct_id, quantity } = detail;
+                        const { product_name, subproduct_id, quantity } = detail;
 
                         if (subproduct_id > 0) {
                             await outStockSubProduct(subproduct_id, quantity);
                         } else {
-                            await outStockProduct(product_id, quantity);
+                            await outStockProduct(product_name, quantity);
                         }
                     }
                 } catch (stockError) {

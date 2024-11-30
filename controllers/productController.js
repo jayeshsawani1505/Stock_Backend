@@ -155,6 +155,22 @@ const removeStock = async (req, res) => {
     }
 };
 
+const getFilteredProducts = async (req, res) => {
+    try {
+        const filters = req.query; // Get query parameters (categoryId, startDate, endDate)
+        const results = await productService.getFilteredProductsService(filters);
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: "No products found." });
+        }
+
+        res.status(200).json({ message: "Products retrieved successfully.", data: results });
+    } catch (error) {
+        console.error("Error in getFilteredProducts controller:", error);
+        res.status(500).json({ message: "Error retrieving products.", error });
+    }
+};
+
 module.exports = {
     createProduct,
     getProductById,
@@ -163,5 +179,6 @@ module.exports = {
     deleteProduct,
     uploadExcel,
     addStock, removeStock,
-    getProductByCategoryId
+    getProductByCategoryId,
+    getFilteredProducts
 };

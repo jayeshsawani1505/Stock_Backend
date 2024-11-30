@@ -129,6 +129,57 @@ const outStock = async (id, quantity) => {
     });
 };
 
+const getFilteredProductsService = async (filters) => {
+    try {
+        const { categoryId, startDate, endDate } = filters;
+
+        // Base SQL query
+        let query = `
+            SELECT products.*, category.category_name
+            FROM products
+            JOIN category ON products.category_id = category.category_id
+        `;
+
+        // Collect conditions and values for prepared statement
+        const conditions = [];
+        const values = [];
+
+        if (categoryId) {
+            conditions.push("products.category_id = ?");
+            values.push(categoryId);
+        }
+
+        if (startDate) {
+            conditions.push("products.created_at >= ?");
+            values.push(startDate);
+        }
+
+        if (endDate) {
+            conditions.push("products.created_at <= ?");
+            values.push(endDate);
+        }
+
+        // Add WHERE clause if there are any conditions
+        if (conditions.length > 0) {
+            query += ` WHERE ${conditions.join(" AND ")}`;
+        }
+
+        // Add ORDER BY clause
+        query += ` ORDER BY products.created_at DESC`;
+
+        // Execute the query
+        return new Promise((resolve, reject) => {
+            dbconnection.query(query, values, (error, results) => {
+                if (error) return reject(error);
+                resolve(results);
+            });
+        });
+    } catch (error) {
+        console.error("Error in getFilteredProductsService:", error);
+        throw error;
+    }
+};
+
 module.exports = {
     createProductService,
     getProductByID,
@@ -136,5 +187,6 @@ module.exports = {
     updateProductService,
     deleteProductService,
     inStock, outStock,
-    getProductsByCategoryId
+    getProductsByCategoryId,
+    getFilteredProductsService
 };

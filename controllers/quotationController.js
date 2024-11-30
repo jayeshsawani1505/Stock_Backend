@@ -91,6 +91,22 @@ const getQuotationsByCustomerId = async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve quotations: ' + error.message });
     }
 };
+const getFilteredQuotations = async (req, res) => {
+    try {
+        const filters = req.query; // Get query parameters (startDate, endDate, customerId)
+        const results = await quotationService.getFilteredQuotationsService(filters);
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: "No quotations found." });
+        }
+
+        res.status(200).json({ message: "Quotations retrieved successfully.", data: results });
+    } catch (error) {
+        console.error("Error in getFilteredQuotations controller:", error);
+        res.status(500).json({ message: "Error retrieving quotations.", error });
+    }
+};
+
 module.exports = {
     generateQuotationNumber,
     createQuotation,
@@ -98,5 +114,6 @@ module.exports = {
     getAllQuotations,
     updateQuotation,
     deleteQuotation,
-    getQuotationsByCustomerId
+    getQuotationsByCustomerId,
+    getFilteredQuotations
 };

@@ -182,11 +182,71 @@ const deletePurchase = async (id) => {
     });
 };
 
+const getFilteredPurchases = async (query) => {
+    try {
+        const { startDate, endDate, vendorId } = query;
+
+        // Base SQL query
+        let sql = `
+            SELECT purchases.*, vendors.vendor_name 
+            FROM purchases 
+            JOIN vendors ON purchases.vendor_id = vendors.vendor_id
+        `;
+
+        // Collect conditions and parameter values
+        const conditions = [];
+        const values = [];
+
+        if (startDate) {
+            conditions.push("purchases.created_at >= ?");
+            values.push(startDate);
+        }
+
+        if (endDate) {
+            conditions.push("purchases.created_at <= ?");
+            values.push(endDate);
+        }
+
+        if (vendorId) {
+            conditions.push("purchases.vendor_id = ?");
+            values.push(vendorId);
+        }
+
+        // Add WHERE clause only if there are conditions
+        if (conditions.length > 0) {
+            sql += ` WHERE ${conditions.join(" AND ")}`;
+        }
+
+        // Always add ordering
+        sql += ` ORDER BY purchases.created_at DESC`;
+
+        // Execute query
+        const results = await new Promise((resolve, reject) => {
+            dbconnection.query(sql, values, (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(results);
+            });
+        });
+
+        if (results.length === 0) {
+            return { success: false, message: "Purchase not found." };
+        }
+
+        return { success: true, data: results };
+    } catch (error) {
+        console.error("Error in getFilteredPurchases:", error);
+        throw error;
+    }
+};
+
 module.exports = {
     createPurchase,
     createPurchaseExcel,
     getAllPurchases,
     getPurchaseById,
     updatePurchase,
-    deletePurchase
+    deletePurchase,
+    getFilteredPurchases
 };

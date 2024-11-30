@@ -33,16 +33,36 @@ const getVendorService = async (id) => {
 
 // Get all vendors
 const getVendorsService = async () => {
-    const rows = await new Promise((resolve, reject) => {
-        dbconnection.query(
-            'SELECT * FROM vendors ORDER BY created_at DESC',
-            (error, results) => {
-                if (error) reject(error);
-                else resolve(results);
-            }
-        );
-    });
-    return rows;
+    try {
+        const rows = await new Promise((resolve, reject) => {
+            dbconnection.query(
+                `
+                SELECT 
+                    vendors.*, 
+                    COALESCE(SUM(purchases.total_amount), 0) AS total_amount 
+                FROM 
+                    vendors 
+                LEFT JOIN 
+                    purchases ON vendors.vendor_id = purchases.vendor_id 
+                GROUP BY 
+                    vendors.vendor_id 
+                ORDER BY 
+                    vendors.created_at DESC
+                `,
+                (error, results) => {
+                    if (error) {
+                        reject(error); // Reject with error to be handled in catch
+                    } else {
+                        resolve(results); // Resolve with query results
+                    }
+                }
+            );
+        });
+        return rows;
+    } catch (error) {
+        console.error("Error fetching vendors: ", error);
+        throw new Error('Could not fetch vendors');
+    }
 };
 
 // Update a vendor by ID

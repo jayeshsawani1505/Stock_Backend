@@ -107,6 +107,21 @@ const uploadPurchasesExcel = async (req, res) => {
     }
 };
 
+const getFilteredPurchases = async (req, res) => {
+    try {
+        const filters = req.query; // Get query parameters from the request
+        const response = await purchasesService.getFilteredPurchases(filters);
+
+        if (response.success) {
+            res.status(200).json({ message: "Purchases retrieved successfully.", data: response.data });
+        } else {
+            res.status(404).json({ message: response.message });
+        }
+    } catch (error) {
+        console.error("Error in getFilteredPurchases controller:", error);
+        res.status(500).json({ message: "Error retrieving purchases.", error });
+    }
+};
 
 module.exports = {
     createPurchase,
@@ -114,5 +129,6 @@ module.exports = {
     getPurchaseById,
     updatePurchase,
     deletePurchase,
-    uploadPurchasesExcel
+    uploadPurchasesExcel,
+    getFilteredPurchases
 };

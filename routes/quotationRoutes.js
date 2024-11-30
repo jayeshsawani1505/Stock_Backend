@@ -22,4 +22,6 @@ router.delete('/:id', quotationController.deleteQuotation);
 // Get quotations by customer ID
 router.get('/customer/:customerId', quotationController.getQuotationsByCustomerId);
 
+router.get('/report/filter', quotationController.getFilteredQuotations);
+
 module.exports = router;

@@ -111,19 +111,29 @@ const updateInvoiceStatus = async (req, res) => {
     }
 };
 
-// Get Invoice details by id for pdf
 const getInvoiceDetailsForPDF = async (req, res) => {
     const { id } = req.params;
+
     try {
-        const rows = await invoiceService.getInvoiceDetailsForPDF(id);
-        if (rows.length === 0) {
+        const invoice = await invoiceService.getInvoiceDetailsForPDF(id);
+
+        if (!invoice) {
             return res.status(404).json({ message: "Invoice not found." });
         }
-        res.status(200).json({ message: "Invoice retrieved successfully.", data: rows[0] });
+
+        return res.status(200).json({
+            message: "Invoice retrieved successfully.",
+            data: invoice, // Include the invoice data
+        });
     } catch (error) {
-        res.status(500).json({ message: "Error retrieving invoice.", error });
+        console.error("Error retrieving invoice: ", error);
+        return res.status(500).json({
+            message: "Error retrieving invoice.",
+            error: error.message || "An unexpected error occurred.",
+        });
     }
 };
+
 
 // Update an invoice by ID
 const updateInvoice = async (req, res) => {

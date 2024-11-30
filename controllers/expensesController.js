@@ -103,10 +103,27 @@ const deleteExpense = async (req, res) => {
     }
 };
 
+const getFilteredExpenses = async (req, res) => {
+    try {
+        const filters = req.query; // Get query parameters (startDate, endDate)
+        const results = await ExpenseService.getFilteredExpensesService(filters);
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: "No expenses found." });
+        }
+
+        res.status(200).json({ message: "Expenses retrieved successfully.", data: results });
+    } catch (error) {
+        console.error('Error in getFilteredExpenses controller:', error);
+        res.status(500).json({ message: "Error retrieving expenses.", error });
+    }
+};
+
 module.exports = {
     createExpense,
     getAllExpenses,
     getExpenseById,
     updateExpense,
-    deleteExpense
+    deleteExpense,
+    getFilteredExpenses
 };

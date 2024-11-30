@@ -119,15 +119,18 @@ const getDeliveryChallanDetailsForPDF = async (id) => {
             // Create dynamic placeholders for the query
             const productIds = invoiceDetails.map((detail) => detail.product_id);
             const subproductIds = invoiceDetails.map((detail) => detail.subproduct_id);
+            const categoryIds = invoiceDetails.map((detail) => detail.category_id);
 
             const detailsQuery = `
                 SELECT 
                     products.product_id, 
                     products.product_name, 
                     subproducts.subproduct_id, 
-                    subproducts.subproduct_name
+                    subproducts.subproduct_name,
+                    category.category_name
                 FROM products
                 LEFT JOIN subproducts ON products.product_id = subproducts.product_id
+                LEFT JOIN category ON products.category_id = category.category_id
                 WHERE products.product_id IN (?) 
                 AND (subproducts.subproduct_id IN (?) OR subproducts.subproduct_id IS NULL)
             `;
@@ -145,6 +148,7 @@ const getDeliveryChallanDetailsForPDF = async (id) => {
                         ...detail,
                         product_name: product ? product.product_name : null,
                         subproduct_name: subproduct ? subproduct.subproduct_name : null,
+                        category_name: product ? product.category_name : null,  // Add category name
                     };
                 });
 
