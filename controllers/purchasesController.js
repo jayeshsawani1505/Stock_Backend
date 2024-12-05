@@ -123,6 +123,25 @@ const getFilteredPurchases = async (req, res) => {
     }
 };
 
+const updatePurchasesStatus = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+        return res.status(400).json({ message: "Status is required." });
+    }
+
+    try {
+        const result = await purchasesService.updatePurchasesStatus(id, status);
+        res.status(200).json({ message: "Purchases status updated successfully.", data: result });
+    } catch (error) {
+        if (error.message === 'Purchases not found') {
+            return res.status(404).json({ message: error.message });
+        }
+        res.status(500).json({ message: "Error updating Purchases status.", error: error.message });
+    }
+};
+
 module.exports = {
     createPurchase,
     getAllPurchases,
@@ -130,5 +149,6 @@ module.exports = {
     updatePurchase,
     deletePurchase,
     uploadPurchasesExcel,
-    getFilteredPurchases
+    getFilteredPurchases,
+    updatePurchasesStatus
 };

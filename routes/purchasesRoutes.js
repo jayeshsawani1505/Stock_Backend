@@ -24,5 +24,6 @@ router.delete('/:id', purchasesController.deletePurchase);
 // Route to upload and process Excel file for categories
 router.post('/upload-excel', upload.single('file'), purchasesController.uploadPurchasesExcel);
 
+router.put('/status/:id', purchasesController.updatePurchasesStatus);
 
 module.exports = router;

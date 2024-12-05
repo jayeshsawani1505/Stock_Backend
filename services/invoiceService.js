@@ -96,6 +96,7 @@ const createInvoice = async (invoiceData) => {
                             await outStockSubProduct(subproduct_id, quantity);
                         } else {
                             await outStockProduct(product_name, quantity);
+                            await opening_balance(customer_id, total_amount);
                         }
                     }
                 } catch (stockError) {
@@ -147,6 +148,24 @@ const outStockProduct = async (id, quantity) => {
     });
 };
 
+const opening_balance = async (customer_id, total_amount) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE customers SET opening_balance = opening_balance + ? WHERE customer_id = ?',
+            [total_amount, customer_id],
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                if (results.affectedRows === 0) {
+                    return reject(new Error('Customer not found'));
+                }
+                resolve(results);
+            }
+        );
+    });
+};
+
 // Get all invoices
 const getAllInvoices = async () => {
     return new Promise((resolve, reject) => {
@@ -155,6 +174,8 @@ const getAllInvoices = async () => {
                 invoices.*, 
                 customers.name AS customer_name,
                 customers.phone AS customer_phone,
+                customers.opening_balance AS customer_openingBalance,
+                customers.closing_balance AS customer_closingBalance,
                 customers.profile_photo AS customer_profile_photo
             FROM invoices
             JOIN customers ON invoices.customer_id = customers.customer_id ORDER BY invoices.created_at DESC

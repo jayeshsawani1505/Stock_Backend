@@ -33,21 +33,37 @@ const getPurchasePaymentService = async (id) => {
 
 // Get all purchase payments
 const getPurchasePaymentsService = async () => {
-    const rows = await new Promise((resolve, reject) => {
-        dbconnection.query(
-            `SELECT purchase_payments.*, purchases.*, suppliers.name AS supplier_name
-                FROM purchase_payments
-                JOIN purchases ON purchase_payments.purchase_id = purchases.id
-                JOIN suppliers ON purchases.supplier_id = suppliers.supplier_id
-                ORDER BY purchase_payments.created_at DESC`,
-            async (error, results) => {
-                if (error) return reject(error);
-                else resolve(results);
-            }
-        );
-    });
-
-    return rows;
+    try {
+        const rows = await new Promise((resolve, reject) => {
+            dbconnection.query(
+                `
+                SELECT 
+                    purchase_payments.*, 
+                    purchases.total_amount,
+                    vendors.vendor_name
+                FROM 
+                    purchase_payments
+                JOIN 
+                    purchases ON purchase_payments.purchase_id = purchases.id
+                JOIN 
+                    vendors ON purchases.vendor_id = vendors.vendor_id
+                ORDER BY 
+                    purchase_payments.created_at DESC
+                `,
+                (error, results) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(results);
+                    }
+                }
+            );
+        });
+        return rows;
+    } catch (error) {
+        console.error("Error fetching purchase payments:", error);
+        throw error;
+    }
 };
 
 // Update a purchase payment by ID
@@ -102,10 +118,10 @@ const getFilteredPurchasePaymentsService = async (filters) => {
         const { startDate, endDate, supplierId } = filters;
 
         let query = `
-                SELECT purchase_payments.*, purchases.*, suppliers.name AS supplier_name
+                SELECT purchase_payments.*, purchases.*,  vendors.vendor_name
                 FROM purchase_payments
                 JOIN purchases ON purchase_payments.purchase_id = purchases.id
-                JOIN suppliers ON purchases.supplier_id = suppliers.supplier_id
+                JOIN vendors ON purchases.vendor_id = vendors.vendor_id
             `;
 
         const conditions = [];

@@ -2,18 +2,69 @@ const dbconnection = require('../config/database');
 
 // Create a new payment
 const createPaymentService = async (paymentData) => {
-    const { invoice_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description } = paymentData;
-    const result = await new Promise((resolve, reject) => {
+    const {
+        invoice_id,
+        receiveAmount,
+        pendingAmount,
+        payment_mode,
+        payment_date,
+        payment_status,
+        description
+    } = paymentData;
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Start transaction
+            await dbconnection.beginTransaction();
+
+            // Insert payment record
+            const paymentResult = await new Promise((resolve, reject) => {
+                dbconnection.query(
+                    'INSERT INTO payments (invoice_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    [invoice_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description],
+                    (error, results) => {
+                        if (error) reject(error);
+                        else resolve(results);
+                    }
+                );
+            });
+
+            const paymentId = paymentResult.insertId;
+
+            // Update customer's closing balance
+            await updateCustomerClosingBalance(invoice_id, receiveAmount);
+
+            // Commit transaction
+            await dbconnection.commit();
+
+            resolve({ paymentId });
+        } catch (error) {
+            // Rollback transaction in case of failure
+            await dbconnection.rollback();
+            reject(error);
+        }
+    });
+};
+
+const updateCustomerClosingBalance = async (invoice_id, receiveAmount) => {
+    return new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO payments (invoice_id, receiveAmount,pendingAmount, payment_mode, payment_date, payment_status, description) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [invoice_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description],
+            `UPDATE customers 
+             JOIN invoices ON customers.customer_id = invoices.customer_id
+             SET customers.closing_balance = customers.opening_balance - ?
+             WHERE invoices.id = ?`,
+            [receiveAmount, invoice_id],
             (error, results) => {
-                if (error) reject(error);
-                else resolve(results);
+                if (error) {
+                    return reject(error);
+                }
+                if (results.affectedRows === 0) {
+                    return reject(new Error('Customer or Invoice not found'));
+                }
+                resolve(results);
             }
         );
     });
-    return { paymentId: result.insertId };
 };
 
 // Get a payment by ID
@@ -174,10 +225,16 @@ const getFilteredPaymentsService = async (filters) => {
 
         // Base SQL query
         let query = `
-            SELECT payments.*, invoices.*, customers.name AS customer_name
-            FROM payments
-            JOIN invoices ON payments.invoice_id = invoices.id
-            JOIN customers ON invoices.customer_id = customers.customer_id
+             SELECT 
+                payments.*, 
+                invoices.total_amount, 
+                customers.name AS customer_name
+            FROM 
+                payments
+            JOIN 
+                invoices ON payments.invoice_id = invoices.id
+            JOIN 
+                customers ON invoices.customer_id = customers.customer_id
         `;
 
         const conditions = [];

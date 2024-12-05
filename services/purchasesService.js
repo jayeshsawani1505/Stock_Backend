@@ -10,6 +10,9 @@ const createPurchase = async (purchaseData) => {
         supplier_invoice_serial_no,
         notes,
         terms_conditions,
+        adjustmentType,
+        adjustmentValue,
+        subtotal_amount,
         total_amount,
         payment_mode,
         signature_id,
@@ -18,13 +21,13 @@ const createPurchase = async (purchaseData) => {
     } = purchaseData;
 
     // Serialize invoice_details
-    const serializedInvoiceDetails = JSON.stringify(invoice_details);
+    const invoiceDetailsJSON = JSON.stringify(invoice_details);
 
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO purchases (vendor_id, purchase_date,
              due_date, reference_no, supplier_invoice_serial_no, notes, 
-             terms_conditions, total_amount, payment_mode, signature_id, status, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             terms_conditions, adjustmentType, adjustmentValue, subtotal_amount, total_amount, payment_mode, signature_id, status, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 vendor_id,
                 purchase_date,
@@ -33,14 +36,49 @@ const createPurchase = async (purchaseData) => {
                 supplier_invoice_serial_no,
                 notes,
                 terms_conditions,
+                adjustmentType,
+                adjustmentValue,
+                subtotal_amount,
                 total_amount,
                 payment_mode,
                 signature_id,
                 status,
-                serializedInvoiceDetails
+                invoiceDetailsJSON
             ],
+            async (error, results) => {
+                if (error) {
+                    console.error('Error executing query:', error);
+                    return reject({ message: 'Error creating invoice.', error });
+                }
+
+                try {
+                    for (const detail of invoice_details) {
+                        const { product_name, quantity } = detail;
+
+                        // Use inStock instead of outStockProduct
+                        await inStock(product_name, quantity);
+                    }
+                } catch (stockError) {
+                    console.error('Stock adjustment error:', stockError);
+                    return reject({ message: 'Stock adjustment failed.', stockError });
+                }
+
+                resolve(results); // Resolve with the results
+            }
+        );
+    });
+};
+
+// InStock function for adding product quantity
+const inStock = async (id, quantity) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE products SET quantity = quantity + ? WHERE product_name = ?',
+            [quantity, id],
             (error, results) => {
-                if (error) return reject(error);
+                if (error) {
+                    return reject(error);
+                }
                 resolve(results);
             }
         );
@@ -52,7 +90,9 @@ const createPurchaseExcel = async (purchases) => {
         INSERT INTO purchases 
         (vendor_id, purchase_date, due_date, reference_no, 
         supplier_invoice_serial_no, product_id, subproduct_id, quantity, rate, 
-        notes, terms_conditions, total_amount, payment_mode, status) 
+        notes, terms_conditions,adjustmentType,
+        adjustmentValue,
+        subtotal_amount, total_amount, payment_mode, status) 
         VALUES ?
     `;
 
@@ -68,6 +108,9 @@ const createPurchaseExcel = async (purchases) => {
         purchase.rate,
         purchase.notes,
         purchase.terms_conditions,
+        purchase.adjustmentType,
+        purchase.adjustmentValue,
+        purchase.subtotal_amount,
         purchase.total_amount,
         purchase.payment_mode,
         purchase.status
@@ -122,6 +165,9 @@ const updatePurchase = async (id, purchaseData) => {
         supplier_invoice_serial_no,
         notes,
         terms_conditions,
+        adjustmentType,
+        adjustmentValue,
+        subtotal_amount,
         total_amount,
         payment_mode,
         signature_id,
@@ -142,6 +188,9 @@ const updatePurchase = async (id, purchaseData) => {
                  supplier_invoice_serial_no = ?, 
                  notes = ?, 
                  terms_conditions = ?, 
+                 adjustmentType = ?,
+                 adjustmentValue = ?,
+                 subtotal_amount ?,
                  total_amount = ?, 
                  payment_mode = ?, 
                  signature_id = ?, 
@@ -157,6 +206,9 @@ const updatePurchase = async (id, purchaseData) => {
                 supplier_invoice_serial_no,
                 notes,
                 terms_conditions,
+                adjustmentType,
+                adjustmentValue,
+                subtotal_amount,
                 total_amount,
                 payment_mode,
                 signature_id,
@@ -241,6 +293,24 @@ const getFilteredPurchases = async (query) => {
     }
 };
 
+const updatePurchasesStatus = async (id, status) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE purchases SET status = ? WHERE id = ?',
+            [status, id],
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                if (results.affectedRows === 0) {
+                    return reject(new Error('Purchases not found'));
+                }
+                resolve(results);
+            }
+        );
+    });
+};
+
 module.exports = {
     createPurchase,
     createPurchaseExcel,
@@ -248,5 +318,6 @@ module.exports = {
     getPurchaseById,
     updatePurchase,
     deletePurchase,
-    getFilteredPurchases
+    getFilteredPurchases,
+    updatePurchasesStatus
 };
