@@ -177,6 +177,8 @@ const getPaymentsService = async () => {
 // Update a payment by ID
 const updatePaymentService = async (id, paymentData) => {
     const { invoice_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description } = paymentData;
+
+    // Update payment record
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
             'UPDATE payments SET invoice_id = ?, receiveAmount = ?, pendingAmount = ?, payment_mode = ?, payment_date = ?, payment_status = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE payment_id = ?',
@@ -187,7 +189,19 @@ const updatePaymentService = async (id, paymentData) => {
             }
         );
     });
-    return result.affectedRows > 0 ? { id, ...paymentData } : null;
+
+    // If payment was successfully updated, update the customer's closing balance
+    if (result.affectedRows > 0) {
+        try {
+            await updateCustomerClosingBalance(invoice_id, receiveAmount);
+        } catch (error) {
+            console.error('Error updating customer closing balance:', error);
+            throw new Error('Payment updated, but failed to update customer closing balance.');
+        }
+        return { id, ...paymentData };
+    }
+
+    return null;
 };
 
 // Delete a payment by ID
