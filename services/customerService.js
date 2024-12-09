@@ -7,7 +7,8 @@ const createCustomerService = async (customerData) => {
         billing_address_line1, billing_address_line2, billing_country, billing_state,
         billing_city, billing_pincode, shipping_name, shipping_address_line1,
         shipping_address_line2, shipping_country, shipping_state, shipping_city,
-        shipping_pincode, bank_name, branch, account_number, account_holder_name, ifsc
+        shipping_pincode, bank_name, branch, account_number, account_holder_name, ifsc,
+        opening_balance
     } = customerData;
 
     const result = await new Promise((resolve, reject) => {
@@ -17,14 +18,15 @@ const createCustomerService = async (customerData) => {
             billing_address_line1, billing_address_line2, billing_country, billing_state,
             billing_city, billing_pincode, shipping_name, shipping_address_line1, 
             shipping_address_line2, shipping_country, shipping_state, shipping_city,
-            shipping_pincode, bank_name, branch, account_number, account_holder_name, ifsc) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            shipping_pincode, bank_name, branch, account_number, account_holder_name, ifsc,
+            opening_balance) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 profile_photo, name, currency, email, website, phone, notes, billing_name,
                 billing_address_line1, billing_address_line2, billing_country, billing_state,
                 billing_city, billing_pincode, shipping_name, shipping_address_line1,
                 shipping_address_line2, shipping_country, shipping_state, shipping_city,
-                shipping_pincode, bank_name, branch, account_number, account_holder_name, ifsc
+                shipping_pincode, bank_name, branch, account_number, account_holder_name, ifsc, opening_balance
             ],
             (error, results) => {
                 if (error) reject(error);
@@ -95,7 +97,7 @@ const getTotalCustomerCount = async () => {
 // Update a customer by ID
 const updateCustomerService = async (id, customerData) => {
     const {
-        profile_photo, name, currency, email, website, phone, notes, billing_name,
+        opening_balance, name, currency, email, website, phone, notes, billing_name,
         billing_address_line1, billing_address_line2, billing_country, billing_state,
         billing_city, billing_pincode, shipping_name, shipping_address_line1,
         shipping_address_line2, shipping_country, shipping_state, shipping_city,
@@ -105,7 +107,7 @@ const updateCustomerService = async (id, customerData) => {
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
             `UPDATE customers SET 
-            profile_photo = ?, name = ?, currency = ?, email = ?, website = ?, phone = ?, notes = ?, 
+            opening_balance = ?, name = ?, currency = ?, email = ?, website = ?, phone = ?, notes = ?, 
             billing_name = ?, billing_address_line1 = ?, billing_address_line2 = ?, 
             billing_country = ?, billing_state = ?, billing_city = ?, billing_pincode = ?, 
             shipping_name = ?, shipping_address_line1 = ?, shipping_address_line2 = ?, 
@@ -113,7 +115,7 @@ const updateCustomerService = async (id, customerData) => {
             bank_name = ?, branch = ?, account_number = ?, account_holder_name = ?, ifsc = ?, 
             updated_at = CURRENT_TIMESTAMP WHERE customer_id = ?`,
             [
-                profile_photo, name, currency, email, website, phone, notes, billing_name,
+                opening_balance, name, currency, email, website, phone, notes, billing_name,
                 billing_address_line1, billing_address_line2, billing_country, billing_state,
                 billing_city, billing_pincode, shipping_name, shipping_address_line1,
                 shipping_address_line2, shipping_country, shipping_state, shipping_city,
