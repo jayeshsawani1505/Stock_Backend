@@ -242,7 +242,10 @@ const getFilteredPaymentsService = async (filters) => {
              SELECT 
                 payments.*, 
                 invoices.total_amount, 
-                customers.name AS customer_name
+                invoices.invoice_number, 
+                customers.name AS customer_name,
+                customers.opening_balance AS customer_opening_balance,
+                customers.closing_balance AS customer_closing_balance
             FROM 
                 payments
             JOIN 
