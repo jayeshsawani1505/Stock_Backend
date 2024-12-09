@@ -52,6 +52,8 @@ const createInvoice = async (invoiceData) => {
         signature_id,
         adjustmentType,
         adjustmentValue,
+        adjustmentType2,
+        adjustmentValue2,
         subtotal_amount,
         total_amount,
         invoice_details
@@ -63,8 +65,8 @@ const createInvoice = async (invoiceData) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO invoices 
-            (invoice_number, customer_id, invoice_date, due_date, transporter_name, category_id, status, notes, terms_conditions, signature_id,adjustmentType, adjustmentValue, subtotal_amount, total_amount, invoice_details) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (invoice_number, customer_id, invoice_date, due_date, transporter_name, category_id, status, notes, terms_conditions, signature_id, adjustmentType, adjustmentValue, adjustmentType2, adjustmentValue2, subtotal_amount, total_amount, invoice_details) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 invoice_number,
                 customer_id,
@@ -78,6 +80,8 @@ const createInvoice = async (invoiceData) => {
                 signature_id,
                 adjustmentType,
                 adjustmentValue,
+                adjustmentType2,
+                adjustmentValue2,
                 subtotal_amount,
                 total_amount,
                 invoiceDetailsJSON

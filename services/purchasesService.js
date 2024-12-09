@@ -12,6 +12,8 @@ const createPurchase = async (purchaseData) => {
         terms_conditions,
         adjustmentType,
         adjustmentValue,
+        adjustmentType2,
+        adjustmentValue2,
         subtotal_amount,
         total_amount,
         payment_mode,
@@ -27,7 +29,7 @@ const createPurchase = async (purchaseData) => {
         dbconnection.query(
             `INSERT INTO purchases (vendor_id, purchase_date,
              due_date, reference_no, supplier_invoice_serial_no, notes, 
-             terms_conditions, adjustmentType, adjustmentValue, subtotal_amount, total_amount, payment_mode, signature_id, status, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             terms_conditions, adjustmentType, adjustmentValue, adjustmentType2, adjustmentValue2, subtotal_amount, total_amount, payment_mode, signature_id, status, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 vendor_id,
                 purchase_date,
@@ -38,6 +40,8 @@ const createPurchase = async (purchaseData) => {
                 terms_conditions,
                 adjustmentType,
                 adjustmentValue,
+                adjustmentType2,
+                adjustmentValue2,
                 subtotal_amount,
                 total_amount,
                 payment_mode,
