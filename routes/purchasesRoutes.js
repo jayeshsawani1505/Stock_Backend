@@ -26,4 +26,6 @@ router.post('/upload-excel', upload.single('file'), purchasesController.uploadPu
 
 router.put('/status/:id', purchasesController.updatePurchasesStatus);
 
+router.get('/pdf/:id', purchasesController.getPurchasesDetailsForPDF);
+
 module.exports = router;

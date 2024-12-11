@@ -142,6 +142,29 @@ const updatePurchasesStatus = async (req, res) => {
     }
 };
 
+const getPurchasesDetailsForPDF = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const purchase = await purchasesService.getPurchasesDetailsForPDF(id);
+
+        if (!purchase) {
+            return res.status(404).json({ message: "purchase not found." });
+        }
+
+        return res.status(200).json({
+            message: "purchase retrieved successfully.",
+            data: purchase, // Include the purchase data
+        });
+    } catch (error) {
+        console.error("Error retrieving purchase: ", error);
+        return res.status(500).json({
+            message: "Error retrieving purchase.",
+            error: error.message || "An unexpected error occurred.",
+        });
+    }
+};
+
 module.exports = {
     createPurchase,
     getAllPurchases,
@@ -150,5 +173,6 @@ module.exports = {
     deletePurchase,
     uploadPurchasesExcel,
     getFilteredPurchases,
-    updatePurchasesStatus
+    updatePurchasesStatus,
+    getPurchasesDetailsForPDF
 };

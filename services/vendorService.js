@@ -2,11 +2,11 @@ const dbconnection = require('../config/database');
 
 // Create a new vendor
 const createVendorService = async (vendorData) => {
-    const { vendor_name, email, phone_number, closing_balance } = vendorData;
+    const { vendor_name, email, phone_number, opening_balance } = vendorData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO vendors (vendor_name, email, phone_number, closing_balance) VALUES (?, ?, ?, ?)',
-            [vendor_name, email, phone_number, closing_balance],
+            'INSERT INTO vendors (vendor_name, email, phone_number, opening_balance) VALUES (?, ?, ?, ?)',
+            [vendor_name, email, phone_number, opening_balance],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);
@@ -67,11 +67,11 @@ const getVendorsService = async () => {
 
 // Update a vendor by ID
 const updateVendorService = async (id, vendorData) => {
-    const { vendor_name, email, phone_number, closing_balance } = vendorData;
+    const { vendor_name, email, phone_number, opening_balance } = vendorData;
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE vendors SET vendor_name = ?, email = ?, phone_number = ?, closing_balance = ?, updated_at = CURRENT_TIMESTAMP WHERE vendor_id = ?',
-            [vendor_name, email, phone_number, closing_balance, id],
+            'UPDATE vendors SET vendor_name = ?, email = ?, phone_number = ?, opening_balance = ?, updated_at = CURRENT_TIMESTAMP WHERE vendor_id = ?',
+            [vendor_name, email, phone_number, opening_balance, id],
             (error, results) => {
                 if (error) reject(error);
                 else resolve(results);

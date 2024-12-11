@@ -92,6 +92,21 @@ const getFilteredPurchasePayments = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch filtered purchase payments" });
     }
 };
+const getFilteredTransactionLogs = async (req, res) => {
+    try {
+        const filters = req.query; // Get query parameters (startDate, endDate, customerId, transactionType)
+        const results = await purchasePaymentService.getFilteredVendorTransactionLogsService(filters);
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: "No transaction logs found." });
+        }
+
+        res.status(200).json({ message: "Transaction logs retrieved successfully.", data: results });
+    } catch (error) {
+        console.error("Error in getFilteredTransactionLogs controller:", error);
+        res.status(500).json({ message: "Error retrieving transaction logs.", error });
+    }
+};
 
 module.exports = {
     createPurchasePayment,
@@ -101,4 +116,5 @@ module.exports = {
     deletePurchasePayment,
     getPurchasePaymentsByPurchaseId,
     getFilteredPurchasePayments,
+    getFilteredTransactionLogs
 };

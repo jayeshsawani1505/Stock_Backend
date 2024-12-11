@@ -72,9 +72,9 @@ const getPaymentsByCustomerId = async (req, res) => {
         if (payments.length === 0) {
             return res.status(404).json({ message: 'No payments found for this customer ID' });
         }
-        res.status(200).json({ 
-            message: 'Payments retrieved successfully', 
-            payments 
+        res.status(200).json({
+            message: 'Payments retrieved successfully',
+            payments
         });
     } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve payments: ' + error.message });
@@ -97,6 +97,22 @@ const getFilteredPayments = async (req, res) => {
     }
 };
 
+const getFilteredTransactionLogs = async (req, res) => {
+    try {
+        const filters = req.query; // Get query parameters (startDate, endDate, customerId, transactionType)
+        const results = await paymentService.getFilteredTransactionLogsService(filters);
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: "No transaction logs found." });
+        }
+
+        res.status(200).json({ message: "Transaction logs retrieved successfully.", data: results });
+    } catch (error) {
+        console.error("Error in getFilteredTransactionLogs controller:", error);
+        res.status(500).json({ message: "Error retrieving transaction logs.", error });
+    }
+};
+
 module.exports = {
     createPayment,
     getPaymentById,
@@ -104,5 +120,6 @@ module.exports = {
     updatePayment,
     deletePayment,
     getPaymentsByCustomerId,
-    getFilteredPayments
+    getFilteredPayments,
+    getFilteredTransactionLogs
 };

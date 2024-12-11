@@ -22,5 +22,6 @@ router.get('/purchase/:purchaseId', purchasePaymentController.getPurchasePayment
 
 // Get filtered purchase payments
 router.get('/report/filter', purchasePaymentController.getFilteredPurchasePayments);
+router.get('/transaction/report/filter', purchasePaymentController.getFilteredTransactionLogs);
 
 module.exports = router;

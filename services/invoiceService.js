@@ -56,7 +56,9 @@ const createInvoice = async (invoiceData) => {
         adjustmentValue2,
         subtotal_amount,
         total_amount,
-        invoice_details
+        invoice_details,
+        closing_balance,
+        opening_balance
     } = invoiceData;
 
     // Convert invoice_details to a JSON string
@@ -94,15 +96,13 @@ const createInvoice = async (invoiceData) => {
 
                 try {
                     for (const detail of invoice_details) {
-                        const { product_name, subproduct_id, quantity } = detail;
-
-                        if (subproduct_id > 0) {
-                            await outStockSubProduct(subproduct_id, quantity);
-                        } else {
-                            await outStockProduct(product_name, quantity);
-                            await opening_balance(customer_id, total_amount);
-                        }
+                        const { product_name, quantity } = detail;
+                        await outStockProduct(product_name, quantity);
                     }
+                    await opening_Balance(customer_id, opening_balance, closing_balance);
+                    // Log the transaction in the transaction_logs table
+                    await logTransaction(customer_id, total_amount, closing_balance);
+
                 } catch (stockError) {
                     console.error('Stock adjustment error:', stockError);
                     return reject({ message: 'Stock adjustment failed.', stockError });
@@ -152,11 +152,14 @@ const outStockProduct = async (id, quantity) => {
     });
 };
 
-const opening_balance = async (customer_id, total_amount) => {
+const opening_Balance = async (customer_id, opening_balance, closing_balance) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE customers SET opening_balance = opening_balance + ? WHERE customer_id = ?',
-            [total_amount, customer_id],
+            `UPDATE customers SET 
+             opening_balance = ?,
+             closing_balance = ?
+             WHERE customer_id = ?`,
+            [opening_balance, closing_balance, customer_id],
             (error, results) => {
                 if (error) {
                     return reject(error);
@@ -170,6 +173,21 @@ const opening_balance = async (customer_id, total_amount) => {
     });
 };
 
+const logTransaction = async (customer_id, total_amount, closing_balance) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            `INSERT INTO transaction_logs (customer_id, transaction_type, amount, balance_after) 
+            VALUES (?, 'sales', ?, ?)`,
+            [customer_id, total_amount, closing_balance],
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(results);
+            }
+        );
+    });
+};
 // Get all invoices
 const getAllInvoices = async () => {
     return new Promise((resolve, reject) => {
