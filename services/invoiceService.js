@@ -67,8 +67,9 @@ const createInvoice = async (invoiceData) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO invoices 
-            (invoice_number, customer_id, invoice_date, due_date, transporter_name, category_id, status, notes, terms_conditions, signature_id, adjustmentType, adjustmentValue, adjustmentType2, adjustmentValue2, subtotal_amount, total_amount, invoice_details) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (invoice_number, customer_id, invoice_date, due_date, transporter_name, category_id, status, notes, terms_conditions, signature_id, adjustmentType, adjustmentValue, adjustmentType2, adjustmentValue2, subtotal_amount, total_amount, invoice_details,closing_balance,
+        opening_balance) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?)`,
             [
                 invoice_number,
                 customer_id,
@@ -86,7 +87,9 @@ const createInvoice = async (invoiceData) => {
                 adjustmentValue2,
                 subtotal_amount,
                 total_amount,
-                invoiceDetailsJSON
+                invoiceDetailsJSON,
+                closing_balance,
+                opening_balance
             ],
             async (error, results) => {
                 if (error) {
@@ -245,7 +248,9 @@ const getInvoiceDetailsForPDF = async (id) => {
                 invoices.*, 
                 customers.*, 
                 signature.signature_name, 
-                signature.signature_photo
+                signature.signature_photo,
+                invoices.opening_balance AS invoice_opening_balance,
+                invoices.closing_balance AS invoice_closing_balance
             FROM invoices
             JOIN customers ON invoices.customer_id = customers.customer_id
             LEFT JOIN signature ON invoices.signature_id = signature.signature_id

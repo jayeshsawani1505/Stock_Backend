@@ -31,7 +31,8 @@ const createPurchase = async (purchaseData) => {
         dbconnection.query(
             `INSERT INTO purchases (vendor_id, purchase_date,
              due_date, reference_no, supplier_invoice_serial_no, notes, 
-             terms_conditions, adjustmentType, adjustmentValue, adjustmentType2, adjustmentValue2, subtotal_amount, total_amount, payment_mode, signature_id, status, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             terms_conditions, adjustmentType, adjustmentValue, adjustmentType2, adjustmentValue2, subtotal_amount, total_amount, payment_mode, signature_id, status, invoice_details,closing_balance,
+        opening_balance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 vendor_id,
                 purchase_date,
@@ -49,7 +50,9 @@ const createPurchase = async (purchaseData) => {
                 payment_mode,
                 signature_id,
                 status,
-                invoiceDetailsJSON
+                invoiceDetailsJSON,
+                closing_balance,
+                opening_balance
             ],
             async (error, results) => {
                 if (error) {
@@ -364,7 +367,9 @@ const getPurchasesDetailsForPDF = async (id) => {
                 purchases.*, 
                 vendors.*, 
                 signature.signature_name, 
-                signature.signature_photo
+                signature.signature_photo,
+                purchases.opening_balance AS purchases_opening_balance,
+                purchases.closing_balance AS purchases_closing_balance
             FROM purchases
              JOIN vendors ON purchases.vendor_id = vendors.vendor_id
              LEFT JOIN signature ON purchases.signature_id = signature.signature_id
