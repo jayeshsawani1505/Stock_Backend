@@ -120,7 +120,7 @@ const logTransaction = async (vendor_id, total_amount, closing_balance) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
             `INSERT INTO vendor_transaction_logs (vendor_id, transaction_type, amount, balance_after) 
-            VALUES (?, 'sales', ?, ?)`,
+            VALUES (?, 'purchase', ?, ?)`,
             [vendor_id, total_amount, closing_balance],
             (error, results) => {
                 if (error) {

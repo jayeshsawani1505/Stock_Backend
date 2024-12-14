@@ -50,20 +50,19 @@ const logTransaction = async (vendor_id, receiveAmount) => {
                 }
 
                 const currentBalance = results[0].closing_balance;
-                const balanceAfter = currentBalance - receiveAmount;  // Subtract the payment amount
 
                 // Insert the transaction log
                 dbconnection.query(
                     `INSERT INTO vendor_transaction_logs (vendor_id, transaction_type, amount, balance_after) 
                     VALUES (?, 'payment-in', ?, ?)`,
-                    [vendor_id, receiveAmount, balanceAfter],
+                    [vendor_id, receiveAmount, currentBalance],
                     (error, logResults) => {
                         if (error) {
                             return reject(new Error(`Failed to insert transaction log: ${error.message}`));
                         }
 
                         // Resolve with the transaction log details
-                        resolve({ vendor_id, balanceAfter });
+                        resolve({ vendor_id, currentBalance });
                     }
                 );
             }
