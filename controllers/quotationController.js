@@ -107,6 +107,31 @@ const getFilteredQuotations = async (req, res) => {
     }
 };
 
+const getQuotationDetailsForPDF = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Call the service to get quotation details
+        const quotation = await quotationService.getQuotationsForPDF(id);
+
+        if (!quotation) {
+            return res.status(404).json({ message: "Quotation not found." });
+        }
+
+        // Send successful response
+        return res.status(200).json({
+            message: "Quotation retrieved successfully.",
+            data: quotation, // Include the quotation data
+        });
+    } catch (error) {
+        console.error("Error retrieving quotation: ", error);
+        return res.status(500).json({
+            message: "Error retrieving quotation.",
+            error: error.message || "An unexpected error occurred.",
+        });
+    }
+};
+
 module.exports = {
     generateQuotationNumber,
     createQuotation,
@@ -115,5 +140,6 @@ module.exports = {
     updateQuotation,
     deleteQuotation,
     getQuotationsByCustomerId,
-    getFilteredQuotations
+    getFilteredQuotations,
+    getQuotationDetailsForPDF
 };

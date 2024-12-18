@@ -105,3 +105,28 @@ exports.uploadExcel = async (req, res) => {
         res.status(500).json({ error: 'Failed to process the Excel file' });
     }
 };
+
+exports.getReturnForPDF = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Call the service to get return details
+        const returnData = await returnDebitNotesPurchasesService.getReturnForPDF(id);
+
+        if (!returnData) {
+            return res.status(404).json({ message: "Return not found." });
+        }
+
+        // Send successful response
+        return res.status(200).json({
+            message: "Return retrieved successfully.",
+            data: returnData, // Include the return data
+        });
+    } catch (error) {
+        console.error("Error retrieving return: ", error);
+        return res.status(500).json({
+            message: "Error retrieving return.",
+            error: error.message || "An unexpected error occurred.",
+        });
+    }
+};

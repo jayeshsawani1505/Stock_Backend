@@ -32,6 +32,11 @@ const createQuotationService = async (quotationData) => {
         status,
         notes,
         terms_conditions,
+        adjustmentType,
+        adjustmentValue,
+        adjustmentType2,
+        adjustmentValue2,
+        subtotal_amount,
         total_amount,
         signature_id,
         invoice_details
@@ -42,7 +47,13 @@ const createQuotationService = async (quotationData) => {
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'INSERT INTO quotations (quotation_number, customer_id, quotation_date, due_date, status, notes, terms_conditions, total_amount, signature_id, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            `INSERT INTO quotations (quotation_number, customer_id, quotation_date, due_date, status, notes, terms_conditions,
+             adjustmentType,
+            adjustmentValue,
+            adjustmentType2,
+            adjustmentValue2,
+            subtotal_amount,
+            total_amount, signature_id, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 quotation_number,
                 customer_id,
@@ -51,6 +62,11 @@ const createQuotationService = async (quotationData) => {
                 status,
                 notes,
                 terms_conditions,
+                adjustmentType,
+                adjustmentValue,
+                adjustmentType2,
+                adjustmentValue2,
+                subtotal_amount,
                 total_amount,
                 signature_id,
                 invoiceDetailsString
@@ -227,6 +243,53 @@ const getFilteredQuotationsService = async (filters) => {
     }
 };
 
+const getQuotationsForPDF = async (id) => {
+    return new Promise((resolve, reject) => {
+        const quotationQuery = `
+            SELECT 
+                quotations.*, 
+                customers.*, 
+                signature.signature_name, 
+                signature.signature_photo
+            FROM quotations
+            JOIN customers ON quotations.customer_id = customers.customer_id
+            LEFT JOIN signature ON quotations.signature_id = signature.signature_id
+            WHERE quotations.id = ?
+        `;
+
+        // Execute the query to fetch quotation details
+        dbconnection.query(quotationQuery, [id], (queryError, quotationResults) => {
+            if (queryError) {
+                console.error("Database Query Error: ", queryError);
+                return reject(queryError); // Reject the promise if there's a query error
+            }
+
+            if (quotationResults.length === 0) {
+                return reject(new Error("Quotation not found"));
+            }
+
+            // Extract the first result
+            const quotation = quotationResults[0];
+
+            // Parse quotation_details JSON
+            let quotationDetails;
+            try {
+                quotationDetails = JSON.parse(quotation.quotation_details || "[]");
+                console.log("Parsed Quotation Details: ", quotationDetails);
+            } catch (error) {
+                console.error("Invalid JSON in quotation_details: ", quotation.quotation_details);
+                return reject(new Error("Invalid quotation_details JSON"));
+            }
+
+            // Add parsed details to the result
+            quotation.quotation_details = quotationDetails;
+
+            // Resolve the promise with the complete quotation object
+            resolve(quotation);
+        });
+    });
+};
+
 module.exports = {
     generateQuotationNumber,
     createQuotationService,
@@ -235,5 +298,6 @@ module.exports = {
     updateQuotationService,
     deleteQuotationService,
     getQuotationsByCustomerIdService,
-    getFilteredQuotationsService
+    getFilteredQuotationsService,
+    getQuotationsForPDF
 };

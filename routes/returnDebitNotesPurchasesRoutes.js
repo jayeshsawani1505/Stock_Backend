@@ -21,5 +21,6 @@ router.delete('/:id', returnDebitNotesPurchasesController.deleteReturnDebitNote)
 
 // API to upload and process Excel file for products
 router.post('/upload-excel', upload.single('file'), returnDebitNotesPurchasesController.uploadExcel);
+router.get('/pdf/:id', returnDebitNotesPurchasesController.getReturnForPDF);
 
 module.exports = router;

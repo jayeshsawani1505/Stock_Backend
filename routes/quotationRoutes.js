@@ -24,4 +24,6 @@ router.get('/customer/:customerId', quotationController.getQuotationsByCustomerI
 
 router.get('/report/filter', quotationController.getFilteredQuotations);
 
+router.get('/pdf/:id', quotationController.getQuotationDetailsForPDF);
+
 module.exports = router;
