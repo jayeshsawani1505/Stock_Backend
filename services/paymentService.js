@@ -35,7 +35,7 @@ const createPaymentService = async (paymentData) => {
             await updateCustomerClosingBalance(customer_id, receiveAmount);
 
             // Log the transaction in the transaction_logs table
-            await logTransaction(customer_id, receiveAmount);
+            await logTransaction(customer_id, receiveAmount, payment_date);
 
             // Commit transaction
             await dbconnection.commit();
@@ -71,7 +71,7 @@ const updateCustomerClosingBalance = async (customer_id, receiveAmount) => {
     });
 };
 
-const logTransaction = async (customer_id, receiveAmount) => {
+const logTransaction = async (customer_id, receiveAmount, payment_date) => {
     return new Promise((resolve, reject) => {
         // Fetch the customer's current closing balance
         dbconnection.query(
@@ -90,9 +90,9 @@ const logTransaction = async (customer_id, receiveAmount) => {
 
                 // Insert the transaction log
                 dbconnection.query(
-                    `INSERT INTO transaction_logs (customer_id, transaction_type, amount, balance_after) 
-                    VALUES (?, 'payment-in', ?, ?)`,
-                    [customer_id, receiveAmount, currentBalance],
+                    `INSERT INTO transaction_logs (customer_id, transaction_type, amount, balance_after, payment_date) 
+                    VALUES (?, 'payment-in', ?, ?, ?)`,
+                    [customer_id, receiveAmount, currentBalance, payment_date],
                     (error, logResults) => {
                         if (error) {
                             return reject(new Error(`Failed to insert transaction log: ${error.message}`));

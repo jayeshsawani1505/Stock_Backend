@@ -21,7 +21,7 @@ const createPurchasePaymentService = async (paymentData) => {
                     await updateVendorClosingBalance(vendor_id, receiveAmount);
 
                     // Log the transaction in the transaction_logs table
-                    await logTransaction(vendor_id, receiveAmount);
+                    await logTransaction(vendor_id, receiveAmount, payment_date);
 
                     // Resolve with the inserted payment ID
                     resolve({ paymentId: results.insertId });
@@ -34,7 +34,7 @@ const createPurchasePaymentService = async (paymentData) => {
     });
 };
 
-const logTransaction = async (vendor_id, receiveAmount) => {
+const logTransaction = async (vendor_id, receiveAmount, payment_date) => {
     return new Promise((resolve, reject) => {
         // Fetch the vendor's current closing balance
         dbconnection.query(
@@ -53,9 +53,9 @@ const logTransaction = async (vendor_id, receiveAmount) => {
 
                 // Insert the transaction log
                 dbconnection.query(
-                    `INSERT INTO vendor_transaction_logs (vendor_id, transaction_type, amount, balance_after) 
-                    VALUES (?, 'payment-in', ?, ?)`,
-                    [vendor_id, receiveAmount, currentBalance],
+                    `INSERT INTO vendor_transaction_logs (vendor_id, transaction_type, amount, balance_after, payment_date) 
+                    VALUES (?, 'payment-in', ?, ?, ?)`,
+                    [vendor_id, receiveAmount, currentBalance, payment_date],
                     (error, logResults) => {
                         if (error) {
                             return reject(new Error(`Failed to insert transaction log: ${error.message}`));

@@ -57,7 +57,10 @@ const getDeliveryChallanDetailsForPDF = async (req, res) => {
         if (rows.length === 0) {
             return res.status(404).json({ message: "Delivery Challan not found." });
         }
-        res.status(200).json({ message: "Delivery Challan retrieved successfully.", data: rows[0] });
+        res.status(200).json({
+            message: "Delivery Challan retrieved successfully.",
+            data: rows[0], // Include the record
+        });
     } catch (error) {
         res.status(500).json({ message: "Error retrieving delivery challan.", error });
     }

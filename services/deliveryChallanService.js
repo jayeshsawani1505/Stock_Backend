@@ -28,8 +28,13 @@ const createDeliveryChallanService = async (challanData) => {
 
     const result = await new Promise((resolve, reject) => {
         const query = `INSERT INTO delivery_challans 
-                       (delivery_number, customer_id, delivery_date, due_date, notes, terms_conditions, total_amount, signature_id, status, invoice_details) 
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                       (delivery_number, customer_id, delivery_date, due_date, notes, terms_conditions,
+                       adjustmentType,
+                        adjustmentValue,
+                        adjustmentType2,
+                        adjustmentValue2,
+                        subtotal_amount, total_amount, signature_id, status, invoice_details) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const values = [
             challanData.delivery_number,
             challanData.customer_id,
@@ -37,6 +42,11 @@ const createDeliveryChallanService = async (challanData) => {
             challanData.due_date,
             challanData.notes,
             challanData.terms_conditions,
+            challanData.adjustmentType,
+            challanData.adjustmentValue,
+            challanData.adjustmentType2,
+            challanData.adjustmentValue2,
+            challanData.subtotal_amount,
             challanData.total_amount,
             challanData.signature_id,
             challanData.status,
@@ -83,7 +93,7 @@ const getDeliveryChallanService = async (id) => {
 
 const getDeliveryChallanDetailsForPDF = async (id) => {
     return new Promise((resolve, reject) => {
-        const invoiceQuery = `
+        const deliveryChallanQuery = `
             SELECT 
                 delivery_challans.*, 
                 customers.*, 
@@ -95,66 +105,22 @@ const getDeliveryChallanDetailsForPDF = async (id) => {
             WHERE delivery_challans.id = ?
         `;
 
-        // Fetch the invoice and its associated data
-        dbconnection.query(invoiceQuery, [id], async (invoiceError, invoiceResults) => {
-            if (invoiceError) return reject(invoiceError);
-            if (invoiceResults.length === 0) return reject(new Error("Challan not found"));
+        console.log("Executing Query with ID: ", id); // Log the input ID
 
-            const invoice = invoiceResults[0]; // Assuming only one invoice is fetched
-            let invoiceDetails = [];
-
-            try {
-                // Parse the JSON string in `invoice_details`
-                invoiceDetails = JSON.parse(invoice.invoice_details);
-                console.log("Challan Details Parsed: ", invoiceDetails);
-            } catch (error) {
-                return reject(new Error("Invalid Challan JSON"));
+        dbconnection.query(deliveryChallanQuery, [id], (challanError, challanResults) => {
+            if (challanError) {
+                console.error("Database Query Error: ", challanError);
+                return reject(challanError);
             }
 
-            if (invoiceDetails.length === 0) {
-                invoice.invoice_details = [];
-                return resolve(invoice);
+            console.log("Query Results: ", challanResults); // Log the raw results
+
+            if (challanResults.length === 0) {
+                console.warn("No results found for ID: ", id);
+                return reject(new Error("Delivery challan not found"));
             }
 
-            // Create dynamic placeholders for the query
-            const productIds = invoiceDetails.map((detail) => detail.product_id);
-            const subproductIds = invoiceDetails.map((detail) => detail.subproduct_id);
-            const categoryIds = invoiceDetails.map((detail) => detail.category_id);
-
-            const detailsQuery = `
-                SELECT 
-                    products.product_id, 
-                    products.product_name, 
-                    subproducts.subproduct_id, 
-                    subproducts.subproduct_name,
-                    category.category_name
-                FROM products
-                LEFT JOIN subproducts ON products.product_id = subproducts.product_id
-                LEFT JOIN category ON products.category_id = category.category_id
-                WHERE products.product_id IN (?) 
-                AND (subproducts.subproduct_id IN (?) OR subproducts.subproduct_id IS NULL)
-            `;
-
-            // Query to get product and subproduct names
-            dbconnection.query(detailsQuery, [productIds, subproductIds], (detailsError, detailsResults) => {
-                if (detailsError) return reject(detailsError);
-
-                // Map product and subproduct names back to invoiceDetails
-                invoiceDetails = invoiceDetails.map((detail) => {
-                    const product = detailsResults.find((item) => item.product_id === detail.product_id);
-                    const subproduct = detailsResults.find((item) => item.subproduct_id === detail.subproduct_id);
-
-                    return {
-                        ...detail,
-                        product_name: product ? product.product_name : null,
-                        subproduct_name: subproduct ? subproduct.subproduct_name : null,
-                        category_name: product ? product.category_name : null,  // Add category name
-                    };
-                });
-
-                invoice.invoice_details = invoiceDetails; // Update the invoice with enriched details
-                resolve([invoice]);  // Wrap in an array as expected in the controller
-            });
+            resolve(challanResults);
         });
     });
 };
