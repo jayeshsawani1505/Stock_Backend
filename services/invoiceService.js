@@ -104,7 +104,7 @@ const createInvoice = async (invoiceData) => {
                     }
                     await opening_Balance(customer_id, opening_balance, closing_balance);
                     // Log the transaction in the transaction_logs table
-                    await logTransaction(customer_id, total_amount, closing_balance);
+                    await logTransaction(customer_id, total_amount, closing_balance, invoice_date);
 
                 } catch (stockError) {
                     console.error('Stock adjustment error:', stockError);
@@ -176,12 +176,12 @@ const opening_Balance = async (customer_id, opening_balance, closing_balance) =>
     });
 };
 
-const logTransaction = async (customer_id, total_amount, closing_balance) => {
+const logTransaction = async (customer_id, total_amount, closing_balance, invoice_date) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            `INSERT INTO transaction_logs (customer_id, transaction_type, amount, balance_after) 
-            VALUES (?, 'sales', ?, ?)`,
-            [customer_id, total_amount, closing_balance],
+            `INSERT INTO transaction_logs (customer_id, transaction_type, amount, balance_after, payment_date) 
+            VALUES (?, 'sales', ?, ?, ?)`,
+            [customer_id, total_amount, closing_balance, invoice_date],
             (error, results) => {
                 if (error) {
                     return reject(error);

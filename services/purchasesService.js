@@ -69,7 +69,7 @@ const createPurchase = async (purchaseData) => {
                     }
                     await opening_Balance(vendor_id, opening_balance, closing_balance);
                     // Log the transaction in the transaction_logs table
-                    await logTransaction(vendor_id, total_amount, closing_balance);
+                    await logTransaction(vendor_id, total_amount, closing_balance, purchase_date);
 
                 } catch (stockError) {
                     console.error('Stock adjustment error:', stockError);
@@ -119,12 +119,12 @@ const opening_Balance = async (vendor_id, opening_balance, closing_balance) => {
     });
 };
 
-const logTransaction = async (vendor_id, total_amount, closing_balance) => {
+const logTransaction = async (vendor_id, total_amount, closing_balance, purchase_date) => {
     return new Promise((resolve, reject) => {
         dbconnection.query(
-            `INSERT INTO vendor_transaction_logs (vendor_id, transaction_type, amount, balance_after) 
-            VALUES (?, 'purchase', ?, ?)`,
-            [vendor_id, total_amount, closing_balance],
+            `INSERT INTO vendor_transaction_logs (vendor_id, transaction_type, amount, balance_after, payment_date) 
+            VALUES (?, 'purchase', ?, ?, ?)`,
+            [vendor_id, total_amount, closing_balance, purchase_date],
             (error, results) => {
                 if (error) {
                     return reject(error);
