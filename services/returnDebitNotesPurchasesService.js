@@ -21,32 +21,74 @@ const create = async (returnDebitNoteData) => {
         invoice_details
     } = returnDebitNoteData;
 
-    // Convert invoice_details to a JSON string if required by the table
-    const invoiceDetailsString = JSON.stringify(invoice_details);
+    // Convert invoice_details to a JSON string
+    const invoiceDetailsJSON = JSON.stringify(invoice_details);
 
-    const result = await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         dbconnection.query(
-            `INSERT INTO return_debit_notes_purchases (vendor_id, purchase_order_date, due_date, reference_no, notes, terms_conditions,
-            adjustmentType,
-            adjustmentValue,
-            adjustmentType2,
-            adjustmentValue2,
-            subtotal_amount, total_amount, signature_id, payment_mode, status, invoice_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?)`,
-            [vendor_id, purchase_order_date, due_date, reference_no, notes, terms_conditions,
+            `INSERT INTO return_debit_notes_purchases 
+            (vendor_id, purchase_order_date, due_date, reference_no, notes, terms_conditions, adjustmentType, adjustmentValue, adjustmentType2, adjustmentValue2, subtotal_amount, total_amount, signature_id, payment_mode, status, invoice_details) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                vendor_id,
+                purchase_order_date,
+                due_date,
+                reference_no,
+                notes,
+                terms_conditions,
                 adjustmentType,
                 adjustmentValue,
                 adjustmentType2,
                 adjustmentValue2,
-                subtotal_amount, total_amount, signature_id, payment_mode, status, invoiceDetailsString],
-            (error, results) => {
-                if (error) reject(error);
-                else resolve(results);
+                subtotal_amount,
+                total_amount,
+                signature_id,
+                payment_mode,
+                status,
+                invoiceDetailsJSON
+            ],
+            async (error, results) => {
+                if (error) {
+                    console.error('Error executing query:', error);
+                    return reject({ message: 'Error creating return debit note.', error });
+                }
+
+                try {
+                    // Assuming you have additional operations to perform here
+                    for (const detail of invoice_details) {
+                        const { product_name, quantity } = detail;
+                        await outStockProduct(product_name, quantity);
+                    }
+
+                } catch (operationError) {
+                    console.error('Error during post-insert operations:', operationError);
+                    return reject({ message: 'Post-insert operations failed.', operationError });
+                }
+
+                resolve(results); // Resolve with the results
             }
         );
     });
-    return { id: result.insertId, ...returnDebitNoteData };
 };
 
+// OutStock function for product
+const outStockProduct = async (id, quantity) => {
+    return new Promise((resolve, reject) => {
+        dbconnection.query(
+            'UPDATE products SET quantity = quantity - ? WHERE product_name = ? AND quantity >= ?',
+            [quantity, id, quantity],
+            (error, results) => {
+                if (error) {
+                    return reject(error);
+                }
+                if (results.affectedRows === 0) {
+                    return reject(new Error('Not enough stock available'));
+                }
+                resolve(results);
+            }
+        );
+    });
+};
 // Get a return debit note by ID
 const getById = async (id) => {
     const rows = await new Promise((resolve, reject) => {
