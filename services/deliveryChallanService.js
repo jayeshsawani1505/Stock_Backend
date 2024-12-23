@@ -135,7 +135,13 @@ const updateDeliveryChallanService = async (id, challanData) => {
     const result = await new Promise((resolve, reject) => {
         const query = `UPDATE delivery_challans SET 
                        delivery_number = ?, customer_id = ?, delivery_date = ?, due_date = ?, 
-                       notes = ?, terms_conditions = ?, total_amount = ?, 
+                       notes = ?, terms_conditions = ?,
+                       adjustmentType = ?,
+                        adjustmentValue = ?,
+                        adjustmentType2 = ?,
+                        adjustmentValue2 = ?,
+                        subtotal_amount = ?,
+                        total_amount = ?, 
                        signature_id = ?, status = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
         const values = [
             challanData.delivery_number,
@@ -144,6 +150,11 @@ const updateDeliveryChallanService = async (id, challanData) => {
             challanData.due_date,
             challanData.notes,
             challanData.terms_conditions,
+            challanData.adjustmentType,
+            challanData.adjustmentValue,
+            challanData.adjustmentType2,
+            challanData.adjustmentValue2,
+            challanData.subtotal_amount,
             challanData.total_amount,
             challanData.signature_id,
             challanData.status,

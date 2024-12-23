@@ -129,6 +129,11 @@ const update = async (id, returnDebitNoteData) => {
         reference_no,
         notes,
         terms_conditions,
+        adjustmentType,
+        adjustmentValue,
+        adjustmentType2,
+        adjustmentValue2,
+        subtotal_amount,
         total_amount,
         signature_id,
         payment_mode,
@@ -136,37 +141,84 @@ const update = async (id, returnDebitNoteData) => {
         invoice_details
     } = returnDebitNoteData;
 
-    // Stringify invoice_details if necessary
+    // Stringify invoice_details for storage
     const invoiceDetailsString = JSON.stringify(invoice_details);
 
-    const result = await new Promise((resolve, reject) => {
-        dbconnection.query(
-            'UPDATE return_debit_notes_purchases SET vendor_id = ?, purchase_order_date = ?, due_date = ?, reference_no = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, payment_mode = ?, status = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [
-                vendor_id,
-                purchase_order_date,
-                due_date,
-                reference_no,
-                notes,
-                terms_conditions,
-                total_amount,
-                signature_id,
-                payment_mode,
-                status,
-                invoiceDetailsString,
-                id
-            ],
-            (error, results) => {
-                if (error) reject(error);
-                else resolve(results);
-            }
-        );
-    });
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Fetch existing invoice details for comparison
+            const existingData = await new Promise((res, rej) => {
+                dbconnection.query(
+                    `SELECT invoice_details FROM return_debit_notes_purchases WHERE id = ?`,
+                    [id],
+                    (error, results) => {
+                        if (error) return rej(error);
+                        if (results.length === 0) return rej({ message: "Record not found" });
+                        res(results[0].invoice_details ? JSON.parse(results[0].invoice_details) : []);
+                    }
+                );
+            });
 
-    // Check if the update was successful
-    return result.affectedRows > 0
-        ? { id, ...returnDebitNoteData }
-        : null;
+            // Find new or changed entries
+            const newOrChangedEntries = invoice_details.filter(newDetail => {
+                const existingDetail = existingData.find(
+                    item => item.product_name === newDetail.product_name
+                );
+                return !existingDetail || existingDetail.quantity !== newDetail.quantity;
+            });
+
+            // Start the update query
+            dbconnection.query(
+                `UPDATE return_debit_notes_purchases SET vendor_id = ?, purchase_order_date = ?, due_date = ?, reference_no = ?, notes = ?, terms_conditions = ?, 
+                adjustmentType = ?, adjustmentValue = ?, adjustmentType2 = ?, adjustmentValue2 = ?, subtotal_amount = ?, total_amount = ?, 
+                signature_id = ?, payment_mode = ?, status = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+                [
+                    vendor_id,
+                    purchase_order_date,
+                    due_date,
+                    reference_no,
+                    notes,
+                    terms_conditions,
+                    adjustmentType,
+                    adjustmentValue,
+                    adjustmentType2,
+                    adjustmentValue2,
+                    subtotal_amount,
+                    total_amount,
+                    signature_id,
+                    payment_mode,
+                    status,
+                    invoiceDetailsString,
+                    id
+                ],
+                async (error, results) => {
+                    if (error) {
+                        console.error('Error executing query:', error);
+                        return reject({ message: 'Error updating return debit note.', error });
+                    }
+
+                    // If update is successful, call outStockProduct for new or changed entries
+                    try {
+                        for (const detail of newOrChangedEntries) {
+                            const { product_name, quantity } = detail;
+                            await outStockProduct(product_name, quantity);
+                        }
+                    } catch (operationError) {
+                        console.error('Error during post-update operations:', operationError);
+                        return reject({ message: 'Post-update operations failed.', operationError });
+                    }
+
+                    // Return the updated data if successful
+                    resolve(results.affectedRows > 0
+                        ? { id, ...returnDebitNoteData }
+                        : null);
+                }
+            );
+        } catch (fetchError) {
+            console.error('Error fetching existing data:', fetchError);
+            reject({ message: 'Error fetching existing data.', fetchError });
+        }
+    });
 };
 
 // Delete a return debit note by ID

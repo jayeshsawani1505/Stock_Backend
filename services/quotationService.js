@@ -126,6 +126,11 @@ const updateQuotationService = async (id, quotationData) => {
         status,
         notes,
         terms_conditions,
+        adjustmentType,
+        adjustmentValue,
+        adjustmentType2,
+        adjustmentValue2,
+        subtotal_amount,
         total_amount,
         signature_id,
         invoice_details // Assuming you want to update this field as well
@@ -136,7 +141,12 @@ const updateQuotationService = async (id, quotationData) => {
 
     const result = await new Promise((resolve, reject) => {
         dbconnection.query(
-            'UPDATE quotations SET quotation_number = ?, customer_id = ?, quotation_date = ?, due_date = ?, status = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            `UPDATE quotations SET quotation_number = ?, customer_id = ?, quotation_date = ?, due_date = ?, status = ?, notes = ?, terms_conditions = ?,
+             adjustmentType = ?,
+        adjustmentValue = ?,
+        adjustmentType2 = ?,
+        adjustmentValue2 = ?,
+        subtotal_amount = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
             [
                 quotation_number,
                 customer_id,
@@ -145,6 +155,11 @@ const updateQuotationService = async (id, quotationData) => {
                 status,
                 notes,
                 terms_conditions,
+                adjustmentType,
+                adjustmentValue,
+                adjustmentType2,
+                adjustmentValue2,
+                subtotal_amount,
                 total_amount,
                 signature_id,
                 invoiceDetailsString,
