@@ -216,60 +216,115 @@ const updatePurchase = async (id, purchaseData) => {
         terms_conditions,
         adjustmentType,
         adjustmentValue,
+        adjustmentType2,
+        adjustmentValue2,
         subtotal_amount,
         total_amount,
         payment_mode,
         signature_id,
         status,
-        invoice_details
+        invoice_details,
+        opening_balance,
+        closing_balance
     } = purchaseData;
 
     // Serialize invoice_details
     const serializedInvoiceDetails = JSON.stringify(invoice_details);
 
     return new Promise((resolve, reject) => {
-        dbconnection.query(
-            `UPDATE purchases 
-             SET vendor_id = ?, 
-                 purchase_date = ?, 
-                 due_date = ?, 
-                 reference_no = ?, 
-                 supplier_invoice_serial_no = ?, 
-                 notes = ?, 
-                 terms_conditions = ?, 
-                 adjustmentType = ?,
-                 adjustmentValue = ?,
-                 subtotal_amount ?,
-                 total_amount = ?, 
-                 payment_mode = ?, 
-                 signature_id = ?, 
-                 status = ?, 
-                 invoice_details = ?, 
-                 updated_at = CURRENT_TIMESTAMP 
-             WHERE id = ?`,
-            [
-                vendor_id,
-                purchase_date,
-                due_date,
-                reference_no,
-                supplier_invoice_serial_no,
-                notes,
-                terms_conditions,
-                adjustmentType,
-                adjustmentValue,
-                subtotal_amount,
-                total_amount,
-                payment_mode,
-                signature_id,
-                status,
-                serializedInvoiceDetails,
-                id
-            ],
-            (error, results) => {
-                if (error) return reject(error);
-                resolve(results);
+        // Begin transaction
+        dbconnection.beginTransaction(async (err) => {
+            if (err) {
+                console.error('Error starting transaction:', err);
+                return reject({ message: 'Error starting transaction.', err });
             }
-        );
+
+            try {
+                // Update purchase record with missing fields
+                const result = await new Promise((resolve, reject) => {
+                    dbconnection.query(
+                        `UPDATE purchases 
+                         SET vendor_id = ?, 
+                             purchase_date = ?, 
+                             due_date = ?, 
+                             reference_no = ?, 
+                             supplier_invoice_serial_no = ?, 
+                             notes = ?, 
+                             terms_conditions = ?, 
+                             adjustmentType = ?,
+                             adjustmentValue = ?,
+                             adjustmentType2 = ?, 
+                             adjustmentValue2 = ?,
+                             subtotal_amount = ?, 
+                             total_amount = ?, 
+                             payment_mode = ?, 
+                             signature_id = ?, 
+                             status = ?, 
+                             invoice_details = ?, 
+                             closing_balance = ?, 
+                             opening_balance = ?, 
+                             updated_at = CURRENT_TIMESTAMP 
+                         WHERE id = ?`,
+                        [
+                            vendor_id,
+                            purchase_date,
+                            due_date,
+                            reference_no,
+                            supplier_invoice_serial_no,
+                            notes,
+                            terms_conditions,
+                            adjustmentType,
+                            adjustmentValue,
+                            adjustmentType2,
+                            adjustmentValue2,
+                            subtotal_amount,
+                            total_amount,
+                            payment_mode,
+                            signature_id,
+                            status,
+                            serializedInvoiceDetails,
+                            closing_balance,
+                            opening_balance,
+                            id
+                        ],
+                        (error, results) => {
+                            if (error) {
+                                return reject({ message: 'Error updating purchase.', error });
+                            }
+                            resolve(results);
+                        }
+                    );
+                });
+
+                // Adjust stock for each product in invoice details
+                for (const detail of invoice_details) {
+                    const { product_name, quantity } = detail;
+                    await inStock(product_name, quantity); // Adjust stock
+                }
+
+                // Update vendor balance if needed
+                await opening_Balance(vendor_id, opening_balance, closing_balance);
+
+                // Log the transaction
+                await logTransaction(vendor_id, total_amount, closing_balance, purchase_date);
+
+                // Commit transaction if everything is successful
+                dbconnection.commit((commitErr) => {
+                    if (commitErr) {
+                        console.error('Error committing transaction:', commitErr);
+                        return reject({ message: 'Transaction commit failed.', commitErr });
+                    }
+
+                    resolve(result); // Resolve with update result
+                });
+            } catch (err) {
+                // Rollback transaction on error
+                dbconnection.rollback(() => {
+                    console.error('Error during purchase update process:', err);
+                    reject({ message: 'Error during purchase update process.', err });
+                });
+            }
+        });
     });
 };
 

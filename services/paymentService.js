@@ -1,4 +1,5 @@
 const dbconnection = require('../config/database');
+const util = require('util');
 
 // Create a new payment
 const createPaymentService = async (paymentData) => {
@@ -161,34 +162,65 @@ const getPaymentsService = async () => {
 };
 
 // Update a payment by ID
-const updatePaymentService = async (id, paymentData) => {
-    const { customer_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description } = paymentData;
+const updatePaymentService = async (paymentId, updatedData) => {
+    const {
+        customer_id,
+        receiveAmount,
+        pendingAmount,
+        payment_mode,
+        payment_date,
+        payment_status,
+        description
+    } = updatedData;
 
-    // Update payment record
-    const result = await new Promise((resolve, reject) => {
-        dbconnection.query(
-            'UPDATE payments SET customer_id = ?, receiveAmount = ?, pendingAmount = ?, payment_mode = ?, payment_date = ?, payment_status = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE payment_id = ?',
-            [customer_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description, id],
-            (error, results) => {
-                if (error) reject(error);
-                else resolve(results);
-            }
-        );
-    });
+    const query = util.promisify(dbconnection.query).bind(dbconnection);
 
-    // If payment was successfully updated, update the customer's closing balance
-    if (result.affectedRows > 0) {
-        try {
-            await updateCustomerClosingBalance(customer_id, receiveAmount);
-            await logTransaction(customer_id, receiveAmount);
-        } catch (error) {
-            console.error('Error updating customer closing balance:', error);
-            throw new Error('Payment updated, but failed to update customer closing balance.');
+    try {
+        // Start transaction
+        await dbconnection.beginTransaction();
+
+        // Get the previous payment record to calculate the difference in `receiveAmount`
+        const previousPayment = await query('SELECT customer_id, receiveAmount FROM payments WHERE payment_id = ?', [paymentId]);
+        if (previousPayment.length === 0) {
+            throw new Error('Payment record not found');
         }
-        return { id, ...paymentData };
-    }
 
-    return null;
+        const previousReceiveAmount = previousPayment[0].receiveAmount;
+        const previousCustomerId = previousPayment[0].customer_id;
+
+        // Update payment record
+        await query(
+            'UPDATE payments SET customer_id = ?, receiveAmount = ?, pendingAmount = ?, payment_mode = ?, payment_date = ?, payment_status = ?, description = ? WHERE payment_id = ?',
+            [customer_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description, paymentId]
+        );
+
+        // Calculate the difference in receiveAmount for balance adjustment
+        const amountDifference = receiveAmount - previousReceiveAmount;
+
+        // If the customer is changed, adjust balances for both customers
+        if (previousCustomerId !== customer_id) {
+            // Revert balance for the previous customer
+            await updateCustomerClosingBalance(previousCustomerId, -previousReceiveAmount);
+            // Update balance for the new customer
+            await updateCustomerClosingBalance(customer_id, receiveAmount);
+        } else {
+            // Update balance for the same customer
+            await updateCustomerClosingBalance(customer_id, amountDifference);
+        }
+
+        // Log the updated transaction
+        await logTransaction(customer_id, receiveAmount, payment_date, paymentId, 'update');
+
+        // Commit transaction
+        await dbconnection.commit();
+
+        return { paymentId };
+    } catch (error) {
+        // Rollback transaction in case of failure
+        await dbconnection.rollback();
+        console.error('Transaction failed:', error);
+        throw new Error('Failed to update payment');
+    }
 };
 
 // Delete a payment by ID

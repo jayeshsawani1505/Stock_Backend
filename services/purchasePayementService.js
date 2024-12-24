@@ -148,17 +148,65 @@ const getPurchasePaymentsService = async () => {
 // Update a purchase payment by ID
 const updatePurchasePaymentService = async (id, paymentData) => {
     const { vendor_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description } = paymentData;
-    const result = await new Promise((resolve, reject) => {
+
+    return new Promise((resolve, reject) => {
+        // Fetch the old payment record to compare changes
         dbconnection.query(
-            'UPDATE purchase_payments SET vendor_id = ?, receiveAmount = ?, pendingAmount = ?, payment_mode = ?, payment_date = ?, payment_status = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE payment_id = ?',
-            [vendor_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description, id],
-            (error, results) => {
-                if (error) reject(error);
-                else resolve(results);
+            'SELECT vendor_id, receiveAmount FROM purchase_payments WHERE payment_id = ?',
+            [id],
+            async (fetchError, results) => {
+                if (fetchError) {
+                    console.error('Error fetching old payment:', fetchError);
+                    return reject({ message: 'Error fetching old payment.', error: fetchError });
+                }
+
+                if (results.length === 0) {
+                    return reject({ message: 'Payment record not found.' });
+                }
+
+                const { vendor_id: oldVendorId, receiveAmount: oldReceiveAmount } = results[0];
+
+                // Proceed with the update
+                dbconnection.query(
+                    `UPDATE purchase_payments 
+                     SET vendor_id = ?, receiveAmount = ?, pendingAmount = ?, payment_mode = ?, 
+                         payment_date = ?, payment_status = ?, description = ?, updated_at = CURRENT_TIMESTAMP 
+                     WHERE payment_id = ?`,
+                    [vendor_id, receiveAmount, pendingAmount, payment_mode, payment_date, payment_status, description, id],
+                    async (updateError, updateResults) => {
+                        if (updateError) {
+                            console.error('Error updating payment:', updateError);
+                            return reject({ message: 'Error updating payment.', error: updateError });
+                        }
+
+                        if (updateResults.affectedRows === 0) {
+                            return reject({ message: 'Failed to update payment.' });
+                        }
+
+                        try {
+                            // Update vendor balances if vendor or receiveAmount changed
+                            if (oldVendorId !== vendor_id || oldReceiveAmount !== receiveAmount) {
+                                // Revert balance for the old vendor
+                                await updateVendorClosingBalance(oldVendorId, -oldReceiveAmount);
+
+                                // Update balance for the new vendor
+                                await updateVendorClosingBalance(vendor_id, receiveAmount);
+                            }
+
+                            // Log the transaction
+                            await logTransaction(vendor_id, receiveAmount, payment_date);
+
+                            // Resolve with updated payment data
+                            resolve({ id, ...paymentData });
+                        } catch (error) {
+                            console.error('Error updating balances or logging transaction:', error);
+                            return reject({ message: 'Error updating balances or logging transaction.', error });
+                        }
+                    }
+                );
             }
         );
     });
-    return result.affectedRows > 0 ? { id, ...paymentData } : null;
 };
 
 // Delete a purchase payment by ID

@@ -285,33 +285,102 @@ const getInvoiceDetailsForPDF = async (id) => {
 };
 
 // Update an invoice by ID
-const updateInvoice = async (id, invoiceData) => {
-    const { invoice_number, customer_id, invoice_date, due_date, transporter_name, category_id, status, notes, terms_conditions, total_amount, signature_id, invoice_details } = invoiceData;
+const updateInvoice = async (invoiceId, invoiceData) => {
+    const {
+        invoice_number,
+        customer_id,
+        invoice_date,
+        due_date,
+        transporter_name,
+        category_id,
+        status,
+        notes,
+        terms_conditions,
+        signature_id,
+        adjustmentType,
+        adjustmentValue,
+        adjustmentType2,
+        adjustmentValue2,
+        subtotal_amount,
+        total_amount,
+        invoice_details,
+        closing_balance,
+        opening_balance
+    } = invoiceData;
+
+    // Convert invoice_details to a JSON string
+    const invoiceDetailsJSON = JSON.stringify(invoice_details);
 
     return new Promise((resolve, reject) => {
-        const serializedInvoiceDetails = JSON.stringify(invoice_details); // Serialize invoice_details
-
         dbconnection.query(
-            'UPDATE invoices SET invoice_number = ?, customer_id = ?, invoice_date = ?, due_date = ?, transporter_name = ?, category_id = ?, status = ?, notes = ?, terms_conditions = ?, total_amount = ?, signature_id = ?, invoice_details = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-            [invoice_number, customer_id, invoice_date, due_date, transporter_name, category_id, status, notes, terms_conditions, total_amount, signature_id, serializedInvoiceDetails, id],
+            `UPDATE invoices SET 
+                invoice_number = ?,
+                customer_id = ?,
+                invoice_date = ?,
+                due_date = ?,
+                transporter_name = ?,
+                category_id = ?,
+                status = ?,
+                notes = ?,
+                terms_conditions = ?,
+                signature_id = ?,
+                adjustmentType = ?,
+                adjustmentValue = ?,
+                adjustmentType2 = ?,
+                adjustmentValue2 = ?,
+                subtotal_amount = ?,
+                total_amount = ?,
+                invoice_details = ?,
+                closing_balance = ?,
+                opening_balance = ?
+            WHERE id = ?`,
+            [
+                invoice_number,
+                customer_id,
+                invoice_date,
+                due_date,
+                transporter_name,
+                category_id,
+                status,
+                notes,
+                terms_conditions,
+                signature_id,
+                adjustmentType,
+                adjustmentValue,
+                adjustmentType2,
+                adjustmentValue2,
+                subtotal_amount,
+                total_amount,
+                invoiceDetailsJSON,
+                closing_balance,
+                opening_balance,
+                invoiceId
+            ],
             async (error, results) => {
-                if (error) return reject(error);
-
-                try {
-                    for (const detail of invoice_details) {
-                        const { product_name, subproduct_id, quantity } = detail;
-
-                        if (subproduct_id > 0) {
-                            await outStockSubProduct(subproduct_id, quantity);
-                        } else {
-                            await outStockProduct(product_name, quantity);
-                        }
-                    }
-                } catch (stockError) {
-                    return reject(stockError); // Reject if stock update fails
+                if (error) {
+                    console.error('Error executing update query:', error);
+                    return reject({ message: 'Error updating invoice.', error });
                 }
 
-                resolve(results); // Resolve with the original results if everything succeeds
+                try {
+                    // Adjust stock for updated invoice details
+                    for (const detail of invoice_details) {
+                        const { product_name, quantity } = detail;
+                        await outStockProduct(product_name, quantity);
+                    }
+
+                    // Update customer balances
+                    await opening_Balance(customer_id, opening_balance, closing_balance);
+
+                    // Log the transaction in the transaction_logs table
+                    await logTransaction(customer_id, total_amount, closing_balance, invoice_date);
+
+                } catch (stockError) {
+                    console.error('Stock adjustment error:', stockError);
+                    return reject({ message: 'Stock adjustment failed.', stockError });
+                }
+
+                resolve(results); // Resolve with the results
             }
         );
     });
